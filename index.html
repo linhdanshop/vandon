@@ -138,16 +138,20 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
   .topbar .btn-small{padding:4px 7px;font-size:12px}
   .main{padding:6px}
 
-  /* Thanh lọc mobile: gọn hơn, ít tốn chiều cao */
-  .toolbar{display:grid!important;grid-template-columns:92px 1fr;gap:6px!important;overflow:visible!important;white-space:normal!important;padding:7px!important;margin-bottom:6px!important;border-radius:10px}
-  .toolbar .btn-blue{grid-column:1 / 2;width:100%;min-height:34px;font-size:13px;padding:6px 6px}
-  .toolbar .search-input{grid-column:2 / 3;width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:13px}
-  .toolbar .select-filter{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:13px}
-  .toolbar .arrow{display:none}
-  .toolbar label{font-size:12px;align-self:center;font-weight:800;color:#475569}
-  .toolbar .dt{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:12.5px;padding:5px 7px}
+  /* Thanh lọc mobile: đúng 2 dòng. Dòng 1: Tạo phiếu + tìm kiếm. Dòng 2: Shop + ĐVVC + từ ngày + đến ngày + áp dụng */
+  .toolbar{display:grid!important;grid-template-columns:82px 82px 68px 68px 52px;gap:5px!important;overflow:visible!important;white-space:normal!important;padding:6px!important;margin-bottom:6px!important;border-radius:10px}
+  .toolbar .btn-blue{grid-column:1 / 2;grid-row:1;width:100%;min-height:34px;font-size:13px;padding:6px 6px}
+  .toolbar .search-input{grid-column:2 / 6;grid-row:1;width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:13px}
+  .toolbar .select-filter{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:12.5px;padding:5px 6px}
+  .toolbar #filterShop{grid-column:1 / 2;grid-row:2}
+  .toolbar #filterDvvc{grid-column:2 / 3;grid-row:2}
+  .toolbar label,.toolbar .arrow{display:none!important}
+  .toolbar .dt{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:11px;padding:4px 5px;text-align:center}
+  .toolbar #dateFrom{grid-column:3 / 4;grid-row:2}
+  .toolbar #dateTo{grid-column:4 / 5;grid-row:2}
   .toolbar button{min-height:34px}
-  .toolbar button:nth-last-child(2),.toolbar button:nth-last-child(1){font-size:13px}
+  .toolbar button:nth-last-child(2){grid-column:5 / 6;grid-row:2;font-size:12px;padding:5px 4px}
+  .toolbar button:nth-last-child(1){display:none!important}
 
   /* Thống kê mobile: 2 khối nằm cùng 1 hàng cuộn ngang, nút nhỏ lại */
   .stats-wrap{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px;margin-bottom:6px;overflow-x:auto;padding-bottom:0}
@@ -665,7 +669,31 @@ function startOfDay(d){ const x=new Date(d); x.setHours(0,0,0,0); return x; }
 function endOfDay(d){ const x=new Date(d); x.setHours(23,59,59,999); return x; }
 function pad2(n){ return String(n).padStart(2,"0"); }
 function toLocalInputValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
-function fromLocalInputValue(v){ return v ? new Date(v).getTime() : null; }
+function toLocalDateValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+function useMobileDate(){ return window.matchMedia && window.matchMedia("(max-width:900px)").matches; }
+function setupDateInputType(){
+  const type = useMobileDate() ? "date" : "datetime-local";
+  if(dateFrom.type !== type) dateFrom.type = type;
+  if(dateTo.type !== type) dateTo.type = type;
+}
+function setDateInputValues(){
+  setupDateInputType();
+  if(useMobileDate()){
+    dateFrom.value = dateFilter.from ? toLocalDateValue(dateFilter.from) : "";
+    dateTo.value = dateFilter.to ? toLocalDateValue(dateFilter.to) : "";
+  }else{
+    dateFrom.value = dateFilter.from ? toLocalInputValue(dateFilter.from) : "";
+    dateTo.value = dateFilter.to ? toLocalInputValue(dateFilter.to) : "";
+  }
+}
+function fromLocalInputValue(v, isEnd=false){
+  if(!v) return null;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(v)){
+    const d = new Date(v + "T00:00");
+    return isEnd ? endOfDay(d).getTime() : startOfDay(d).getTime();
+  }
+  return new Date(v).getTime();
+}
 
 function setDateDefault30(){
   const now = new Date();
@@ -673,8 +701,7 @@ function setDateDefault30(){
   from.setDate(from.getDate()-29);
   const to = endOfDay(now);
   dateFilter = {from:from.getTime(), to:to.getTime(), mode:"30days"};
-  dateFrom.value = toLocalInputValue(dateFilter.from);
-  dateTo.value = toLocalInputValue(dateFilter.to);
+  setDateInputValues();
   render();
 }
 
@@ -686,15 +713,16 @@ function setDateQuick(mode){
   if(mode === "7days") { from=startOfDay(now); from.setDate(from.getDate()-6); to=endOfDay(now); }
   if(mode === "month") { from=new Date(now.getFullYear(), now.getMonth(), 1, 0,0,0,0); to=endOfDay(now); }
   dateFilter = {from:from.getTime(), to:to.getTime(), mode};
-  dateFrom.value = toLocalInputValue(dateFilter.from);
-  dateTo.value = toLocalInputValue(dateFilter.to);
+  setDateInputValues();
   render();
 }
 function setDateCustom(){
-  dateFilter = {from:fromLocalInputValue(dateFrom.value), to:fromLocalInputValue(dateTo.value), mode:"custom"};
+  setupDateInputType();
+  dateFilter = {from:fromLocalInputValue(dateFrom.value, false), to:fromLocalInputValue(dateTo.value, true), mode:"custom"};
+  setDateInputValues();
   render();
 }
-function clearDateFilter(){ dateFilter={from:null,to:null,mode:""}; dateFrom.value=""; dateTo.value=""; render(); }
+function clearDateFilter(){ dateFilter={from:null,to:null,mode:""}; setDateInputValues(); render(); }
 function updateDateButtons(){
   // Đã bỏ các nút Hôm nay / Hôm qua / 7 ngày / Tháng này để thanh lọc gọn 1 dòng.
 }
@@ -992,6 +1020,11 @@ window.addEventListener("load", function(){
     renderQuick();
     setDateDefault30();
   }
+});
+
+
+window.addEventListener("resize", function(){
+  if(currentUser){ setDateInputValues(); }
 });
 
 function escapeHtml(str){
