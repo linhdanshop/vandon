@@ -54,12 +54,59 @@
   .stat-box{border-radius:10px!important;box-shadow:0 1px 5px #0001!important}
 }
 
+
+
+/* ===== THỐNG KÊ DẠNG CARD RÕ RÀNG ===== */
+.stats-dashboard{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:10px!important}
+.stats-dashboard .stat-box{background:#fff!important;border-radius:12px!important;padding:12px!important;box-shadow:0 2px 8px #00000012!important;display:block!important;min-height:auto!important}
+.stats-dashboard .stat-title{font-size:16px!important;font-weight:900!important;color:#1f2937!important;margin:0 0 10px!important;text-align:left!important;min-width:0!important}
+.stats-dashboard .stat-line{display:grid!important;grid-template-columns:repeat(4,minmax(110px,1fr))!important;gap:10px!important;flex-wrap:nowrap!important;justify-content:stretch!important;align-items:stretch!important}
+.stats-dashboard .stat-pill{height:72px!important;min-width:0!important;border-radius:12px!important;background:#fff!important;border:1px solid #e5e7eb!important;border-top:4px solid #94a3b8!important;box-shadow:0 1px 6px #00000012!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important;padding:8px!important;color:#111827!important;font-size:13px!important;line-height:1.1!important}
+.stats-dashboard .stat-pill .stat-label{font-weight:800!important;color:#6b7280!important;font-size:13px!important;white-space:nowrap!important}
+.stats-dashboard .stat-pill b{font-size:26px!important;font-weight:900!important;color:#111827!important;line-height:1!important}
+.stats-dashboard .stat-pill.active{background:#eff6ff!important;border-color:#bfdbfe!important;border-top-color:#2563eb!important;box-shadow:0 0 0 1px #2563eb33 inset,0 1px 6px #00000012!important}
+.stats-dashboard .stat-pill.active b,.stats-dashboard .stat-pill.active .stat-label{color:#1d4ed8!important}
+.stats-dashboard .stat-total{border-top-color:#2563eb!important}
+.stats-dashboard .stat-red{border-top-color:#ef4444!important}
+.stats-dashboard .stat-green{border-top-color:#22c55e!important}
+.stats-dashboard .stat-yellow{border-top-color:#f59e0b!important}
+.stats-dashboard .stat-black{border-top-color:#111827!important}
+
+@media(max-width:900px){
+  .stats-dashboard{grid-template-columns:1fr 1fr!important;gap:6px!important;margin-bottom:7px!important}
+  .stats-dashboard .stat-box{padding:7px 6px!important;border-radius:10px!important}
+  .stats-dashboard .stat-title{text-align:center!important;font-size:13px!important;margin-bottom:6px!important}
+  .stats-dashboard .stat-line{grid-template-columns:1fr 1fr!important;gap:5px!important}
+  .stats-dashboard .stat-pill{height:43px!important;border-radius:9px!important;border-top-width:3px!important;padding:4px!important;gap:2px!important}
+  .stats-dashboard .stat-pill .stat-label{font-size:11.5px!important}
+  .stats-dashboard .stat-pill b{font-size:18px!important}
+}
+
 </style>
 </head>
 <body>
 <div id="loginPage" class="login-page"><div class="login-box"><h2>Xử lý vận đơn</h2><input id="loginUser" placeholder="Tài khoản"><br><br><input id="loginPass" type="password" placeholder="Mật khẩu"><div id="loginMsg" class="login-msg"></div><label style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><input id="rememberLogin" type="checkbox" style="width:auto" checked>Ghi nhớ đăng nhập</label><button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button></div></div>
 <div id="app" class="app"><div class="topbar"><h2>Xử lý vận đơn</h2><div><span id="helloUser"></span><button id="accountBtn" class="btn-gray btn-small" onclick="openAccount()">Tài khoản</button> <button class="btn-gray btn-small" onclick="logout()">Đăng xuất</button></div></div><div class="main"><div class="toolbar"><button id="createBtn" class="btn-blue" onclick="openCreate()">+ Tạo phiếu</button><input class="search" id="searchBox" placeholder="Tìm mã vận đơn / nội dung" oninput="render()"><select class="sel" id="filterCarrier" onchange="render()"><option value="">Tất cả ĐVVC</option></select><select class="sel" id="filterShop" onchange="render()"><option value="">Shop</option><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select><select class="sel" id="filterDvvc" onchange="render()"><option value="">Tiến độ ĐVVC</option><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý</option></select><label>Từ</label><span class="date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="date" onchange="setDateCustom()"></span><span class="arrow">→</span><label>Đến</label><span class="date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="date" onchange="setDateCustom()"></span><button id="applyBtn" class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button><button id="clearDateBtn" class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button></div>
-<div class="stats-wrap"><div class="stat-box"><div class="stat-title">Thống kê Shop</div><div class="stat-line"><div class="stat-pill" onclick="clearStatusFilter()">Tổng: <b id="stTotal">0</b></div><div class="stat-pill" onclick="filterByShop('chua_xong')">🔴 Chưa: <b id="stShopRed">0</b></div><div class="stat-pill" onclick="filterByShop('da_xong')">🟢 Xong: <b id="stShopGreen">0</b></div><div class="stat-pill" onclick="filterByShop('huy')">⚫ Hủy: <b id="stShopCancel">0</b></div></div></div><div class="stat-box"><div class="stat-title">Thống kê ĐVVC</div><div class="stat-line"><div class="stat-pill" onclick="filterByDvvc('chua_xu_ly')">🔴 Chưa: <b id="stDvvcRed">0</b></div><div class="stat-pill" onclick="filterByDvvc('dang_xu_ly')">🟡 Đang: <b id="stDvvcYellow">0</b></div><div class="stat-pill" onclick="filterByDvvc('da_xu_ly')">🟢 Xong: <b id="stDvvcGreen">0</b></div><div class="stat-pill" onclick="filterByDvvc('khong_xu_ly')">⚫ Không: <b id="stDvvcBlack">0</b></div></div></div></div>
+<div class="stats-wrap stats-dashboard">
+  <div class="stat-box shop-stats">
+    <div class="stat-title">Thống kê Shop</div>
+    <div class="stat-line">
+      <div class="stat-pill stat-total" onclick="clearStatusFilter()"><span class="stat-label">Tổng</span><b id="stTotal">0</b></div>
+      <div class="stat-pill stat-red" onclick="filterByShop('chua_xong')"><span class="stat-label">Chưa xong</span><b id="stShopRed">0</b></div>
+      <div class="stat-pill stat-green" onclick="filterByShop('da_xong')"><span class="stat-label">Đã xong</span><b id="stShopGreen">0</b></div>
+      <div class="stat-pill stat-black" onclick="filterByShop('huy')"><span class="stat-label">Hủy</span><b id="stShopCancel">0</b></div>
+    </div>
+  </div>
+  <div class="stat-box dvvc-stats">
+    <div class="stat-title">Thống kê ĐVVC</div>
+    <div class="stat-line">
+      <div class="stat-pill stat-red" onclick="filterByDvvc('chua_xu_ly')"><span class="stat-label">Chưa xử lý</span><b id="stDvvcRed">0</b></div>
+      <div class="stat-pill stat-yellow" onclick="filterByDvvc('dang_xu_ly')"><span class="stat-label">Đang xử lý</span><b id="stDvvcYellow">0</b></div>
+      <div class="stat-pill stat-green" onclick="filterByDvvc('da_xu_ly')"><span class="stat-label">Đã xử lý</span><b id="stDvvcGreen">0</b></div>
+      <div class="stat-pill stat-black" onclick="filterByDvvc('khong_xu_ly')"><span class="stat-label">Không xử lý</span><b id="stDvvcBlack">0</b></div>
+    </div>
+  </div>
+</div>
 <div class="table-wrap"><table><thead><tr><th>STT</th><th>Ngày</th><th>Gấp</th><th>ĐVVC</th><th>Mã vận đơn</th><th>Nội dung Shop</th><th>Ảnh</th><th>Tiến độ Shop</th><th>Shop sửa</th><th>Nội dung ĐVVC</th><th>Tiến độ ĐVVC</th><th>ĐVVC sửa</th><th>Lịch sử</th><th>Xóa</th></tr></thead><tbody id="tbody"></tbody></table></div><div id="mobileList" class="mobile-list"></div></div></div>
 <div id="createModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Tạo phiếu mới</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>Đơn vị vận chuyển</label><select id="c_carrier"></select></div><div class="form-row"><label>Mã vận đơn</label><input id="c_tracking" placeholder="Nhập mã vận đơn"><label style="display:flex;gap:6px;margin-top:8px;font-weight:800;color:#b91c1c"><input id="c_urgent" type="checkbox" style="width:auto"> Gấp</label></div><div class="form-row"><label>Nội dung Shop</label><textarea id="c_shop"></textarea><div class="quick" id="quickBox"></div></div><div class="form-row"><label>Ảnh</label><input id="c_images" type="file" multiple accept="image/*" onchange="handleFileImages(event)"><div id="c_preview" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="createTask()">Lưu phiếu</button></div></div>
 <div id="shopModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Sửa nội dung Shop</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>ĐVVC</label><select id="s_carrier"></select></div><div class="form-row"><label>Mã vận đơn</label><input id="s_tracking" disabled><label style="display:flex;gap:6px;margin-top:8px;font-weight:800;color:#b91c1c"><input id="s_urgent" type="checkbox" style="width:auto"> Gấp</label></div><div class="form-row"><label>Nội dung Shop</label><textarea id="s_shop"></textarea><div class="quick" id="quickBoxShop"></div></div><div class="form-row"><label>Ảnh Shop bổ sung</label><input id="s_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><div class="form-row"><label>Tiến độ Shop</label><select id="s_status_shop"><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select></div><button class="btn-green" onclick="saveShop()">Lưu Shop</button></div></div>
