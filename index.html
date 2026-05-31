@@ -49,6 +49,8 @@ tr:hover{background:#f9fafb}
 .quick button{background:#eef2ff;color:#1d4ed8;font-size:13px;padding:6px 8px}
 .history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px;max-height:250px;overflow:auto;white-space:pre-wrap;line-height:1.55}
 .img-view{max-width:90vw;max-height:85vh;border-radius:8px;background:white}
+.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.preview-img{width:72px;height:72px;object-fit:cover;border-radius:6px;border:1px solid #d1d5db;cursor:pointer}
 .note{font-size:12px;color:#6b7280;margin-top:4px}
 @media(max-width:800px){.toolbar{flex-wrap:wrap}.toolbar input,.toolbar select{max-width:none}.stats{overflow:auto}.topbar{height:auto;padding:10px;gap:8px;flex-wrap:wrap}}
 </style>
@@ -62,6 +64,10 @@ tr:hover{background:#f9fafb}
     <br><br>
     <input id="loginPass" type="password" placeholder="Mật khẩu" autocomplete="current-password">
     <br><br>
+    <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <input id="rememberLogin" type="checkbox" style="width:auto;margin:0" checked>
+      Ghi nhớ đăng nhập
+    </label>
     <button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button>
     <p style="color:#6b7280;text-align:center;margin-bottom:0">Demo: admin / 123456</p>
   </div>
@@ -91,6 +97,7 @@ tr:hover{background:#f9fafb}
         <option value="">Tất cả Shop</option>
         <option value="chua_xong">Chưa xong</option>
         <option value="da_xong">Đã xong</option>
+        <option value="huy">Hủy</option>
       </select>
     </div>
 
@@ -146,8 +153,9 @@ tr:hover{background:#f9fafb}
 
     <div class="form-row">
       <label>Ảnh</label>
-      <input id="c_images" type="file" multiple accept="image/*">
-      <div class="note">Demo giao diện chưa lưu ảnh thật. Bản Firebase sẽ up ảnh lên Storage.</div>
+      <input id="c_images" type="file" multiple accept="image/*" onchange="handleFileImages(event)">
+      <div id="c_preview" class="preview-list"></div>
+      <div class="note">Có thể chọn ảnh hoặc copy ảnh rồi dán Ctrl+V vào trang này.</div>
     </div>
 
     <button class="btn-green" onclick="createTask()">Lưu phiếu</button>
@@ -175,6 +183,7 @@ tr:hover{background:#f9fafb}
       <select id="s_status_shop">
         <option value="chua_xong">Chưa xong</option>
         <option value="da_xong">Đã xong</option>
+        <option value="huy">Hủy</option>
       </select>
     </div>
     <button class="btn-green" onclick="saveShop()">Lưu Shop</button>
@@ -247,6 +256,7 @@ const QUICK_TEXTS = [
 
 let currentUser = null;
 let editId = null;
+let pastedImages = [];
 
 let tasks = [
   {
@@ -281,14 +291,24 @@ function login(){
     return;
   }
   currentUser = {username:u, ...USERS[u]};
-  loginPage.style.display = "none";
-  app.style.display = "block";
-  helloUser.textContent = currentUser.name + " ";
+  if(rememberLogin.checked){
+    localStorage.setItem("xvd_user", u);
+  }else{
+    localStorage.removeItem("xvd_user");
+  }
+  showApp();
   renderQuick();
   render();
 }
 
+function showApp(){
+  loginPage.style.display = "none";
+  app.style.display = "block";
+  helloUser.textContent = currentUser.name + " ";
+}
+
 function logout(){
+  localStorage.removeItem("xvd_user");
   currentUser = null;
   app.style.display = "none";
   loginPage.style.display = "flex";
@@ -309,7 +329,7 @@ function statusDvvcText(s){
 }
 
 function statusShopText(s){
-  return {chua_xong:"Chưa xong", da_xong:"Đã xong"}[s] || s;
+  return {chua_xong:"Chưa xong", da_xong:"Đã xong", huy:"Hủy"}[s] || s;
 }
 
 function badgeDvvc(s){
@@ -318,7 +338,8 @@ function badgeDvvc(s){
 }
 
 function badgeShop(s){
-  return `<span class="badge ${s==="da_xong"?"green":"red"}">${statusShopText(s)}</span>`;
+  const cls = s==="da_xong" ? "green" : s==="huy" ? "black" : "red";
+  return `<span class="badge ${cls}">${statusShopText(s)}</span>`;
 }
 
 function render(){
@@ -384,6 +405,8 @@ function openCreate(){
   c_tracking.value = "";
   c_shop.value = "";
   c_images.value = "";
+  pastedImages = [];
+  renderPreview();
   createModal.style.display = "flex";
 }
 
@@ -442,7 +465,7 @@ function createTask(){
     dvvc: "",
     status_dvvc: "chua_xu_ly",
     status_shop: "chua_xong",
-    images: [],
+    images: [...pastedImages],
     history: [`${formatTime(now)} - ${currentUser.name} tạo phiếu`]
   });
   closeAll();
@@ -508,6 +531,56 @@ function showImg(src){
   bigImg.src = src;
   imgModal.style.display = "flex";
 }
+
+
+function handleFileImages(event){
+  const files = Array.from(event.target.files || []);
+  files.forEach(file => {
+    if(!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      pastedImages.push(e.target.result);
+      renderPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPreview(){
+  if(!document.getElementById("c_preview")) return;
+  c_preview.innerHTML = pastedImages.map((src,i)=>`
+    <img class="preview-img" src="${src}" onclick="showImg('${src}')">
+  `).join("");
+}
+
+document.addEventListener("paste", function(e){
+  if(createModal.style.display !== "flex") return;
+  const items = e.clipboardData && e.clipboardData.items ? Array.from(e.clipboardData.items) : [];
+  let found = false;
+  items.forEach(item => {
+    if(item.type.indexOf("image") === 0){
+      found = true;
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      reader.onload = ev => {
+        pastedImages.push(ev.target.result);
+        renderPreview();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+  if(found) e.preventDefault();
+});
+
+window.addEventListener("load", function(){
+  const saved = localStorage.getItem("xvd_user");
+  if(saved && USERS[saved]){
+    currentUser = {username:saved, ...USERS[saved]};
+    showApp();
+    renderQuick();
+    render();
+  }
+});
 
 function escapeHtml(str){
   return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
