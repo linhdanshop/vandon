@@ -25,6 +25,14 @@ button{border:0;border-radius:6px;padding:6px 9px;cursor:pointer;font-weight:600
 .main{padding:10px}
 .toolbar{background:white;border-radius:8px;padding:8px;display:flex;gap:7px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001}
 .toolbar input,.toolbar select{max-width:220px}
+.toolbar .dt{max-width:170px}
+.datebar{background:white;border-radius:8px;padding:8px;display:flex;gap:7px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001;flex-wrap:wrap}
+.datebar button.active{background:#2563eb;color:#fff}
+.datebar label{font-size:12px;color:#374151;font-weight:700}
+.urgent-badge{display:inline-block;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:999px;padding:2px 6px;font-weight:800;font-size:11px;margin-right:4px;white-space:nowrap}
+.img-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.copy-line{display:flex;gap:8px;align-items:flex-start}
+.copy-text{background:#f8fafc;border:1px solid #e5e7eb;border-radius:6px;padding:8px;white-space:pre-wrap;line-height:1.45;flex:1}
 
 .stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .stat-box{background:white;border-radius:8px;padding:8px 10px;box-shadow:0 1px 4px #0001}
@@ -130,24 +138,34 @@ td:nth-child(8) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
       </select>
     </div>
 
+    <div class="datebar">
+      <button class="btn-gray btn-small" id="dateToday" onclick="setDateQuick('today')">Hôm nay</button>
+      <button class="btn-gray btn-small" id="dateYesterday" onclick="setDateQuick('yesterday')">Hôm qua</button>
+      <button class="btn-gray btn-small" id="date7" onclick="setDateQuick('7days')">7 ngày</button>
+      <button class="btn-gray btn-small" id="dateMonth" onclick="setDateQuick('month')">Tháng này</button>
+      <label>Từ</label><input class="dt" id="dateFrom" type="datetime-local" onchange="setDateCustom()">
+      <label>Đến</label><input class="dt" id="dateTo" type="datetime-local" onchange="setDateCustom()">
+      <button class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc ngày</button>
+    </div>
+
     <div class="stats-wrap">
       <div class="stat-box">
         <div class="stat-title">Thống kê Shop</div>
         <div class="stat-line">
-          <div class="stat-pill">Tổng: <b id="stTotal">0</b></div>
-          <div class="stat-pill">🔴 Chưa xong: <b id="stShopRed">0</b></div>
-          <div class="stat-pill">🟢 Đã xong: <b id="stShopGreen">0</b></div>
-          <div class="stat-pill">⚫ Hủy: <b id="stShopCancel">0</b></div>
+          <div class="stat-pill" onclick="clearStatusFilter()">Tổng: <b id="stTotal">0</b></div>
+          <div class="stat-pill" onclick="filterByShop('chua_xong')">🔴 Chưa xong: <b id="stShopRed">0</b></div>
+          <div class="stat-pill" onclick="filterByShop('da_xong')">🟢 Đã xong: <b id="stShopGreen">0</b></div>
+          <div class="stat-pill" onclick="filterByShop('huy')">⚫ Hủy: <b id="stShopCancel">0</b></div>
         </div>
       </div>
 
       <div class="stat-box">
         <div class="stat-title">Thống kê ĐVVC</div>
         <div class="stat-line">
-          <div class="stat-pill">🔴 Chưa xử lý: <b id="stDvvcRed">0</b></div>
-          <div class="stat-pill">🟡 Đang xử lý: <b id="stDvvcYellow">0</b></div>
-          <div class="stat-pill">🟢 Đã xử lý: <b id="stDvvcGreen">0</b></div>
-          <div class="stat-pill">⚫ Không xử lý: <b id="stDvvcBlack">0</b></div>
+          <div class="stat-pill" onclick="filterByDvvc('chua_xu_ly')">🔴 Chưa xử lý: <b id="stDvvcRed">0</b></div>
+          <div class="stat-pill" onclick="filterByDvvc('dang_xu_ly')">🟡 Đang xử lý: <b id="stDvvcYellow">0</b></div>
+          <div class="stat-pill" onclick="filterByDvvc('da_xu_ly')">🟢 Đã xử lý: <b id="stDvvcGreen">0</b></div>
+          <div class="stat-pill" onclick="filterByDvvc('khong_xu_ly')">⚫ Không xử lý: <b id="stDvvcBlack">0</b></div>
         </div>
       </div>
     </div>
@@ -187,6 +205,9 @@ td:nth-child(8) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
     <div class="form-row">
       <label>Mã vận đơn</label>
       <input id="c_tracking" placeholder="Nhập mã vận đơn">
+      <label style="display:flex;align-items:center;gap:6px;margin-top:8px;font-weight:700;color:#b91c1c">
+        <input id="c_urgent" type="checkbox" style="width:auto"> Gấp
+      </label>
     </div>
 
     <div class="form-row">
@@ -217,11 +238,20 @@ td:nth-child(8) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
     <div class="form-row">
       <label>Mã vận đơn</label>
       <input id="s_tracking" disabled>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:8px;font-weight:700;color:#b91c1c">
+        <input id="s_urgent" type="checkbox" style="width:auto"> Gấp
+      </label>
     </div>
     <div class="form-row">
       <label>Nội dung Shop</label>
       <textarea id="s_shop"></textarea>
       <div class="quick" id="quickBoxShop"></div>
+    </div>
+    <div class="form-row">
+      <label>Ảnh bổ sung</label>
+      <div class="img-tools"><input id="s_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"></div>
+      <div id="edit_preview" class="preview-list"></div>
+      <div class="note">Shop có thể tải ảnh hoặc copy ảnh rồi dán Ctrl+V khi đang mở cửa sổ này.</div>
     </div>
     <div class="form-row">
       <label>Tiến độ Shop</label>
@@ -258,6 +288,12 @@ td:nth-child(8) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
     <div class="form-row">
       <label>Nội dung ĐVVC</label>
       <textarea id="d_dvvc" placeholder="ĐVVC phản hồi tại đây"></textarea>
+    </div>
+    <div class="form-row">
+      <label>Ảnh bổ sung</label>
+      <div class="img-tools"><input id="d_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"></div>
+      <div id="edit_preview_dvvc" class="preview-list"></div>
+      <div class="note">ĐVVC có thể tải ảnh hoặc copy ảnh rồi dán Ctrl+V khi đang mở cửa sổ này.</div>
     </div>
     <button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button>
   </div>
@@ -313,6 +349,9 @@ const QUICK_TEXTS = [
 let currentUser = null;
 let editId = null;
 let pastedImages = [];
+let editImages = [];
+let currentImageTarget = "create";
+let dateFilter = {from:null, to:null, mode:"today"};
 
 let tasks = [
   {
@@ -323,6 +362,7 @@ let tasks = [
     dvvc:"Đã gửi yêu cầu xuống bưu cục",
     status_dvvc:"dang_xu_ly",
     status_shop:"chua_xong",
+    urgent:true,
     images:[],
     history:["Shop 01 tạo phiếu"]
   },
@@ -334,6 +374,7 @@ let tasks = [
     dvvc:"",
     status_dvvc:"chua_xu_ly",
     status_shop:"chua_xong",
+    urgent:false,
     images:[],
     history:["Admin tạo phiếu"]
   }
@@ -398,29 +439,37 @@ function badgeShop(s){
   return `<span class="badge ${cls}">${statusShopText(s)}</span>`;
 }
 
-function render(){
+function getBaseList(){
   const q = searchBox.value.trim().toLowerCase();
+  let list = tasks.filter(t => !t.deleted);
+  if(dateFilter.from) list = list.filter(t => t.created_at >= dateFilter.from);
+  if(dateFilter.to) list = list.filter(t => t.created_at <= dateFilter.to);
+  if(q) list = list.filter(t =>
+    t.tracking.toLowerCase().includes(q) ||
+    (t.shop || "").toLowerCase().includes(q) ||
+    (t.dvvc || "").toLowerCase().includes(q)
+  );
+  return list;
+}
+
+function render(){
   const fd = filterDvvc.value;
   const fs = filterShop.value;
 
-  let list = tasks.filter(t => !t.deleted);
-  if(q) list = list.filter(t =>
-    t.tracking.toLowerCase().includes(q) ||
-    t.shop.toLowerCase().includes(q) ||
-    t.dvvc.toLowerCase().includes(q)
-  );
+  const base = getBaseList();
+  let list = [...base];
   if(fd) list = list.filter(t => t.status_dvvc === fd);
   if(fs) list = list.filter(t => t.status_shop === fs);
 
-  const active = tasks.filter(t=>!t.deleted);
-  stTotal.textContent = active.length;
-  stShopRed.textContent = active.filter(t=>t.status_shop==="chua_xong").length;
-  stShopGreen.textContent = active.filter(t=>t.status_shop==="da_xong").length;
-  stShopCancel.textContent = active.filter(t=>t.status_shop==="huy").length;
-  stDvvcRed.textContent = active.filter(t=>t.status_dvvc==="chua_xu_ly").length;
-  stDvvcYellow.textContent = active.filter(t=>t.status_dvvc==="dang_xu_ly").length;
-  stDvvcGreen.textContent = active.filter(t=>t.status_dvvc==="da_xu_ly").length;
-  stDvvcBlack.textContent = active.filter(t=>t.status_dvvc==="khong_xu_ly").length;
+  stTotal.textContent = base.length;
+  stShopRed.textContent = base.filter(t=>t.status_shop==="chua_xong").length;
+  stShopGreen.textContent = base.filter(t=>t.status_shop==="da_xong").length;
+  stShopCancel.textContent = base.filter(t=>t.status_shop==="huy").length;
+  stDvvcRed.textContent = base.filter(t=>t.status_dvvc==="chua_xu_ly").length;
+  stDvvcYellow.textContent = base.filter(t=>t.status_dvvc==="dang_xu_ly").length;
+  stDvvcGreen.textContent = base.filter(t=>t.status_dvvc==="da_xu_ly").length;
+  stDvvcBlack.textContent = base.filter(t=>t.status_dvvc==="khong_xu_ly").length;
+  updateDateButtons();
 
   tbody.innerHTML = list.map((t,i)=>`
     <tr>
@@ -428,6 +477,7 @@ function render(){
       <td>${formatTime(t.created_at)}</td>
       <td>
         <div class="code-wrap">
+          ${t.urgent ? `<span class="urgent-badge">Gấp</span>` : ""}
           <span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span>
           <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button>
         </div>
@@ -451,6 +501,41 @@ function render(){
   `).join("");
 }
 
+function filterByShop(status){ filterShop.value = status; filterDvvc.value = ""; render(); }
+function filterByDvvc(status){ filterDvvc.value = status; filterShop.value = ""; render(); }
+function clearStatusFilter(){ filterShop.value = ""; filterDvvc.value = ""; render(); }
+
+function startOfDay(d){ const x=new Date(d); x.setHours(0,0,0,0); return x; }
+function endOfDay(d){ const x=new Date(d); x.setHours(23,59,59,999); return x; }
+function pad2(n){ return String(n).padStart(2,"0"); }
+function toLocalInputValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
+function fromLocalInputValue(v){ return v ? new Date(v).getTime() : null; }
+
+function setDateQuick(mode){
+  const now = new Date();
+  let from, to;
+  if(mode === "today") { from = startOfDay(now); to = endOfDay(now); }
+  if(mode === "yesterday") { const y=new Date(now); y.setDate(y.getDate()-1); from=startOfDay(y); to=endOfDay(y); }
+  if(mode === "7days") { from=startOfDay(now); from.setDate(from.getDate()-6); to=endOfDay(now); }
+  if(mode === "month") { from=new Date(now.getFullYear(), now.getMonth(), 1, 0,0,0,0); to=endOfDay(now); }
+  dateFilter = {from:from.getTime(), to:to.getTime(), mode};
+  dateFrom.value = toLocalInputValue(dateFilter.from);
+  dateTo.value = toLocalInputValue(dateFilter.to);
+  render();
+}
+function setDateCustom(){
+  dateFilter = {from:fromLocalInputValue(dateFrom.value), to:fromLocalInputValue(dateTo.value), mode:"custom"};
+  render();
+}
+function clearDateFilter(){ dateFilter={from:null,to:null,mode:""}; dateFrom.value=""; dateTo.value=""; render(); }
+function updateDateButtons(){
+  [dateToday,dateYesterday,date7,dateMonth].forEach(b=>b.classList.remove("active"));
+  if(dateFilter.mode==="today") dateToday.classList.add("active");
+  if(dateFilter.mode==="yesterday") dateYesterday.classList.add("active");
+  if(dateFilter.mode==="7days") date7.classList.add("active");
+  if(dateFilter.mode==="month") dateMonth.classList.add("active");
+}
+
 function renderQuick(){
   const html = QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join("");
   quickBox.innerHTML = html;
@@ -472,6 +557,8 @@ function openCreate(){
   c_tracking.value = "";
   c_shop.value = "";
   c_images.value = "";
+  c_urgent.checked = false;
+  currentImageTarget = "create";
   pastedImages = [];
   renderPreview();
   createModal.style.display = "flex";
@@ -483,7 +570,11 @@ function openShop(id){
   editId = id;
   s_tracking.value = t.tracking;
   s_shop.value = t.shop;
+  s_urgent.checked = !!t.urgent;
   s_status_shop.value = t.status_shop;
+  currentImageTarget = "shop";
+  editImages = [...(t.images || [])];
+  renderEditPreview();
   shopModal.style.display = "flex";
 }
 
@@ -494,6 +585,9 @@ function openDvvc(id){
   d_tracking.value = t.tracking;
   d_status_dvvc.value = t.status_dvvc;
   d_dvvc.value = t.dvvc || "";
+  currentImageTarget = "dvvc";
+  editImages = [...(t.images || [])];
+  renderEditPreview();
   dvvcModal.style.display = "flex";
 }
 
@@ -510,8 +604,8 @@ function openDetail(id){
   detailContent.innerHTML = `
     <div class="detail-grid">
       <div class="detail-label">Ngày ghi nhận</div><div class="detail-value">${formatTime(t.created_at)}</div>
-      <div class="detail-label">Mã vận đơn</div><div class="detail-value"><b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div>
-      <div class="detail-label">Nội dung Shop</div><div class="detail-value">${escapeHtml(t.shop)}</div>
+      <div class="detail-label">Mã vận đơn</div><div class="detail-value">${t.urgent ? `<span class="urgent-badge">Gấp</span>` : ""}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div>
+      <div class="detail-label">Nội dung Shop</div><div class="detail-value"><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyShopContent('${t.id}')">Copy yêu cầu</button></div></div>
       <div class="detail-label">Tiến độ Shop</div><div class="detail-value">${badgeShop(t.status_shop)}</div>
       <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc || "")}</div>
       <div class="detail-label">Tiến độ ĐVVC</div><div class="detail-value">${badgeDvvc(t.status_dvvc)}</div>
@@ -551,6 +645,7 @@ function createTask(){
     dvvc: "",
     status_dvvc: "chua_xu_ly",
     status_shop: "chua_xong",
+    urgent: c_urgent.checked,
     images: [...pastedImages],
     history: [`${formatTime(now)} - ${currentUser.name} tạo phiếu`]
   });
@@ -566,9 +661,13 @@ function saveShop(){
   const changes = [];
 
   if(t.shop !== s_shop.value.trim()) changes.push("sửa nội dung Shop");
+  if(!!t.urgent !== s_urgent.checked) changes.push(s_urgent.checked ? "đánh dấu Gấp" : "bỏ Gấp");
+  if((t.images || []).length !== editImages.length) changes.push("bổ sung ảnh");
   if(t.status_shop !== s_status_shop.value) changes.push(`Shop: ${statusShopText(t.status_shop)} -> ${statusShopText(s_status_shop.value)}`);
 
   t.shop = s_shop.value.trim();
+  t.urgent = s_urgent.checked;
+  t.images = [...editImages];
   t.status_shop = s_status_shop.value;
   t.updated_at = now;
 
@@ -589,9 +688,11 @@ function saveDvvc(){
 
   if(t.status_dvvc !== d_status_dvvc.value) changes.push(`ĐVVC: ${statusDvvcText(t.status_dvvc)} -> ${statusDvvcText(d_status_dvvc.value)}`);
   if(t.dvvc !== d_dvvc.value.trim()) changes.push("sửa nội dung ĐVVC");
+  if((t.images || []).length !== editImages.length) changes.push("bổ sung ảnh");
 
   t.status_dvvc = d_status_dvvc.value;
   t.dvvc = d_dvvc.value.trim();
+  t.images = [...editImages];
   t.updated_at = now;
 
   if(changes.length){
@@ -617,18 +718,32 @@ function copyTracking(code){
   navigator.clipboard.writeText(code).then(()=>alert("Đã copy mã vận đơn: " + code));
 }
 
-function handleFileImages(event){
-  const files = Array.from(event.target.files || []);
-  files.forEach(file => {
+function copyShopContent(id){
+  const t = tasks.find(x=>x.id===id);
+  if(!t) return;
+  const text = `${t.urgent ? "[GẤP]\n" : ""}${t.shop || ""}`;
+  navigator.clipboard.writeText(text).then(()=>alert("Đã copy nội dung yêu cầu Shop"));
+}
+
+function addFilesToList(files, target){
+  Array.from(files || []).forEach(file => {
     if(!file.type.startsWith("image/")) return;
     const reader = new FileReader();
     reader.onload = e => {
-      pastedImages.push(e.target.result);
-      renderPreview();
+      if(target === "create"){
+        pastedImages.push(e.target.result);
+        renderPreview();
+      }else{
+        editImages.push(e.target.result);
+        renderEditPreview();
+      }
     };
     reader.readAsDataURL(file);
   });
 }
+
+function handleFileImages(event){ addFilesToList(event.target.files, "create"); }
+function handleEditImages(event){ addFilesToList(event.target.files, currentImageTarget); }
 
 function renderPreview(){
   if(!document.getElementById("c_preview")) return;
@@ -637,23 +752,36 @@ function renderPreview(){
   `).join("");
 }
 
+function renderEditPreview(){
+  const html = editImages.map((src,i)=>`
+    <div style="position:relative;display:inline-block">
+      <img class="preview-img" src="${src}" onclick="showImg('${src}')">
+      <button class="btn-red btn-small" style="position:absolute;right:-4px;top:-4px;padding:2px 5px" onclick="removeEditImage(${i})">×</button>
+    </div>
+  `).join("");
+  if(document.getElementById("edit_preview")) edit_preview.innerHTML = html;
+  if(document.getElementById("edit_preview_dvvc")) edit_preview_dvvc.innerHTML = html;
+}
+
+function removeEditImage(i){ editImages.splice(i,1); renderEditPreview(); }
+
 document.addEventListener("paste", function(e){
-  if(createModal.style.display !== "flex") return;
+  const inCreate = createModal.style.display === "flex";
+  const inShop = shopModal.style.display === "flex";
+  const inDvvc = dvvcModal.style.display === "flex";
+  if(!inCreate && !inShop && !inDvvc) return;
   const items = e.clipboardData && e.clipboardData.items ? Array.from(e.clipboardData.items) : [];
-  let found = false;
+  const files = [];
   items.forEach(item => {
     if(item.type.indexOf("image") === 0){
-      found = true;
       const file = item.getAsFile();
-      const reader = new FileReader();
-      reader.onload = ev => {
-        pastedImages.push(ev.target.result);
-        renderPreview();
-      };
-      reader.readAsDataURL(file);
+      if(file) files.push(file);
     }
   });
-  if(found) e.preventDefault();
+  if(files.length){
+    addFilesToList(files, inCreate ? "create" : currentImageTarget);
+    e.preventDefault();
+  }
 });
 
 function showImg(src){
@@ -667,7 +795,7 @@ window.addEventListener("load", function(){
     currentUser = {username:saved, ...USERS[saved]};
     showApp();
     renderQuick();
-    render();
+    setDateQuick("today");
   }
 });
 
