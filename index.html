@@ -29,7 +29,7 @@ button{border:0;border-radius:6px;padding:6px 9px;cursor:pointer;font-weight:600
 .toolbar input,.toolbar select{max-width:220px}
 .toolbar .search-input{width:280px;min-width:220px;max-width:280px}
 .toolbar .select-filter{width:190px;min-width:170px;max-width:190px}
-.toolbar .dt{width:165px!important;min-width:165px!important;max-width:165px!important;padding:6px 8px}
+.toolbar .dt{width:125px!important;min-width:125px!important;max-width:125px!important;padding:6px 8px}
 .toolbar .arrow{font-weight:900;color:#64748b}
 .toolbar label{font-size:12px;color:#374151;font-weight:800}
 .datebar{background:white;border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto}
@@ -183,8 +183,9 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
   .mc-actions{grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:7px 9px}
   .mc-actions button{min-height:30px;font-size:11.5px;padding:5px 4px}
 
-  .modal{padding:8px;align-items:flex-start;overflow:auto}
-  .modal-box{width:100%!important;max-height:none;margin-top:8px;border-radius:12px;padding:12px}
+  .modal{padding:8px;align-items:flex-start;overflow:auto;z-index:999}
+  .modal-box{width:100%!important;max-height:calc(100dvh - 76px);margin:56px auto 14px;border-radius:12px;padding:12px;overflow:auto}
+  .modal-head{position:sticky;top:0;background:white;z-index:3;padding-bottom:8px;border-bottom:1px solid #eef2f7}
   .detail-grid{grid-template-columns:92px 1fr;gap:6px}
   .copy-line{flex-direction:column}
   .copy-line button{width:max-content}
@@ -238,9 +239,9 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
         <option value="khong_xu_ly">ĐVVC không xử lý được</option>
       </select>
       <span class="arrow">|</span>
-      <label>Từ</label><span class="mobile-date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="datetime-local" onchange="setDateCustom()"></span>
+      <label>Từ</label><span class="mobile-date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="date" onchange="setDateCustom()"></span>
       <span class="arrow">→</span>
-      <label>Đến</label><span class="mobile-date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="datetime-local" onchange="setDateCustom()"></span>
+      <label>Đến</label><span class="mobile-date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="date" onchange="setDateCustom()"></span>
       <button class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button>
       <button class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button>
     </div>
@@ -677,19 +678,14 @@ function toLocalDateValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-
 function shortDateLabel(ts, fallback){ if(!ts) return fallback; const d=new Date(ts); return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; }
 function useMobileDate(){ return window.matchMedia && window.matchMedia("(max-width:900px)").matches; }
 function setupDateInputType(){
-  const type = useMobileDate() ? "date" : "datetime-local";
-  if(dateFrom.type !== type) dateFrom.type = type;
-  if(dateTo.type !== type) dateTo.type = type;
+  // PC + điện thoại chỉ chọn ngày, không chọn giờ.
+  if(dateFrom.type !== "date") dateFrom.type = "date";
+  if(dateTo.type !== "date") dateTo.type = "date";
 }
 function setDateInputValues(){
   setupDateInputType();
-  if(useMobileDate()){
-    dateFrom.value = dateFilter.from ? toLocalDateValue(dateFilter.from) : "";
-    dateTo.value = dateFilter.to ? toLocalDateValue(dateFilter.to) : "";
-  }else{
-    dateFrom.value = dateFilter.from ? toLocalInputValue(dateFilter.from) : "";
-    dateTo.value = dateFilter.to ? toLocalInputValue(dateFilter.to) : "";
-  }
+  dateFrom.value = dateFilter.from ? toLocalDateValue(dateFilter.from) : "";
+  dateTo.value = dateFilter.to ? toLocalDateValue(dateFilter.to) : "";
   if(document.getElementById("dateFromWrap")) dateFromWrap.setAttribute("data-short", shortDateLabel(dateFilter.from, "Từ"));
   if(document.getElementById("dateToWrap")) dateToWrap.setAttribute("data-short", shortDateLabel(dateFilter.to, "Đến"));
 }
@@ -703,11 +699,11 @@ function fromLocalInputValue(v, isEnd=false){
 }
 
 function setDateDefault30(){
+  // Mặc định hiển thị theo tháng hiện tại, không phải 30 ngày trước.
   const now = new Date();
-  const from = startOfDay(now);
-  from.setDate(from.getDate()-29);
+  const from = new Date(now.getFullYear(), now.getMonth(), 1, 0,0,0,0);
   const to = endOfDay(now);
-  dateFilter = {from:from.getTime(), to:to.getTime(), mode:"30days"};
+  dateFilter = {from:from.getTime(), to:to.getTime(), mode:"month"};
   setDateInputValues();
   render();
 }
@@ -882,6 +878,17 @@ function createTask(){
   render();
 }
 
+
+function historyValue(v){
+  const text = String(v ?? "").trim();
+  return text ? text : "(trống)";
+}
+function pushChange(changes, label, oldVal, newVal){
+  if(String(oldVal ?? "") !== String(newVal ?? "")){
+    changes.push(`${label}:\n- Cũ: ${historyValue(oldVal)}\n- Mới: ${historyValue(newVal)}`);
+  }
+}
+
 function saveShop(){
   const t = tasks.find(x=>x.id===editId);
   if(!t) return;
@@ -889,19 +896,28 @@ function saveShop(){
   const now = Date.now();
   const changes = [];
 
-  if(t.shop !== s_shop.value.trim()) changes.push("sửa nội dung Shop");
-  if(!!t.urgent !== s_urgent.checked) changes.push(s_urgent.checked ? "đánh dấu Gấp" : "bỏ Gấp");
-  if((t.images || []).length !== editImages.length) changes.push("bổ sung ảnh");
-  if(t.status_shop !== s_status_shop.value) changes.push(`Shop: ${statusShopText(t.status_shop)} -> ${statusShopText(s_status_shop.value)}`);
+  const oldShop = t.shop || "";
+  const newShop = s_shop.value.trim();
+  const oldUrgent = !!t.urgent;
+  const newUrgent = s_urgent.checked;
+  const oldImgCount = (t.images || []).length;
+  const newImgCount = editImages.length;
+  const oldStatus = t.status_shop;
+  const newStatus = s_status_shop.value;
 
-  t.shop = s_shop.value.trim();
-  t.urgent = s_urgent.checked;
+  pushChange(changes, "Nội dung Shop", oldShop, newShop);
+  if(oldUrgent !== newUrgent) changes.push(`Gấp:\n- Cũ: ${oldUrgent ? "Có" : "Không"}\n- Mới: ${newUrgent ? "Có" : "Không"}`);
+  if(oldImgCount !== newImgCount) changes.push(`Ảnh:\n- Cũ: ${oldImgCount} ảnh\n- Mới: ${newImgCount} ảnh`);
+  if(oldStatus !== newStatus) changes.push(`Tiến độ Shop:\n- Cũ: ${statusShopText(oldStatus)}\n- Mới: ${statusShopText(newStatus)}`);
+
+  t.shop = newShop;
+  t.urgent = newUrgent;
   t.images = [...editImages];
-  t.status_shop = s_status_shop.value;
+  t.status_shop = newStatus;
   t.updated_at = now;
 
   if(changes.length){
-    t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
+    t.history.push(`${formatTime(now)} - ${currentUser.name}:\n${changes.join("\n")}`);
   }
 
   closeAll();
@@ -915,17 +931,24 @@ function saveDvvc(){
   const now = Date.now();
   const changes = [];
 
-  if(t.status_dvvc !== d_status_dvvc.value) changes.push(`ĐVVC: ${statusDvvcText(t.status_dvvc)} -> ${statusDvvcText(d_status_dvvc.value)}`);
-  if(t.dvvc !== d_dvvc.value.trim()) changes.push("sửa nội dung ĐVVC");
-  if((t.images || []).length !== editImages.length) changes.push("bổ sung ảnh");
+  const oldStatus = t.status_dvvc;
+  const newStatus = d_status_dvvc.value;
+  const oldDvvc = t.dvvc || "";
+  const newDvvc = d_dvvc.value.trim();
+  const oldImgCount = (t.images || []).length;
+  const newImgCount = editImages.length;
 
-  t.status_dvvc = d_status_dvvc.value;
-  t.dvvc = d_dvvc.value.trim();
+  if(oldStatus !== newStatus) changes.push(`Tiến độ ĐVVC:\n- Cũ: ${statusDvvcText(oldStatus)}\n- Mới: ${statusDvvcText(newStatus)}`);
+  pushChange(changes, "Nội dung ĐVVC", oldDvvc, newDvvc);
+  if(oldImgCount !== newImgCount) changes.push(`Ảnh:\n- Cũ: ${oldImgCount} ảnh\n- Mới: ${newImgCount} ảnh`);
+
+  t.status_dvvc = newStatus;
+  t.dvvc = newDvvc;
   t.images = [...editImages];
   t.updated_at = now;
 
   if(changes.length){
-    t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
+    t.history.push(`${formatTime(now)} - ${currentUser.name}:\n${changes.join("\n")}`);
   }
 
   closeAll();
@@ -947,12 +970,38 @@ function copyTracking(code){
   navigator.clipboard.writeText(code).then(()=>alert("Đã copy mã vận đơn: " + code));
 }
 
-function copyTicket(id){
+async function copyTicket(id){
   const t = tasks.find(x=>x.id===id);
   if(!t) return;
   const imgText = t.images?.length ? `Có ${t.images.length} ảnh kèm theo` : "Không có ảnh";
   const text = `${t.urgent ? "🔥 GẤP\n" : ""}Ngày tạo: ${formatTime(t.created_at)}\nMã vận đơn: ${t.tracking}\nNội dung: ${t.shop || ""}\nẢnh: ${imgText}`;
-  navigator.clipboard.writeText(text).then(()=>alert("Đã copy phiếu"));
+
+  const htmlImgs = (t.images || []).map(src => `<div><img src="${src}" style="max-width:420px;border:1px solid #ddd;border-radius:8px;margin-top:8px"></div>`).join("");
+  const html = `<div style="font-family:Arial,sans-serif;line-height:1.45">
+    ${t.urgent ? "<b>🔥 GẤP</b><br>" : ""}
+    <b>Ngày tạo:</b> ${escapeHtml(formatTime(t.created_at))}<br>
+    <b>Mã vận đơn:</b> ${escapeHtml(t.tracking)}<br>
+    <b>Nội dung:</b><br>${escapeHtml(t.shop || "").replace(/\n/g,"<br>")}<br>
+    <b>Ảnh:</b> ${escapeHtml(imgText)}
+    ${htmlImgs}
+  </div>`;
+
+  try{
+    if(navigator.clipboard && window.ClipboardItem){
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([html], {type:"text/html"}),
+          "text/plain": new Blob([text], {type:"text/plain"})
+        })
+      ]);
+      alert(t.images?.length ? "Đã copy phiếu kèm ảnh. App nhận có dán được ảnh hay không tùy Zalo/Telegram/Gmail." : "Đã copy phiếu");
+    }else{
+      await navigator.clipboard.writeText(text);
+      alert("Đã copy phiếu dạng chữ. Trình duyệt này không hỗ trợ copy ảnh kèm theo.");
+    }
+  }catch(err){
+    navigator.clipboard.writeText(text).then(()=>alert("Đã copy phiếu dạng chữ. Ảnh không copy được trên trình duyệt này."));
+  }
 }
 
 function addFilesToList(files, target){
