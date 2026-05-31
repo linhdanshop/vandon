@@ -361,7 +361,7 @@ let editId = null;
 let pastedImages = [];
 let editImages = [];
 let currentImageTarget = "create";
-let dateFilter = {from:null, to:null, mode:"today"};
+let dateFilter = {from:null, to:null, mode:"30days"};
 
 let tasks = [
   {
@@ -374,7 +374,7 @@ let tasks = [
     status_shop:"chua_xong",
     urgent:true,
     images:[],
-    history:["Shop 01 tạo phiếu"]
+    history:[]
   },
   {
     id:"GHN987654321",
@@ -386,7 +386,7 @@ let tasks = [
     status_shop:"chua_xong",
     urgent:false,
     images:[],
-    history:["Admin tạo phiếu"]
+    history:[]
   }
 ];
 
@@ -405,7 +405,7 @@ function login(){
   }
   showApp();
   renderQuick();
-  render();
+  setDateDefault30();
 }
 
 function showApp(){
@@ -521,6 +521,17 @@ function pad2(n){ return String(n).padStart(2,"0"); }
 function toLocalInputValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
 function fromLocalInputValue(v){ return v ? new Date(v).getTime() : null; }
 
+function setDateDefault30(){
+  const now = new Date();
+  const from = startOfDay(now);
+  from.setDate(from.getDate()-29);
+  const to = endOfDay(now);
+  dateFilter = {from:from.getTime(), to:to.getTime(), mode:"30days"};
+  dateFrom.value = toLocalInputValue(dateFilter.from);
+  dateTo.value = toLocalInputValue(dateFilter.to);
+  render();
+}
+
 function setDateQuick(mode){
   const now = new Date();
   let from, to;
@@ -601,10 +612,23 @@ function openDvvc(id){
   dvvcModal.style.display = "flex";
 }
 
+function normalizeHistoryItem(item, t){
+  const text = String(item || "").trim();
+  if(!text) return "";
+  // Nếu lịch sử cũ chưa có ngày giờ thì tự thêm thời gian tạo phiếu để khỏi bị trống.
+  if(/^\d{1,2}:\d{2}:\d{2}|^\d{1,2}\/\d{1,2}\/\d{4}/.test(text)) return text;
+  return `${formatTime(t.created_at)} - ${text}`;
+}
+
+function getHistoryText(t){
+  const arr = (t.history && t.history.length) ? t.history : [`${currentUser?.name || "Shop"} tạo phiếu`];
+  return arr.map(x=>normalizeHistoryItem(x, t)).filter(Boolean).join("\n");
+}
+
 function openHistory(id){
   const t = tasks.find(x=>x.id===id);
   if(!t) return;
-  h_content.textContent = (t.history || []).join("\n");
+  h_content.textContent = getHistoryText(t);
   historyModal.style.display = "flex";
 }
 
@@ -620,7 +644,7 @@ function openDetail(id){
       <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc || "")}</div>
       <div class="detail-label">Tiến độ ĐVVC</div><div class="detail-value">${badgeDvvc(t.status_dvvc)}</div>
       <div class="detail-label">Ảnh</div><div class="detail-value">${t.images?.length ? t.images.map(src=>`<img class="preview-img" src="${src}" onclick="showImg('${src}')">`).join("") : "Không có ảnh"}</div>
-      <div class="detail-label">Lịch sử</div><div class="detail-value">${escapeHtml((t.history || []).join("\\n"))}</div>
+      <div class="detail-label">Lịch sử</div><div class="detail-value">${escapeHtml(getHistoryText(t))}</div>
     </div>
   `;
   detailModal.style.display = "flex";
@@ -806,7 +830,7 @@ window.addEventListener("load", function(){
     currentUser = {username:saved, ...USERS[saved]};
     showApp();
     renderQuick();
-    setDateQuick("today");
+    setDateDefault30();
   }
 });
 
