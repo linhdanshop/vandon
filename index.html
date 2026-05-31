@@ -138,19 +138,23 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
   .topbar .btn-small{padding:4px 7px;font-size:12px}
   .main{padding:6px}
 
-  /* Thanh lọc mobile: đúng 2 dòng. Dòng 1: Tạo phiếu + tìm kiếm. Dòng 2: Shop + ĐVVC + từ ngày + đến ngày + áp dụng */
-  .toolbar{display:grid!important;grid-template-columns:82px 82px 68px 68px 52px;gap:5px!important;overflow:visible!important;white-space:normal!important;padding:6px!important;margin-bottom:6px!important;border-radius:10px}
+  /* Thanh lọc mobile: 2 dòng gọn. Dòng 1: Tạo phiếu + tìm kiếm. Dòng 2: Shop + ĐVVC + từ ngày → đến ngày. Chọn ngày là tự lọc */
+  .toolbar{display:grid!important;grid-template-columns:82px 82px 68px 12px 68px;gap:5px!important;overflow:visible!important;white-space:normal!important;padding:6px!important;margin-bottom:6px!important;border-radius:10px}
   .toolbar .btn-blue{grid-column:1 / 2;grid-row:1;width:100%;min-height:34px;font-size:13px;padding:6px 6px}
   .toolbar .search-input{grid-column:2 / 6;grid-row:1;width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:13px}
   .toolbar .select-filter{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:12.5px;padding:5px 6px}
   .toolbar #filterShop{grid-column:1 / 2;grid-row:2}
   .toolbar #filterDvvc{grid-column:2 / 3;grid-row:2}
-  .toolbar label,.toolbar .arrow{display:none!important}
-  .toolbar .dt{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:11px;padding:4px 5px;text-align:center}
-  .toolbar #dateFrom{grid-column:3 / 4;grid-row:2}
-  .toolbar #dateTo{grid-column:4 / 5;grid-row:2}
+  .toolbar label{display:none!important}
+  .toolbar .arrow{display:flex!important;grid-column:4 / 5;grid-row:2;align-items:center;justify-content:center;font-size:14px;color:#64748b}
+  .mobile-date-wrap{height:34px;position:relative;display:flex!important;align-items:center;justify-content:center;background:#f3f4f6;border:1px solid #d1d5db;border-radius:7px;font-size:12.5px;font-weight:700;color:#111827;overflow:hidden}
+  #dateFromWrap{grid-column:3 / 4;grid-row:2}
+  #dateToWrap{grid-column:5 / 6;grid-row:2}
+  .mobile-date-wrap::after{content:attr(data-short)}
+  .mobile-date-wrap .dt{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;max-width:none!important;opacity:0!important;padding:0!important;margin:0!important;cursor:pointer}
+  .toolbar .dt{font-size:12px;text-align:center}
   .toolbar button{min-height:34px}
-  .toolbar button:nth-last-child(2){grid-column:5 / 6;grid-row:2;font-size:12px;padding:5px 4px}
+  .toolbar button:nth-last-child(2){display:none!important}
   .toolbar button:nth-last-child(1){display:none!important}
 
   /* Thống kê mobile: 2 khối nằm cùng 1 hàng cuộn ngang, nút nhỏ lại */
@@ -234,9 +238,9 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
         <option value="khong_xu_ly">ĐVVC không xử lý được</option>
       </select>
       <span class="arrow">|</span>
-      <label>Từ</label><input class="dt" id="dateFrom" type="datetime-local">
+      <label>Từ</label><span class="mobile-date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="datetime-local" onchange="setDateCustom()"></span>
       <span class="arrow">→</span>
-      <label>Đến</label><input class="dt" id="dateTo" type="datetime-local">
+      <label>Đến</label><span class="mobile-date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="datetime-local" onchange="setDateCustom()"></span>
       <button class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button>
       <button class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button>
     </div>
@@ -670,6 +674,7 @@ function endOfDay(d){ const x=new Date(d); x.setHours(23,59,59,999); return x; }
 function pad2(n){ return String(n).padStart(2,"0"); }
 function toLocalInputValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
 function toLocalDateValue(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+function shortDateLabel(ts, fallback){ if(!ts) return fallback; const d=new Date(ts); return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`; }
 function useMobileDate(){ return window.matchMedia && window.matchMedia("(max-width:900px)").matches; }
 function setupDateInputType(){
   const type = useMobileDate() ? "date" : "datetime-local";
@@ -685,6 +690,8 @@ function setDateInputValues(){
     dateFrom.value = dateFilter.from ? toLocalInputValue(dateFilter.from) : "";
     dateTo.value = dateFilter.to ? toLocalInputValue(dateFilter.to) : "";
   }
+  if(document.getElementById("dateFromWrap")) dateFromWrap.setAttribute("data-short", shortDateLabel(dateFilter.from, "Từ"));
+  if(document.getElementById("dateToWrap")) dateToWrap.setAttribute("data-short", shortDateLabel(dateFilter.to, "Đến"));
 }
 function fromLocalInputValue(v, isEnd=false){
   if(!v) return null;
@@ -1011,6 +1018,8 @@ function showImg(src){
   bigImg.src = src;
   imgModal.style.display = "flex";
 }
+
+window.addEventListener("resize", function(){ setDateInputValues(); });
 
 window.addEventListener("load", function(){
   const saved = localStorage.getItem("xvd_user");
