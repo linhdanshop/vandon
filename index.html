@@ -131,34 +131,56 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
 
 @media(max-width:900px){
   html,body{min-width:0!important;width:100%!important;overflow-x:hidden!important;background:#eef2f7;-webkit-text-size-adjust:100%}
-  body{font-size:14px}
+  body{font-size:13px}
   .app,.main,.topbar{min-width:0!important;width:100%!important}
-  .topbar{height:48px!important;padding:0 12px!important;flex-wrap:nowrap!important;position:sticky;top:0;z-index:5}
-  .topbar h2{font-size:17px}
-  .main{padding:8px}
-  .toolbar{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important;overflow:visible!important;white-space:normal!important;padding:10px!important}
-  .toolbar .btn-blue{grid-column:1 / 2}
-  .toolbar .search-input{grid-column:2 / 3;width:100%!important;min-width:0!important;max-width:none!important}
-  .toolbar .select-filter{width:100%!important;min-width:0!important;max-width:none!important}
+  .topbar{height:42px!important;padding:0 10px!important;flex-wrap:nowrap!important;position:sticky;top:0;z-index:20}
+  .topbar h2{font-size:16px}
+  .topbar .btn-small{padding:4px 7px;font-size:12px}
+  .main{padding:6px}
+
+  /* Thanh lọc mobile: gọn hơn, ít tốn chiều cao */
+  .toolbar{display:grid!important;grid-template-columns:92px 1fr;gap:6px!important;overflow:visible!important;white-space:normal!important;padding:7px!important;margin-bottom:6px!important;border-radius:10px}
+  .toolbar .btn-blue{grid-column:1 / 2;width:100%;min-height:34px;font-size:13px;padding:6px 6px}
+  .toolbar .search-input{grid-column:2 / 3;width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:13px}
+  .toolbar .select-filter{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:13px}
   .toolbar .arrow{display:none}
-  .toolbar label{align-self:center}
-  .toolbar .dt{width:100%!important;min-width:0!important;max-width:none!important;font-size:13px}
-  .toolbar button{min-height:36px}
-  .stats-wrap{grid-template-columns:1fr!important;gap:8px;margin-bottom:8px}
-  .stat-box{padding:10px;border-radius:12px}
-  .stat-title{text-align:left;font-size:15px;margin-bottom:8px}
-  .stat-line{display:grid;grid-template-columns:1fr 1fr;gap:8px;justify-content:stretch}
-  .stat-pill{text-align:center;padding:10px 8px;font-size:13px;border-radius:10px}
-  .stat-pill b{font-size:18px}
+  .toolbar label{font-size:12px;align-self:center;font-weight:800;color:#475569}
+  .toolbar .dt{width:100%!important;min-width:0!important;max-width:none!important;height:34px;font-size:12.5px;padding:5px 7px}
+  .toolbar button{min-height:34px}
+  .toolbar button:nth-last-child(2),.toolbar button:nth-last-child(1){font-size:13px}
+
+  /* Thống kê mobile: 2 khối nằm cùng 1 hàng cuộn ngang, nút nhỏ lại */
+  .stats-wrap{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px;margin-bottom:6px;overflow-x:auto;padding-bottom:0}
+  .stat-box{min-width:0;padding:7px 6px;border-radius:10px}
+  .stat-title{text-align:center;font-size:13px;margin-bottom:5px;line-height:1.1}
+  .stat-line{display:grid;grid-template-columns:1fr 1fr;gap:5px;justify-content:stretch}
+  .stat-pill{text-align:center;padding:6px 4px;font-size:12px;border-radius:8px;line-height:1.15;min-height:30px;display:flex;align-items:center;justify-content:center;gap:3px}
+  .stat-pill b{font-size:15px}
+
   .table-wrap{display:none!important}
   .mobile-list{display:block}
-  .modal{padding:10px;align-items:flex-start;overflow:auto}
-  .modal-box{width:100%!important;max-height:none;margin-top:10px;border-radius:12px}
-  .detail-grid{grid-template-columns:100px 1fr;gap:7px}
+
+  /* Card vận đơn mobile: dạng compact để thấy nhiều đơn hơn */
+  .mobile-card{border-radius:10px;margin-bottom:7px;box-shadow:0 1px 4px #0001}
+  .mc-head{padding:7px 9px;align-items:center}
+  .mc-code{font-size:15px;line-height:1.15}
+  .mc-date{font-size:11.5px;margin-top:2px;color:#64748b}
+  .mc-head .mc-row{gap:5px;flex-wrap:nowrap}
+  .urgent-mark{padding:4px 8px;font-size:12px}
+  .mc-body{padding:7px 9px;gap:5px}
+  .mc-label{font-size:11.5px;margin-bottom:2px}
+  .mc-content{border-radius:7px;padding:5px 8px;line-height:17px;max-height:38px;font-size:13px}
+  .mc-status{gap:5px;font-size:12.5px}
+  .badge{font-size:11.5px;padding:3px 7px}
+  .mc-actions{grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;padding:7px 9px}
+  .mc-actions button{min-height:30px;font-size:11.5px;padding:5px 4px}
+
+  .modal{padding:8px;align-items:flex-start;overflow:auto}
+  .modal-box{width:100%!important;max-height:none;margin-top:8px;border-radius:12px;padding:12px}
+  .detail-grid{grid-template-columns:92px 1fr;gap:6px}
   .copy-line{flex-direction:column}
   .copy-line button{width:max-content}
-  input,textarea,select,button{font-size:14px}
-  .mc-actions{grid-template-columns:1fr 1fr}
+  input,textarea,select,button{font-size:13px}
 }
 
 </style>
