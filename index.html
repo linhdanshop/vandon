@@ -98,6 +98,12 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
 .quick button{background:#eef2ff;color:#1d4ed8;font-size:13px;padding:6px 8px}
 .history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px;max-height:250px;overflow:auto;white-space:pre-wrap;line-height:1.55}
 .img-view{max-width:90vw;max-height:85vh;border-radius:8px;background:white}
+.img-modal-box{background:white;border-radius:12px;padding:10px;max-width:96vw;max-height:92vh;display:flex;flex-direction:column;gap:8px;align-items:center}
+.img-toolbar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;color:#374151}
+.img-nav{display:flex;gap:8px;align-items:center}
+.img-thumbs{display:flex;gap:6px;max-width:90vw;overflow-x:auto;padding:2px 0}
+.img-thumb{width:52px;height:52px;object-fit:cover;border-radius:6px;border:2px solid #e5e7eb;cursor:pointer;opacity:.7}
+.img-thumb.active{border-color:#2563eb;opacity:1}
 .preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .preview-img{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid #d1d5db;cursor:pointer}
 .detail-grid{display:grid;grid-template-columns:150px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}
@@ -499,7 +505,18 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
 
 <!-- IMAGE -->
 <div id="imgModal" class="modal" onclick="closeAll()">
-  <img id="bigImg" class="img-view" alt="Ảnh">
+  <div class="img-modal-box" onclick="event.stopPropagation()">
+    <div class="img-toolbar">
+      <span id="imgCounter">Ảnh</span>
+      <div class="img-nav">
+        <button class="btn-gray btn-small" onclick="prevImage()">‹ Trước</button>
+        <button class="btn-gray btn-small" onclick="nextImage()">Sau ›</button>
+        <button class="btn-gray btn-small" onclick="closeAll()">Đóng</button>
+      </div>
+    </div>
+    <img id="bigImg" class="img-view" alt="Ảnh">
+    <div id="imgThumbs" class="img-thumbs"></div>
+  </div>
 </div>
 
 <script>
@@ -696,7 +713,7 @@ function render(){
         <div class="content-preview" id="shopPrev_${t.id}">${escapeHtml(t.shop)}</div>
         ${t.shop.length > 55 ? `<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>` : ""}
       </td>
-      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImg('${t.images[0]}')">📷 ${t.images.length}</button>` : ""}</td>
+      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 ${t.images.length}</button>` : ""}</td>
       <td>${badgeShop(t.status_shop)}</td>
       <td>${canEditShop() ? `<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>` : `<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td>
       <td class="content-cell">
@@ -738,7 +755,7 @@ function render(){
             <div class="mc-content dvvc" onclick="openDetail('${t.id}')">${escapeHtml(t.dvvc || "")}</div>
           </div>
           <div class="mc-row">
-            ${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImg('${t.images[0]}')">📷 Ảnh (${t.images.length})</button>` : `<span class="mc-label">Không có ảnh</span>`}
+            ${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${t.images.length})</button>` : `<span class="mc-label">Không có ảnh</span>`}
           </div>
         </div>
         <div class="mc-actions">
@@ -954,7 +971,7 @@ function openDetail(id){
       <div class="detail-label">Tiến độ Shop</div><div class="detail-value">${badgeShop(t.status_shop)}</div>
       <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc || "")}</div>
       <div class="detail-label">Tiến độ ĐVVC</div><div class="detail-value">${badgeDvvc(t.status_dvvc)}</div>
-      <div class="detail-label">Ảnh</div><div class="detail-value">${t.images?.length ? t.images.map(src=>`<img class="preview-img" src="${src}" onclick="showImg('${src}')">`).join("") : "Không có ảnh"}</div>
+      <div class="detail-label">Ảnh</div><div class="detail-value">${t.images?.length ? t.images.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join("") : "Không có ảnh"}</div>
       <div class="detail-label">Lịch sử</div><div class="detail-value">${escapeHtml(getHistoryText(t))}</div>
     </div>
   `;
@@ -1292,9 +1309,46 @@ document.addEventListener("paste", function(e){
   }
 });
 
-function showImg(src){
-  bigImg.src = src;
+let imageGallery = [];
+let imageIndex = 0;
+
+function showImageGallery(images, startIndex=0){
+  imageGallery = Array.isArray(images) ? images.filter(Boolean) : [];
+  if(!imageGallery.length) return;
+  imageIndex = Math.max(0, Math.min(startIndex, imageGallery.length - 1));
+  renderImageGallery();
   imgModal.style.display = "flex";
+}
+
+function showImageGalleryById(id, startIndex=0){
+  const t = tasks.find(x=>x.id===id);
+  if(!t || !t.images || !t.images.length) return;
+  showImageGallery(t.images, startIndex);
+}
+
+function renderImageGallery(){
+  if(!imageGallery.length) return;
+  bigImg.src = imageGallery[imageIndex];
+  imgCounter.textContent = `Ảnh ${imageIndex + 1}/${imageGallery.length}`;
+  imgThumbs.innerHTML = imageGallery.map((src,i)=>`
+    <img class="img-thumb ${i===imageIndex ? 'active' : ''}" src="${src}" onclick="imageIndex=${i};renderImageGallery()">
+  `).join("");
+}
+
+function prevImage(){
+  if(!imageGallery.length) return;
+  imageIndex = (imageIndex - 1 + imageGallery.length) % imageGallery.length;
+  renderImageGallery();
+}
+
+function nextImage(){
+  if(!imageGallery.length) return;
+  imageIndex = (imageIndex + 1) % imageGallery.length;
+  renderImageGallery();
+}
+
+function showImg(src){
+  showImageGallery([src], 0);
 }
 
 window.addEventListener("resize", function(){ setDateInputValues(); });
