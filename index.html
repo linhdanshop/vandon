@@ -6,7 +6,7 @@
 <title>Xử lý vận đơn</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef2f7;color:#111827;font-size:13px}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:#eef2f7;color:#111827;font-size:13px}
 .login-page{height:100vh;display:flex;align-items:center;justify-content:center}
 .login-box{width:360px;background:white;border-radius:10px;padding:24px;box-shadow:0 2px 12px #0002}
 .login-box h2{text-align:center;margin:0 0 20px}
@@ -26,10 +26,15 @@ button{border:0;border-radius:6px;padding:6px 9px;cursor:pointer;font-weight:600
 .toolbar{background:white;border-radius:8px;padding:8px;display:flex;gap:7px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001}
 .toolbar input,.toolbar select{max-width:220px}
 .toolbar .dt{max-width:170px}
-.datebar{background:white;border-radius:8px;padding:8px;display:flex;gap:7px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001;flex-wrap:wrap}
+.datebar{background:white;border-radius:8px;padding:8px;display:flex;gap:7px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto}
 .datebar button.active{background:#2563eb;color:#fff}
-.datebar label{font-size:12px;color:#374151;font-weight:700}
-.urgent-badge{display:inline-block;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:999px;padding:2px 6px;font-weight:800;font-size:11px;margin-right:4px;white-space:nowrap}
+.datebar label{font-size:12px;color:#374151;font-weight:800}
+.datebar .arrow{font-weight:900;color:#64748b}
+.urgent-mark{display:inline-flex;align-items:center;justify-content:center;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:999px;padding:4px 8px;font-weight:900;font-size:12px;white-space:nowrap;box-shadow:0 1px 0 #fff inset}
+.urgent-cell{text-align:center;vertical-align:middle}
+tr.is-urgent{background:#fff7f7!important}
+tr.is-urgent:nth-child(even){background:#fff1f1!important}
+.urgent-badge{display:inline-block;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:999px;padding:3px 8px;font-weight:900;font-size:12px;margin-right:4px;white-space:nowrap}
 .img-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .copy-line{display:flex;gap:8px;align-items:flex-start}
 .copy-text{background:#f8fafc;border:1px solid #e5e7eb;border-radius:6px;padding:8px;white-space:pre-wrap;line-height:1.45;flex:1}
@@ -143,9 +148,12 @@ td:nth-child(8) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
       <button class="btn-gray btn-small" id="dateYesterday" onclick="setDateQuick('yesterday')">Hôm qua</button>
       <button class="btn-gray btn-small" id="date7" onclick="setDateQuick('7days')">7 ngày</button>
       <button class="btn-gray btn-small" id="dateMonth" onclick="setDateQuick('month')">Tháng này</button>
-      <label>Từ</label><input class="dt" id="dateFrom" type="datetime-local" onchange="setDateCustom()">
-      <label>Đến</label><input class="dt" id="dateTo" type="datetime-local" onchange="setDateCustom()">
-      <button class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc ngày</button>
+      <span class="arrow">|</span>
+      <label>Từ</label><input class="dt" id="dateFrom" type="datetime-local">
+      <span class="arrow">→</span>
+      <label>Đến</label><input class="dt" id="dateTo" type="datetime-local">
+      <button class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button>
+      <button class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button>
     </div>
 
     <div class="stats-wrap">
@@ -176,6 +184,7 @@ td:nth-child(8) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
           <tr>
             <th>STT</th>
             <th>Ngày ghi nhận</th>
+            <th>Gấp</th>
             <th>Mã vận đơn</th>
             <th>Nội dung Shop</th>
             <th>Ảnh</th>
@@ -472,12 +481,12 @@ function render(){
   updateDateButtons();
 
   tbody.innerHTML = list.map((t,i)=>`
-    <tr>
+    <tr class="${t.urgent ? 'is-urgent' : ''}">
       <td>${i+1}</td>
       <td>${formatTime(t.created_at)}</td>
+      <td class="urgent-cell">${t.urgent ? `<span class="urgent-mark">🔥 Gấp</span>` : ""}</td>
       <td>
         <div class="code-wrap">
-          ${t.urgent ? `<span class="urgent-badge">Gấp</span>` : ""}
           <span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span>
           <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button>
         </div>
@@ -605,7 +614,7 @@ function openDetail(id){
     <div class="detail-grid">
       <div class="detail-label">Ngày ghi nhận</div><div class="detail-value">${formatTime(t.created_at)}</div>
       <div class="detail-label">Mã vận đơn</div><div class="detail-value">${t.urgent ? `<span class="urgent-badge">Gấp</span>` : ""}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div>
-      <div class="detail-label">Nội dung Shop</div><div class="detail-value"><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyShopContent('${t.id}')">Copy yêu cầu</button></div></div>
+      <div class="detail-label">Nội dung Shop</div><div class="detail-value"><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div></div>
       <div class="detail-label">Tiến độ Shop</div><div class="detail-value">${badgeShop(t.status_shop)}</div>
       <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc || "")}</div>
       <div class="detail-label">Tiến độ ĐVVC</div><div class="detail-value">${badgeDvvc(t.status_dvvc)}</div>
@@ -718,11 +727,12 @@ function copyTracking(code){
   navigator.clipboard.writeText(code).then(()=>alert("Đã copy mã vận đơn: " + code));
 }
 
-function copyShopContent(id){
+function copyTicket(id){
   const t = tasks.find(x=>x.id===id);
   if(!t) return;
-  const text = `${t.urgent ? "[GẤP]\n" : ""}${t.shop || ""}`;
-  navigator.clipboard.writeText(text).then(()=>alert("Đã copy nội dung yêu cầu Shop"));
+  const imgText = t.images?.length ? `Có ${t.images.length} ảnh kèm theo` : "Không có ảnh";
+  const text = `${t.urgent ? "🔥 GẤP\n" : ""}Ngày tạo: ${formatTime(t.created_at)}\nMã vận đơn: ${t.tracking}\nNội dung: ${t.shop || ""}\nẢnh: ${imgText}`;
+  navigator.clipboard.writeText(text).then(()=>alert("Đã copy phiếu"));
 }
 
 function addFilesToList(files, target){
