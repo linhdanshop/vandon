@@ -214,6 +214,10 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
   .account-table th,.account-table td{padding:6px 4px}
 }
 
+.login-msg{display:none;margin:10px 0 0;padding:9px 10px;border-radius:7px;font-size:13px;line-height:1.35}
+.login-msg.err{display:block;background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.login-msg.ok{display:block;background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+
 </style>
 </head>
 <body>
@@ -230,6 +234,7 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
       Ghi nhớ đăng nhập
     </label>
     <button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button>
+    <div id="loginMsg" class="login-msg"></div>
     <p style="color:#6b7280;text-align:center;margin-bottom:8px">Mặc định: admin / 123456</p>
     <button type="button" class="btn-gray" style="width:100%;font-size:12px" onclick="resetDefaultLogin()">Reset tài khoản mặc định</button>
   </div>
@@ -549,6 +554,12 @@ function saveUsers(){
 
 loadSavedUsers();
 
+window.addEventListener("DOMContentLoaded", function(){
+  if(document.getElementById("loginPass")){
+    loginPass.addEventListener("keydown", function(e){ if(e.key === "Enter") login(); });
+  }
+});
+
 
 const QUICK_TEXTS = [
   "Hạ COD còn lại 35k",
@@ -597,30 +608,63 @@ let tasks = [
   }
 ];
 
+function setLoginMsg(msg, type="err"){
+  const el = document.getElementById("loginMsg");
+  if(!el) return;
+  el.className = "login-msg " + (type === "ok" ? "ok" : "err");
+  el.textContent = msg;
+}
+
 function resetDefaultLogin(){
-  localStorage.removeItem("xvd_user");
-  localStorage.removeItem("xvd_users");
+  try{
+    localStorage.removeItem("xvd_user");
+    localStorage.removeItem("xvd_users");
+  }catch(e){}
   loginUser.value = "admin";
   loginPass.value = "123456";
-  alert("Đã reset. Đăng nhập bằng admin / 123456");
+  setLoginMsg("Đã reset. Bấm Đăng nhập bằng admin / 123456", "ok");
 }
 
 function login(){
-  const u = loginUser.value.trim();
-  const p = loginPass.value;
-  if(!USERS[u] || USERS[u].pass !== p){
-    alert("Sai tài khoản hoặc mật khẩu");
-    return;
+  try{
+    const u = (loginUser.value || "").trim();
+    const p = loginPass.value || "";
+
+    if(!u){
+      setLoginMsg("Chưa nhập tài khoản");
+      loginUser.focus();
+      return;
+    }
+    if(!p){
+      setLoginMsg("Chưa nhập mật khẩu");
+      loginPass.focus();
+      return;
+    }
+
+    if(!USERS[u]){
+      setLoginMsg("Không tồn tại tài khoản: " + u + ". Tài khoản mặc định là admin / 123456");
+      return;
+    }
+
+    if(String(USERS[u].pass) !== String(p)){
+      setLoginMsg("Sai mật khẩu cho tài khoản " + u + ". Nếu quên, bấm Reset tài khoản mặc định.");
+      return;
+    }
+
+    currentUser = {username:u, ...USERS[u]};
+    if(rememberLogin.checked){
+      localStorage.setItem("xvd_user", u);
+    }else{
+      localStorage.removeItem("xvd_user");
+    }
+    setLoginMsg("Đăng nhập thành công", "ok");
+    showApp();
+    renderQuick();
+    setDateDefault30();
+  }catch(err){
+    console.error(err);
+    setLoginMsg("Lỗi JavaScript khi đăng nhập: " + (err && err.message ? err.message : err));
   }
-  currentUser = {username:u, ...USERS[u]};
-  if(rememberLogin.checked){
-    localStorage.setItem("xvd_user", u);
-  }else{
-    localStorage.removeItem("xvd_user");
-  }
-  showApp();
-  renderQuick();
-  setDateDefault30();
 }
 
 function canCreateTask(){ return currentUser && (currentUser.role === "admin" || currentUser.role === "shop"); }
@@ -1212,7 +1256,7 @@ function escapeAttr(str){
   return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 }
 function escapeJs(str){
-  return String(str).replace(/\/g,"\\").replace(/'/g,"\'");
+  return String(str).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
 }
 
 function deleteTask(id){
