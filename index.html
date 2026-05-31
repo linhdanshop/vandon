@@ -110,6 +110,36 @@
   .stats-dashboard .stat-pill b{font-size:18px!important}
 }
 
+
+
+/* ===== FIX MÃ VẬN ĐƠN: nhỏ hơn, mảnh hơn, cột rộng hơn ===== */
+@media(min-width:901px){
+  table{min-width:1780px!important;}
+  th:nth-child(5),td:nth-child(5){width:230px!important;}
+  th:nth-child(6),td:nth-child(6){width:290px!important;}
+  .code-link{
+    color:#2563eb!important;
+    font-size:17px!important;
+    font-weight:600!important;
+    text-decoration:none!important;
+    line-height:1.2!important;
+    letter-spacing:.15px!important;
+    max-width:none!important;
+  }
+  .code-wrap{gap:8px!important;}
+  .code-wrap span{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important;}
+}
+@media(max-width:900px){
+  .mc-code{
+    color:#2563eb!important;
+    font-size:18px!important;
+    font-weight:600!important;
+    text-decoration:none!important;
+    line-height:1.2!important;
+    letter-spacing:.15px!important;
+  }
+}
+
 </style>
 </head>
 <body>
