@@ -1,98 +1,126 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Xử lý vận đơn</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827;font-size:14px}
-.login-page{height:100vh;display:flex;align-items:center;justify-content:center}
-.login-box{width:360px;background:white;border-radius:10px;padding:24px;box-shadow:0 2px 12px #0002}
-.login-box h2{text-align:center;margin:0 0 20px}
-input,textarea,select{width:100%;padding:9px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
-textarea{min-height:100px;resize:vertical}
-button{border:0;border-radius:6px;padding:8px 11px;cursor:pointer;font-weight:600}
-.btn-blue{background:#2563eb;color:white}
-.btn-green{background:#16a34a;color:white}
-.btn-red{background:#dc2626;color:white}
+body{margin:0;font-family:Arial,sans-serif;background:#eef0f3;color:#111827;font-size:13px}
+button{border:0;border-radius:6px;padding:6px 9px;cursor:pointer;font-weight:700;font-size:12px}
+input,select,textarea{border:1px solid #d1d5db;border-radius:7px;padding:8px 10px;font-size:13px}
+textarea{width:100%;min-height:90px;resize:vertical}
+.btn-blue{background:#2563eb;color:#fff}
+.btn-orange{background:#f59e0b;color:#fff}
+.btn-green{background:#16a34a;color:#fff}
+.btn-red{background:#dc2626;color:#fff}
 .btn-gray{background:#e5e7eb;color:#111827}
-.btn-orange{background:#f59e0b;color:white}
-.btn-small{padding:5px 7px;font-size:12px}
+.btn-mini{padding:4px 6px;font-size:11px}
+
+.login-page{height:100vh;display:flex;align-items:center;justify-content:center}
+.login-box{width:340px;background:white;border-radius:10px;padding:22px;box-shadow:0 2px 12px #0002}
+.login-box h2{text-align:center;margin:0 0 18px}
+.login-box input{width:100%;margin-bottom:10px}
 .app{display:none}
-.topbar{height:56px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
-.topbar h2{font-size:18px;margin:0}
-.main{padding:14px}
-.toolbar{background:white;border-radius:8px;padding:12px;display:flex;gap:8px;align-items:center;margin-bottom:12px;box-shadow:0 1px 4px #0001}
-.toolbar input,.toolbar select{max-width:220px}
 
-.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.stat-box{background:white;border-radius:8px;padding:12px;box-shadow:0 1px 4px #0001}
-.stat-title{font-weight:700;margin-bottom:8px;color:#374151}
-.stat-line{display:flex;gap:8px;flex-wrap:wrap}
-.stat-pill{background:#f3f4f6;border-radius:8px;padding:8px 10px;white-space:nowrap}
-.stat-pill b{font-size:16px}
+.topbar{height:48px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.topbar h2{font-size:17px;margin:0}
+.main{padding:10px}
 
-.table-wrap{background:white;border-radius:8px;overflow:auto;box-shadow:0 1px 4px #0001}
-table{width:100%;border-collapse:collapse;min-width:1380px}
-th,td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}
-th{background:#f9fafb;position:sticky;top:0;z-index:1;font-size:13px}
-tr:hover{background:#f9fafb}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700}
+.toolbar{background:white;border-radius:8px;padding:9px;display:flex;gap:8px;align-items:center;margin-bottom:8px;box-shadow:0 1px 4px #0001}
+.toolbar input{width:240px}
+.toolbar select{width:180px}
+
+.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.stat-box{background:white;border-radius:8px;padding:9px;box-shadow:0 1px 4px #0001}
+.stat-title{font-weight:700;margin-bottom:7px}
+.stat-line{display:flex;gap:6px;flex-wrap:wrap}
+.stat-pill{background:#f3f4f6;border-radius:7px;padding:6px 8px;white-space:nowrap}
+.stat-pill b{font-size:14px}
+
+.list{display:flex;flex-direction:column;gap:4px}
+.row{
+  display:grid;
+  grid-template-columns:42px 118px 180px 100px 112px minmax(260px,1.35fr) minmax(230px,1fr) 58px 72px 72px 70px 48px;
+  align-items:center;
+  gap:6px;
+  background:white;
+  border-radius:7px;
+  min-height:38px;
+  padding:5px 7px;
+  box-shadow:0 1px 3px #0000000d;
+}
+.row:nth-child(even){background:#f8fbff}
+.row.header{
+  background:#e8edf5;
+  font-weight:700;
+  min-height:34px;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+.cell{overflow:hidden}
+.code-wrap{display:flex;align-items:center;gap:5px}
+.code-link{color:#2563eb;font-weight:800;cursor:pointer;text-decoration:underline}
+.text2{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  line-height:1.25;
+  font-size:12.5px;
+  white-space:pre-wrap;
+}
+.badge{display:inline-block;padding:4px 7px;border-radius:999px;font-size:11.5px;font-weight:800}
 .red{background:#fee2e2;color:#b91c1c}
 .yellow{background:#fef3c7;color:#92400e}
 .green{background:#dcfce7;color:#166534}
 .black{background:#e5e7eb;color:#111827}
-.code-wrap{display:flex;align-items:center;gap:6px}
-.code-link{color:#2563eb;font-weight:700;cursor:pointer;text-decoration:underline}
-.content-cell{max-width:240px;font-size:13px;line-height:1.35;white-space:pre-wrap}
-.content-preview{max-height:38px;overflow:hidden}
-.more-btn{padding:0;background:transparent;color:#2563eb;font-weight:700;margin-top:2px}
-.actions{display:flex;gap:5px;flex-wrap:wrap}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:10;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:white;width:min(760px,96vw);max-height:92vh;overflow:auto;border-radius:10px;padding:16px}
+
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:18px}
+.modal-box{background:white;width:min(760px,96vw);max-height:92vh;overflow:auto;border-radius:10px;padding:15px}
 .modal-sm{width:min(560px,96vw)}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .modal-head h3{margin:0}
-.form-row{margin-bottom:12px}
-.quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.quick button{background:#eef2ff;color:#1d4ed8;font-size:13px;padding:6px 8px}
-.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px;max-height:250px;overflow:auto;white-space:pre-wrap;line-height:1.55}
-.img-view{max-width:90vw;max-height:85vh;border-radius:8px;background:white}
-.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.preview-img{width:72px;height:72px;object-fit:cover;border-radius:6px;border:1px solid #d1d5db;cursor:pointer}
-.detail-grid{display:grid;grid-template-columns:150px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}
+.form-row{margin-bottom:10px}
+.form-row input,.form-row select{width:100%}
+.quick{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.quick button{background:#eef2ff;color:#1d4ed8}
+.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:7px;padding:8px;line-height:1.55;white-space:pre-wrap;max-height:280px;overflow:auto}
+.preview-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.preview-img{width:68px;height:68px;object-fit:cover;border-radius:6px;border:1px solid #d1d5db;cursor:pointer}
+.img-view{max-width:90vw;max-height:86vh;border-radius:8px;background:white}
+.detail-grid{display:grid;grid-template-columns:130px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}
 .detail-label{font-weight:700;color:#374151}
 .detail-value{white-space:pre-wrap}
 .note{font-size:12px;color:#6b7280;margin-top:4px}
-@media(max-width:900px){.stats-wrap{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.toolbar input,.toolbar select{max-width:none}.topbar{height:auto;padding:10px;gap:8px;flex-wrap:wrap}}
+
+@media(max-width:1200px){
+  .row{grid-template-columns:36px 105px 160px 92px 105px minmax(220px,1.2fr) minmax(190px,1fr) 52px 65px 65px 60px 42px}
+}
 </style>
 </head>
+
 <body>
 
 <div id="loginPage" class="login-page">
   <div class="login-box">
     <h2>Xử lý vận đơn</h2>
-    <input id="loginUser" placeholder="Tài khoản" autocomplete="username">
-    <br><br>
-    <input id="loginPass" type="password" placeholder="Mật khẩu" autocomplete="current-password">
-    <br><br>
-    <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <input id="rememberLogin" type="checkbox" style="width:auto;margin:0" checked>
-      Ghi nhớ đăng nhập
+    <input id="loginUser" placeholder="Tài khoản">
+    <input id="loginPass" type="password" placeholder="Mật khẩu">
+    <label style="display:flex;align-items:center;gap:7px;margin:4px 0 12px">
+      <input id="rememberLogin" type="checkbox" style="width:auto;margin:0" checked> Ghi nhớ đăng nhập
     </label>
     <button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button>
-    <p style="color:#6b7280;text-align:center;margin-bottom:0">Demo: admin / 123456</p>
+    <p style="color:#6b7280;text-align:center">Demo: admin / 123456</p>
   </div>
 </div>
 
 <div id="app" class="app">
   <div class="topbar">
     <h2>Xử lý vận đơn</h2>
-    <div>
-      <span id="helloUser"></span>
-      <button class="btn-gray btn-small" onclick="logout()">Đăng xuất</button>
-    </div>
+    <div><span id="helloUser"></span> <button class="btn-gray" onclick="logout()">Đăng xuất</button></div>
   </div>
 
   <div class="main">
@@ -110,7 +138,7 @@ tr:hover{background:#f9fafb}
         <option value="chua_xu_ly">ĐVVC chưa xử lý</option>
         <option value="dang_xu_ly">ĐVVC đang xử lý</option>
         <option value="da_xu_ly">ĐVVC đã xử lý</option>
-        <option value="khong_xu_ly">ĐVVC không xử lý được</option>
+        <option value="khong_xu_ly">ĐVVC không xử lý</option>
       </select>
     </div>
 
@@ -124,7 +152,6 @@ tr:hover{background:#f9fafb}
           <div class="stat-pill">⚫ Hủy: <b id="stShopCancel">0</b></div>
         </div>
       </div>
-
       <div class="stat-box">
         <div class="stat-title">Thống kê ĐVVC</div>
         <div class="stat-line">
@@ -136,528 +163,197 @@ tr:hover{background:#f9fafb}
       </div>
     </div>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Ngày ghi nhận</th>
-            <th>Mã vận đơn</th>
-            <th>Nội dung Shop</th>
-            <th>Ảnh</th>
-            <th>Tiến độ Shop</th>
-            <th>Shop sửa</th>
-            <th>Nội dung ĐVVC</th>
-            <th>Tiến độ ĐVVC</th>
-            <th>ĐVVC sửa</th>
-            <th>Lịch sử</th>
-            <th>Xóa</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
+    <div class="list">
+      <div class="row header">
+        <div>STT</div><div>Ngày</div><div>Mã vận đơn</div><div>Shop</div><div>ĐVVC</div>
+        <div>Nội dung Shop</div><div>Nội dung ĐVVC</div><div>Ảnh</div><div>Shop sửa</div><div>ĐVVC sửa</div><div>Lịch sử</div><div>Xóa</div>
+      </div>
+      <div id="listRows"></div>
     </div>
   </div>
 </div>
 
-<!-- TẠO PHIẾU -->
 <div id="createModal" class="modal">
   <div class="modal-box">
-    <div class="modal-head">
-      <h3>Tạo phiếu mới</h3>
-      <button class="btn-gray" onclick="closeAll()">Đóng</button>
-    </div>
-
-    <div class="form-row">
-      <label>Mã vận đơn</label>
-      <input id="c_tracking" placeholder="Nhập mã vận đơn">
-    </div>
-
+    <div class="modal-head"><h3>Tạo phiếu mới</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
+    <div class="form-row"><label>Mã vận đơn</label><input id="c_tracking" placeholder="Nhập mã vận đơn"></div>
     <div class="form-row">
       <label>Nội dung Shop</label>
       <textarea id="c_shop"></textarea>
       <div class="quick" id="quickBox"></div>
-      <div class="note">Bấm mẫu nhanh để chèn vào nội dung, sau đó shop sửa lại tùy đơn.</div>
     </div>
-
     <div class="form-row">
       <label>Ảnh</label>
       <input id="c_images" type="file" multiple accept="image/*" onchange="handleFileImages(event)">
       <div id="c_preview" class="preview-list"></div>
       <div class="note">Có thể chọn ảnh hoặc copy ảnh rồi dán Ctrl+V vào trang này.</div>
     </div>
-
     <button class="btn-green" onclick="createTask()">Lưu phiếu</button>
   </div>
 </div>
 
-<!-- EDIT SHOP -->
 <div id="shopModal" class="modal">
   <div class="modal-box">
-    <div class="modal-head">
-      <h3>Sửa nội dung Shop</h3>
-      <button class="btn-gray" onclick="closeAll()">Đóng</button>
-    </div>
-    <div class="form-row">
-      <label>Mã vận đơn</label>
-      <input id="s_tracking" disabled>
-    </div>
-    <div class="form-row">
-      <label>Nội dung Shop</label>
-      <textarea id="s_shop"></textarea>
-      <div class="quick" id="quickBoxShop"></div>
-    </div>
-    <div class="form-row">
-      <label>Tiến độ Shop</label>
-      <select id="s_status_shop">
-        <option value="chua_xong">Chưa xong</option>
-        <option value="da_xong">Đã xong</option>
-        <option value="huy">Hủy</option>
-      </select>
+    <div class="modal-head"><h3>Sửa Shop</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
+    <div class="form-row"><label>Mã vận đơn</label><input id="s_tracking" disabled></div>
+    <div class="form-row"><label>Nội dung Shop</label><textarea id="s_shop"></textarea><div class="quick" id="quickBoxShop"></div></div>
+    <div class="form-row"><label>Tiến độ Shop</label>
+      <select id="s_status_shop"><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select>
     </div>
     <button class="btn-green" onclick="saveShop()">Lưu Shop</button>
   </div>
 </div>
 
-<!-- EDIT ĐVVC -->
 <div id="dvvcModal" class="modal">
   <div class="modal-box">
-    <div class="modal-head">
-      <h3>Cập nhật ĐVVC</h3>
-      <button class="btn-gray" onclick="closeAll()">Đóng</button>
+    <div class="modal-head"><h3>Sửa ĐVVC</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
+    <div class="form-row"><label>Mã vận đơn</label><input id="d_tracking" disabled></div>
+    <div class="form-row"><label>Tiến độ ĐVVC</label>
+      <select id="d_status_dvvc"><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý được</option></select>
     </div>
-    <div class="form-row">
-      <label>Mã vận đơn</label>
-      <input id="d_tracking" disabled>
-    </div>
-    <div class="form-row">
-      <label>Tiến độ ĐVVC</label>
-      <select id="d_status_dvvc">
-        <option value="chua_xu_ly">Chưa xử lý</option>
-        <option value="dang_xu_ly">Đang xử lý</option>
-        <option value="da_xu_ly">Đã xử lý</option>
-        <option value="khong_xu_ly">Không xử lý được</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>Nội dung ĐVVC</label>
-      <textarea id="d_dvvc" placeholder="ĐVVC phản hồi tại đây"></textarea>
-    </div>
+    <div class="form-row"><label>Nội dung ĐVVC</label><textarea id="d_dvvc"></textarea></div>
     <button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button>
   </div>
 </div>
 
-<!-- HISTORY -->
 <div id="historyModal" class="modal">
   <div class="modal-box modal-sm">
-    <div class="modal-head">
-      <h3>Lịch sử thao tác</h3>
-      <button class="btn-gray" onclick="closeAll()">Đóng</button>
-    </div>
+    <div class="modal-head"><h3>Lịch sử thao tác</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
     <div id="h_content" class="history"></div>
   </div>
 </div>
 
-<!-- DETAIL -->
 <div id="detailModal" class="modal">
   <div class="modal-box">
-    <div class="modal-head">
-      <h3>Chi tiết phiếu</h3>
-      <button class="btn-gray" onclick="closeAll()">Đóng</button>
-    </div>
+    <div class="modal-head"><h3>Chi tiết phiếu</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
     <div id="detailContent"></div>
   </div>
 </div>
 
-<!-- IMAGE -->
-<div id="imgModal" class="modal" onclick="closeAll()">
-  <img id="bigImg" class="img-view" alt="Ảnh">
-</div>
+<div id="imgModal" class="modal" onclick="closeAll()"><img id="bigImg" class="img-view"></div>
 
 <script>
-const USERS = {
-  admin: {pass:"123456", role:"admin", name:"Admin"},
-  shop01: {pass:"123456", role:"shop", name:"Shop 01"},
-  nhanvienjt01: {pass:"123456", role:"dvvc", name:"Nhân viên JT 01"}
+const USERS={
+  admin:{pass:"123456",role:"admin",name:"Admin"},
+  shop01:{pass:"123456",role:"shop",name:"Shop 01"},
+  nhanvienjt01:{pass:"123456",role:"dvvc",name:"Nhân viên JT 01"}
 };
 
-const QUICK_TEXTS = [
-  "Hạ COD còn lại 35k",
-  "G1P",
-  "Đổi thông tin giao hàng thành:",
-  "Giao sớm cho khách hối",
-  "Tạo đơn thu hồi từ khách về shop",
-  "Shop báo chuyển hoàn",
-  "Báo shipper giao lại",
-  "Báo shipper cập nhật đơn hàng",
-  "Khách đã trả ship, báo shipper cập nhật tiền",
-  "Trả hàng về shop"
+const QUICK_TEXTS=[
+  "Hạ COD còn lại 35k","G1P","Đổi thông tin giao hàng thành:","Giao sớm cho khách hối",
+  "Tạo đơn thu hồi từ khách về shop","Shop báo chuyển hoàn","Báo shipper giao lại",
+  "Báo shipper cập nhật đơn hàng","Khách đã trả ship, báo shipper cập nhật tiền","Trả hàng về shop"
 ];
 
-let currentUser = null;
-let editId = null;
-let pastedImages = [];
-
-let tasks = [
-  {
-    id:"SPX123456789",
-    created_at: Date.now(),
-    tracking:"SPX123456789",
-    shop:"Hạ COD còn lại 35k\nKhách xác nhận nhận hàng trong hôm nay. Nhờ bên vận chuyển cập nhật sớm giúp shop.",
-    dvvc:"Đã gửi yêu cầu xuống bưu cục",
-    status_dvvc:"dang_xu_ly",
-    status_shop:"chua_xong",
-    images:[],
-    history:["Shop 01 tạo phiếu"]
-  },
-  {
-    id:"GHN987654321",
-    created_at: Date.now()-3600000,
-    tracking:"GHN987654321",
-    shop:"Giao sớm cho khách hối",
-    dvvc:"",
-    status_dvvc:"chua_xu_ly",
-    status_shop:"chua_xong",
-    images:[],
-    history:["Admin tạo phiếu"]
-  }
+let currentUser=null, editId=null, pastedImages=[];
+let tasks=[
+  {id:"SPX123456789",created_at:Date.now(),tracking:"SPX123456789",shop:"Hạ COD còn lại 35k\nKhách xác nhận nhận hàng trong hôm nay. Nhờ bên vận chuyển cập nhật sớm giúp shop.",dvvc:"Đã gửi yêu cầu xuống bưu cục",status_dvvc:"dang_xu_ly",status_shop:"chua_xong",images:[],history:["Shop 01 tạo phiếu"]},
+  {id:"GHN987654321",created_at:Date.now()-3600000,tracking:"GHN987654321",shop:"Giao sớm cho khách hối",dvvc:"",status_dvvc:"chua_xu_ly",status_shop:"chua_xong",images:[],history:["Admin tạo phiếu"]}
 ];
 
 function login(){
-  const u = loginUser.value.trim();
-  const p = loginPass.value;
-  if(!USERS[u] || USERS[u].pass !== p){
-    alert("Sai tài khoản hoặc mật khẩu");
-    return;
-  }
-  currentUser = {username:u, ...USERS[u]};
-  if(rememberLogin.checked){
-    localStorage.setItem("xvd_user", u);
-  }else{
-    localStorage.removeItem("xvd_user");
-  }
-  showApp();
-  renderQuick();
-  render();
+  const u=loginUser.value.trim(), p=loginPass.value;
+  if(!USERS[u]||USERS[u].pass!==p){alert("Sai tài khoản hoặc mật khẩu");return}
+  currentUser={username:u,...USERS[u]};
+  if(rememberLogin.checked)localStorage.setItem("xvd_user",u);else localStorage.removeItem("xvd_user");
+  showApp();renderQuick();render();
 }
-
-function showApp(){
-  loginPage.style.display = "none";
-  app.style.display = "block";
-  helloUser.textContent = currentUser.name + " ";
-}
-
-function logout(){
-  localStorage.removeItem("xvd_user");
-  currentUser = null;
-  app.style.display = "none";
-  loginPage.style.display = "flex";
-}
-
-function formatTime(ts){
-  const d = new Date(ts);
-  return d.toLocaleString("vi-VN",{hour12:false});
-}
-
-function statusDvvcText(s){
-  return {
-    chua_xu_ly:"Chưa xử lý",
-    dang_xu_ly:"Đang xử lý",
-    da_xu_ly:"Đã xử lý",
-    khong_xu_ly:"Không xử lý được"
-  }[s] || s;
-}
-
-function statusShopText(s){
-  return {chua_xong:"Chưa xong", da_xong:"Đã xong", huy:"Hủy"}[s] || s;
-}
-
-function badgeDvvc(s){
-  const cls = s==="chua_xu_ly" ? "red" : s==="dang_xu_ly" ? "yellow" : s==="da_xu_ly" ? "green" : "black";
-  return `<span class="badge ${cls}">${statusDvvcText(s)}</span>`;
-}
-
-function badgeShop(s){
-  const cls = s==="da_xong" ? "green" : s==="huy" ? "black" : "red";
-  return `<span class="badge ${cls}">${statusShopText(s)}</span>`;
-}
+function showApp(){loginPage.style.display="none";app.style.display="block";helloUser.textContent=currentUser.name+" "}
+function logout(){localStorage.removeItem("xvd_user");currentUser=null;app.style.display="none";loginPage.style.display="flex"}
+function formatTime(ts){return new Date(ts).toLocaleString("vi-VN",{hour12:false,day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}
+function statusDvvcText(s){return {chua_xu_ly:"Chưa xử lý",dang_xu_ly:"Đang xử lý",da_xu_ly:"Đã xử lý",khong_xu_ly:"Không xử lý"}[s]||s}
+function statusShopText(s){return {chua_xong:"Chưa xong",da_xong:"Đã xong",huy:"Hủy"}[s]||s}
+function badgeDvvc(s){const c=s==="chua_xu_ly"?"red":s==="dang_xu_ly"?"yellow":s==="da_xu_ly"?"green":"black";return `<span class="badge ${c}">${statusDvvcText(s)}</span>`}
+function badgeShop(s){const c=s==="da_xong"?"green":s==="huy"?"black":"red";return `<span class="badge ${c}">${statusShopText(s)}</span>`}
 
 function render(){
-  const q = searchBox.value.trim().toLowerCase();
-  const fd = filterDvvc.value;
-  const fs = filterShop.value;
+  const q=searchBox.value.trim().toLowerCase(), fd=filterDvvc.value, fs=filterShop.value;
+  let list=tasks.filter(t=>!t.deleted);
+  if(q)list=list.filter(t=>t.tracking.toLowerCase().includes(q)||t.shop.toLowerCase().includes(q)||(t.dvvc||"").toLowerCase().includes(q));
+  if(fd)list=list.filter(t=>t.status_dvvc===fd);
+  if(fs)list=list.filter(t=>t.status_shop===fs);
 
-  let list = tasks.filter(t => !t.deleted);
-  if(q) list = list.filter(t =>
-    t.tracking.toLowerCase().includes(q) ||
-    t.shop.toLowerCase().includes(q) ||
-    t.dvvc.toLowerCase().includes(q)
-  );
-  if(fd) list = list.filter(t => t.status_dvvc === fd);
-  if(fs) list = list.filter(t => t.status_shop === fs);
+  const a=tasks.filter(t=>!t.deleted);
+  stTotal.textContent=a.length;
+  stShopRed.textContent=a.filter(t=>t.status_shop==="chua_xong").length;
+  stShopGreen.textContent=a.filter(t=>t.status_shop==="da_xong").length;
+  stShopCancel.textContent=a.filter(t=>t.status_shop==="huy").length;
+  stDvvcRed.textContent=a.filter(t=>t.status_dvvc==="chua_xu_ly").length;
+  stDvvcYellow.textContent=a.filter(t=>t.status_dvvc==="dang_xu_ly").length;
+  stDvvcGreen.textContent=a.filter(t=>t.status_dvvc==="da_xu_ly").length;
+  stDvvcBlack.textContent=a.filter(t=>t.status_dvvc==="khong_xu_ly").length;
 
-  const active = tasks.filter(t=>!t.deleted);
-  stTotal.textContent = active.length;
-  stShopRed.textContent = active.filter(t=>t.status_shop==="chua_xong").length;
-  stShopGreen.textContent = active.filter(t=>t.status_shop==="da_xong").length;
-  stShopCancel.textContent = active.filter(t=>t.status_shop==="huy").length;
-  stDvvcRed.textContent = active.filter(t=>t.status_dvvc==="chua_xu_ly").length;
-  stDvvcYellow.textContent = active.filter(t=>t.status_dvvc==="dang_xu_ly").length;
-  stDvvcGreen.textContent = active.filter(t=>t.status_dvvc==="da_xu_ly").length;
-  stDvvcBlack.textContent = active.filter(t=>t.status_dvvc==="khong_xu_ly").length;
-
-  tbody.innerHTML = list.map((t,i)=>`
-    <tr>
-      <td>${i+1}</td>
-      <td>${formatTime(t.created_at)}</td>
-      <td>
-        <div class="code-wrap">
-          <span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span>
-          <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button>
-        </div>
-      </td>
-      <td class="content-cell">
-        <div class="content-preview" id="shopPrev_${t.id}">${escapeHtml(t.shop)}</div>
-        ${t.shop.length > 55 ? `<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>` : ""}
-      </td>
-      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImg('${t.images[0]}')">📷 ${t.images.length}</button>` : ""}</td>
-      <td>${badgeShop(t.status_shop)}</td>
-      <td><button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button></td>
-      <td class="content-cell">
-        <div class="content-preview">${escapeHtml(t.dvvc || "")}</div>
-        ${(t.dvvc || "").length > 55 ? `<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>` : ""}
-      </td>
-      <td>${badgeDvvc(t.status_dvvc)}</td>
-      <td><button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button></td>
-      <td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${t.history?.length || 0})</button></td>
-      <td>${currentUser.role==="admin" ? `<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>` : ""}</td>
-    </tr>
-  `).join("");
+  listRows.innerHTML=list.map((t,i)=>`
+    <div class="row">
+      <div class="cell">${i+1}</div>
+      <div class="cell">${formatTime(t.created_at)}</div>
+      <div class="cell"><div class="code-wrap"><span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span><button class="btn-mini btn-gray" onclick="copyTracking('${t.tracking}')">📋</button></div></div>
+      <div class="cell">${badgeShop(t.status_shop)}</div>
+      <div class="cell">${badgeDvvc(t.status_dvvc)}</div>
+      <div class="cell text2" onclick="openDetail('${t.id}')">${escapeHtml(t.shop)}</div>
+      <div class="cell text2" onclick="openDetail('${t.id}')">${escapeHtml(t.dvvc||"")}</div>
+      <div class="cell">${t.images?.length?`<button class="btn-mini btn-gray" onclick="showImg('${t.images[0]}')">📷 ${t.images.length}</button>`:""}</div>
+      <div class="cell"><button class="btn-mini btn-blue" onclick="openShop('${t.id}')">Shop</button></div>
+      <div class="cell"><button class="btn-mini btn-orange" onclick="openDvvc('${t.id}')">ĐVVC</button></div>
+      <div class="cell"><button class="btn-mini btn-gray" onclick="openHistory('${t.id}')">Xem</button></div>
+      <div class="cell">${currentUser.role==="admin"?`<button class="btn-mini btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:""}</div>
+    </div>`).join("");
 }
-
-function renderQuick(){
-  const html = QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join("");
-  quickBox.innerHTML = html;
-  quickBoxShop.innerHTML = html.replaceAll("addQuick", "addQuickShop");
-}
-
-function addQuick(txt){
-  const old = c_shop.value.trim();
-  c_shop.value = old ? old + "\n" + txt : txt;
-}
-
-function addQuickShop(txt){
-  const old = s_shop.value.trim();
-  s_shop.value = old ? old + "\n" + txt : txt;
-}
-
-function openCreate(){
-  editId = null;
-  c_tracking.value = "";
-  c_shop.value = "";
-  c_images.value = "";
-  pastedImages = [];
-  renderPreview();
-  createModal.style.display = "flex";
-}
-
-function openShop(id){
-  const t = tasks.find(x=>x.id===id);
-  if(!t) return;
-  editId = id;
-  s_tracking.value = t.tracking;
-  s_shop.value = t.shop;
-  s_status_shop.value = t.status_shop;
-  shopModal.style.display = "flex";
-}
-
-function openDvvc(id){
-  const t = tasks.find(x=>x.id===id);
-  if(!t) return;
-  editId = id;
-  d_tracking.value = t.tracking;
-  d_status_dvvc.value = t.status_dvvc;
-  d_dvvc.value = t.dvvc || "";
-  dvvcModal.style.display = "flex";
-}
-
-function openHistory(id){
-  const t = tasks.find(x=>x.id===id);
-  if(!t) return;
-  h_content.textContent = (t.history || []).join("\n");
-  historyModal.style.display = "flex";
-}
-
+function renderQuick(){const h=QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join("");quickBox.innerHTML=h;quickBoxShop.innerHTML=h.replaceAll("addQuick","addQuickShop")}
+function addQuick(txt){c_shop.value=c_shop.value.trim()?c_shop.value.trim()+"\n"+txt:txt}
+function addQuickShop(txt){s_shop.value=s_shop.value.trim()?s_shop.value.trim()+"\n"+txt:txt}
+function openCreate(){editId=null;c_tracking.value="";c_shop.value="";c_images.value="";pastedImages=[];renderPreview();createModal.style.display="flex"}
+function openShop(id){const t=tasks.find(x=>x.id===id);editId=id;s_tracking.value=t.tracking;s_shop.value=t.shop;s_status_shop.value=t.status_shop;shopModal.style.display="flex"}
+function openDvvc(id){const t=tasks.find(x=>x.id===id);editId=id;d_tracking.value=t.tracking;d_status_dvvc.value=t.status_dvvc;d_dvvc.value=t.dvvc||"";dvvcModal.style.display="flex"}
+function openHistory(id){const t=tasks.find(x=>x.id===id);h_content.textContent=(t.history||[]).join("\n");historyModal.style.display="flex"}
 function openDetail(id){
-  const t = tasks.find(x=>x.id===id);
-  if(!t) return;
-  detailContent.innerHTML = `
-    <div class="detail-grid">
-      <div class="detail-label">Ngày ghi nhận</div><div class="detail-value">${formatTime(t.created_at)}</div>
-      <div class="detail-label">Mã vận đơn</div><div class="detail-value"><b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div>
-      <div class="detail-label">Nội dung Shop</div><div class="detail-value">${escapeHtml(t.shop)}</div>
-      <div class="detail-label">Tiến độ Shop</div><div class="detail-value">${badgeShop(t.status_shop)}</div>
-      <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc || "")}</div>
-      <div class="detail-label">Tiến độ ĐVVC</div><div class="detail-value">${badgeDvvc(t.status_dvvc)}</div>
-      <div class="detail-label">Ảnh</div><div class="detail-value">${t.images?.length ? t.images.map(src=>`<img class="preview-img" src="${src}" onclick="showImg('${src}')">`).join("") : "Không có ảnh"}</div>
-      <div class="detail-label">Lịch sử</div><div class="detail-value">${escapeHtml((t.history || []).join("\\n"))}</div>
-    </div>
-  `;
-  detailModal.style.display = "flex";
+  const t=tasks.find(x=>x.id===id);
+  detailContent.innerHTML=`<div class="detail-grid">
+    <div class="detail-label">Ngày</div><div>${formatTime(t.created_at)}</div>
+    <div class="detail-label">Mã vận đơn</div><div><b style="color:#2563eb">${t.tracking}</b> <button class="btn-mini btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div>
+    <div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div>
+    <div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div>
+    <div class="detail-label">Nội dung Shop</div><div class="detail-value">${escapeHtml(t.shop)}</div>
+    <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc||"")}</div>
+    <div class="detail-label">Ảnh</div><div>${t.images?.length?t.images.map(src=>`<img class="preview-img" src="${src}" onclick="showImg('${src}')">`).join(""):"Không có ảnh"}</div>
+    <div class="detail-label">Lịch sử</div><div class="detail-value">${escapeHtml((t.history||[]).join("\n"))}</div>
+  </div>`;
+  detailModal.style.display="flex";
 }
-
-function closeAll(){
-  createModal.style.display = "none";
-  shopModal.style.display = "none";
-  dvvcModal.style.display = "none";
-  historyModal.style.display = "none";
-  detailModal.style.display = "none";
-  imgModal.style.display = "none";
-}
-
+function closeAll(){createModal.style.display=shopModal.style.display=dvvcModal.style.display=historyModal.style.display=detailModal.style.display=imgModal.style.display="none"}
 function createTask(){
-  const tracking = c_tracking.value.trim().toUpperCase();
-  if(!tracking){
-    alert("Chưa nhập mã vận đơn");
-    return;
-  }
-  let old = tasks.find(t=>t.id===tracking && !t.deleted);
-  if(old){
-    alert("Mã vận đơn đã tồn tại. Chỉ cập nhật lại phiếu cũ.");
-    return;
-  }
-  const now = Date.now();
-  tasks.unshift({
-    id: tracking,
-    created_at: now,
-    tracking,
-    shop: c_shop.value.trim(),
-    dvvc: "",
-    status_dvvc: "chua_xu_ly",
-    status_shop: "chua_xong",
-    images: [...pastedImages],
-    history: [`${formatTime(now)} - ${currentUser.name} tạo phiếu`]
-  });
-  closeAll();
-  render();
+  const tracking=c_tracking.value.trim().toUpperCase();
+  if(!tracking){alert("Chưa nhập mã vận đơn");return}
+  if(tasks.find(t=>t.id===tracking&&!t.deleted)){alert("Mã vận đơn đã tồn tại. Chỉ cập nhật lại phiếu cũ.");return}
+  const now=Date.now();
+  tasks.unshift({id:tracking,created_at:now,tracking,shop:c_shop.value.trim(),dvvc:"",status_dvvc:"chua_xu_ly",status_shop:"chua_xong",images:[...pastedImages],history:[`${formatTime(now)} - ${currentUser.name} tạo phiếu`]});
+  closeAll();render();
 }
-
 function saveShop(){
-  const t = tasks.find(x=>x.id===editId);
-  if(!t) return;
-
-  const now = Date.now();
-  const changes = [];
-
-  if(t.shop !== s_shop.value.trim()) changes.push("sửa nội dung Shop");
-  if(t.status_shop !== s_status_shop.value) changes.push(`Shop: ${statusShopText(t.status_shop)} -> ${statusShopText(s_status_shop.value)}`);
-
-  t.shop = s_shop.value.trim();
-  t.status_shop = s_status_shop.value;
-  t.updated_at = now;
-
-  if(changes.length){
-    t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
-  }
-
-  closeAll();
-  render();
+  const t=tasks.find(x=>x.id===editId), now=Date.now(), changes=[];
+  if(t.shop!==s_shop.value.trim())changes.push("sửa nội dung Shop");
+  if(t.status_shop!==s_status_shop.value)changes.push(`Shop: ${statusShopText(t.status_shop)} -> ${statusShopText(s_status_shop.value)}`);
+  t.shop=s_shop.value.trim();t.status_shop=s_status_shop.value;t.updated_at=now;
+  if(changes.length)t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
+  closeAll();render();
 }
-
 function saveDvvc(){
-  const t = tasks.find(x=>x.id===editId);
-  if(!t) return;
-
-  const now = Date.now();
-  const changes = [];
-
-  if(t.status_dvvc !== d_status_dvvc.value) changes.push(`ĐVVC: ${statusDvvcText(t.status_dvvc)} -> ${statusDvvcText(d_status_dvvc.value)}`);
-  if(t.dvvc !== d_dvvc.value.trim()) changes.push("sửa nội dung ĐVVC");
-
-  t.status_dvvc = d_status_dvvc.value;
-  t.dvvc = d_dvvc.value.trim();
-  t.updated_at = now;
-
-  if(changes.length){
-    t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
-  }
-
-  closeAll();
-  render();
+  const t=tasks.find(x=>x.id===editId), now=Date.now(), changes=[];
+  if(t.status_dvvc!==d_status_dvvc.value)changes.push(`ĐVVC: ${statusDvvcText(t.status_dvvc)} -> ${statusDvvcText(d_status_dvvc.value)}`);
+  if(t.dvvc!==d_dvvc.value.trim())changes.push("sửa nội dung ĐVVC");
+  t.status_dvvc=d_status_dvvc.value;t.dvvc=d_dvvc.value.trim();t.updated_at=now;
+  if(changes.length)t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
+  closeAll();render();
 }
-
-function deleteTask(id){
-  if(currentUser.role !== "admin") return;
-  if(!confirm("Xóa phiếu này?")) return;
-  const t = tasks.find(x=>x.id===id);
-  if(t){
-    t.deleted = true;
-    t.history.push(`${formatTime(Date.now())} - ${currentUser.name} xóa phiếu`);
-  }
-  render();
-}
-
-function copyTracking(code){
-  navigator.clipboard.writeText(code).then(()=>alert("Đã copy mã vận đơn: " + code));
-}
-
-function handleFileImages(event){
-  const files = Array.from(event.target.files || []);
-  files.forEach(file => {
-    if(!file.type.startsWith("image/")) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      pastedImages.push(e.target.result);
-      renderPreview();
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-function renderPreview(){
-  if(!document.getElementById("c_preview")) return;
-  c_preview.innerHTML = pastedImages.map((src,i)=>`
-    <img class="preview-img" src="${src}" onclick="showImg('${src}')">
-  `).join("");
-}
-
-document.addEventListener("paste", function(e){
-  if(createModal.style.display !== "flex") return;
-  const items = e.clipboardData && e.clipboardData.items ? Array.from(e.clipboardData.items) : [];
-  let found = false;
-  items.forEach(item => {
-    if(item.type.indexOf("image") === 0){
-      found = true;
-      const file = item.getAsFile();
-      const reader = new FileReader();
-      reader.onload = ev => {
-        pastedImages.push(ev.target.result);
-        renderPreview();
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-  if(found) e.preventDefault();
-});
-
-function showImg(src){
-  bigImg.src = src;
-  imgModal.style.display = "flex";
-}
-
-window.addEventListener("load", function(){
-  const saved = localStorage.getItem("xvd_user");
-  if(saved && USERS[saved]){
-    currentUser = {username:saved, ...USERS[saved]};
-    showApp();
-    renderQuick();
-    render();
-  }
-});
-
-function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-}
+function deleteTask(id){if(currentUser.role!=="admin")return;if(!confirm("Xóa phiếu này?"))return;const t=tasks.find(x=>x.id===id);t.deleted=true;t.history.push(`${formatTime(Date.now())} - ${currentUser.name} xóa phiếu`);render()}
+function copyTracking(code){navigator.clipboard.writeText(code).then(()=>alert("Đã copy: "+code))}
+function handleFileImages(e){Array.from(e.target.files||[]).forEach(file=>{if(!file.type.startsWith("image/"))return;const r=new FileReader();r.onload=ev=>{pastedImages.push(ev.target.result);renderPreview()};r.readAsDataURL(file)})}
+function renderPreview(){c_preview.innerHTML=pastedImages.map(src=>`<img class="preview-img" src="${src}" onclick="showImg('${src}')">`).join("")}
+document.addEventListener("paste",e=>{if(createModal.style.display!=="flex")return;Array.from(e.clipboardData?.items||[]).forEach(item=>{if(item.type.indexOf("image")===0){const f=item.getAsFile(),r=new FileReader();r.onload=ev=>{pastedImages.push(ev.target.result);renderPreview()};r.readAsDataURL(f);e.preventDefault()}})})
+function showImg(src){bigImg.src=src;imgModal.style.display="flex"}
+window.addEventListener("load",()=>{const s=localStorage.getItem("xvd_user");if(s&&USERS[s]){currentUser={username:s,...USERS[s]};showApp();renderQuick();render()}})
+function escapeHtml(str){return String(str).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 </script>
+
 </body>
 </html>
