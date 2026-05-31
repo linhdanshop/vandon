@@ -18,30 +18,40 @@ button{border:0;border-radius:6px;padding:8px 11px;cursor:pointer;font-weight:60
 .btn-red{background:#dc2626;color:white}
 .btn-gray{background:#e5e7eb;color:#111827}
 .btn-orange{background:#f59e0b;color:white}
-.btn-small{padding:6px 8px;font-size:13px}
+.btn-small{padding:5px 7px;font-size:12px}
 .app{display:none}
 .topbar{height:56px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
 .topbar h2{font-size:18px;margin:0}
 .main{padding:14px}
 .toolbar{background:white;border-radius:8px;padding:12px;display:flex;gap:8px;align-items:center;margin-bottom:12px;box-shadow:0 1px 4px #0001}
 .toolbar input,.toolbar select{max-width:220px}
-.stats{display:flex;gap:8px;margin-bottom:12px}
-.stat{background:white;border-radius:8px;padding:10px 14px;box-shadow:0 1px 4px #0001}
+
+.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.stat-box{background:white;border-radius:8px;padding:12px;box-shadow:0 1px 4px #0001}
+.stat-title{font-weight:700;margin-bottom:8px;color:#374151}
+.stat-line{display:flex;gap:8px;flex-wrap:wrap}
+.stat-pill{background:#f3f4f6;border-radius:8px;padding:8px 10px;white-space:nowrap}
+.stat-pill b{font-size:16px}
+
 .table-wrap{background:white;border-radius:8px;overflow:auto;box-shadow:0 1px 4px #0001}
-table{width:100%;border-collapse:collapse;min-width:1260px}
-th,td{border-bottom:1px solid #e5e7eb;padding:9px;text-align:left;vertical-align:top}
-th{background:#f9fafb;position:sticky;top:0;z-index:1}
+table{width:100%;border-collapse:collapse;min-width:1380px}
+th,td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}
+th{background:#f9fafb;position:sticky;top:0;z-index:1;font-size:13px}
 tr:hover{background:#f9fafb}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700}
 .red{background:#fee2e2;color:#b91c1c}
 .yellow{background:#fef3c7;color:#92400e}
 .green{background:#dcfce7;color:#166534}
 .black{background:#e5e7eb;color:#111827}
-.content-cell{max-width:280px;white-space:pre-wrap}
+.code-wrap{display:flex;align-items:center;gap:6px}
+.code-link{color:#2563eb;font-weight:700;cursor:pointer;text-decoration:underline}
+.content-cell{max-width:240px;font-size:13px;line-height:1.35;white-space:pre-wrap}
+.content-preview{max-height:38px;overflow:hidden}
+.more-btn{padding:0;background:transparent;color:#2563eb;font-weight:700;margin-top:2px}
 .actions{display:flex;gap:5px;flex-wrap:wrap}
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:10;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:white;width:min(720px,96vw);max-height:92vh;overflow:auto;border-radius:10px;padding:16px}
-.modal-sm{width:min(520px,96vw)}
+.modal-box{background:white;width:min(760px,96vw);max-height:92vh;overflow:auto;border-radius:10px;padding:16px}
+.modal-sm{width:min(560px,96vw)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .modal-head h3{margin:0}
 .form-row{margin-bottom:12px}
@@ -51,8 +61,11 @@ tr:hover{background:#f9fafb}
 .img-view{max-width:90vw;max-height:85vh;border-radius:8px;background:white}
 .preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .preview-img{width:72px;height:72px;object-fit:cover;border-radius:6px;border:1px solid #d1d5db;cursor:pointer}
+.detail-grid{display:grid;grid-template-columns:150px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}
+.detail-label{font-weight:700;color:#374151}
+.detail-value{white-space:pre-wrap}
 .note{font-size:12px;color:#6b7280;margin-top:4px}
-@media(max-width:800px){.toolbar{flex-wrap:wrap}.toolbar input,.toolbar select{max-width:none}.stats{overflow:auto}.topbar{height:auto;padding:10px;gap:8px;flex-wrap:wrap}}
+@media(max-width:900px){.stats-wrap{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.toolbar input,.toolbar select{max-width:none}.topbar{height:auto;padding:10px;gap:8px;flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -86,27 +99,41 @@ tr:hover{background:#f9fafb}
     <div class="toolbar">
       <button class="btn-blue" onclick="openCreate()">+ Tạo phiếu</button>
       <input id="searchBox" placeholder="Tìm mã vận đơn / nội dung" oninput="render()">
-      <select id="filterDvvc" onchange="render()">
-        <option value="">Tất cả ĐVVC</option>
-        <option value="chua_xu_ly">Chưa xử lý</option>
-        <option value="dang_xu_ly">Đang xử lý</option>
-        <option value="da_xu_ly">Đã xử lý</option>
-        <option value="khong_xu_ly">Không xử lý được</option>
-      </select>
       <select id="filterShop" onchange="render()">
         <option value="">Tất cả Shop</option>
-        <option value="chua_xong">Chưa xong</option>
-        <option value="da_xong">Đã xong</option>
-        <option value="huy">Hủy</option>
+        <option value="chua_xong">Shop chưa xong</option>
+        <option value="da_xong">Shop đã xong</option>
+        <option value="huy">Shop hủy</option>
+      </select>
+      <select id="filterDvvc" onchange="render()">
+        <option value="">Tất cả ĐVVC</option>
+        <option value="chua_xu_ly">ĐVVC chưa xử lý</option>
+        <option value="dang_xu_ly">ĐVVC đang xử lý</option>
+        <option value="da_xu_ly">ĐVVC đã xử lý</option>
+        <option value="khong_xu_ly">ĐVVC không xử lý được</option>
       </select>
     </div>
 
-    <div class="stats">
-      <div class="stat">Tổng: <b id="stTotal">0</b></div>
-      <div class="stat">🔴 Chưa xử lý: <b id="stRed">0</b></div>
-      <div class="stat">🟡 Đang xử lý: <b id="stYellow">0</b></div>
-      <div class="stat">🟢 Đã xử lý: <b id="stGreen">0</b></div>
-      <div class="stat">Shop xong: <b id="stShop">0</b></div>
+    <div class="stats-wrap">
+      <div class="stat-box">
+        <div class="stat-title">Thống kê Shop</div>
+        <div class="stat-line">
+          <div class="stat-pill">Tổng: <b id="stTotal">0</b></div>
+          <div class="stat-pill">🔴 Chưa xong: <b id="stShopRed">0</b></div>
+          <div class="stat-pill">🟢 Đã xong: <b id="stShopGreen">0</b></div>
+          <div class="stat-pill">⚫ Hủy: <b id="stShopCancel">0</b></div>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-title">Thống kê ĐVVC</div>
+        <div class="stat-line">
+          <div class="stat-pill">🔴 Chưa xử lý: <b id="stDvvcRed">0</b></div>
+          <div class="stat-pill">🟡 Đang xử lý: <b id="stDvvcYellow">0</b></div>
+          <div class="stat-pill">🟢 Đã xử lý: <b id="stDvvcGreen">0</b></div>
+          <div class="stat-pill">⚫ Không xử lý: <b id="stDvvcBlack">0</b></div>
+        </div>
+      </div>
     </div>
 
     <div class="table-wrap">
@@ -118,11 +145,13 @@ tr:hover{background:#f9fafb}
             <th>Mã vận đơn</th>
             <th>Nội dung Shop</th>
             <th>Ảnh</th>
-            <th>Tiến độ ĐVVC</th>
-            <th>Nội dung ĐVVC</th>
             <th>Tiến độ Shop</th>
+            <th>Shop sửa</th>
+            <th>Nội dung ĐVVC</th>
+            <th>Tiến độ ĐVVC</th>
+            <th>ĐVVC sửa</th>
             <th>Lịch sử</th>
-            <th>Thao tác riêng</th>
+            <th>Xóa</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -229,6 +258,17 @@ tr:hover{background:#f9fafb}
   </div>
 </div>
 
+<!-- DETAIL -->
+<div id="detailModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Chi tiết phiếu</h3>
+      <button class="btn-gray" onclick="closeAll()">Đóng</button>
+    </div>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
 <!-- IMAGE -->
 <div id="imgModal" class="modal" onclick="closeAll()">
   <img id="bigImg" class="img-view" alt="Ảnh">
@@ -263,7 +303,7 @@ let tasks = [
     id:"SPX123456789",
     created_at: Date.now(),
     tracking:"SPX123456789",
-    shop:"Hạ COD còn lại 35k",
+    shop:"Hạ COD còn lại 35k\nKhách xác nhận nhận hàng trong hôm nay. Nhờ bên vận chuyển cập nhật sớm giúp shop.",
     dvvc:"Đã gửi yêu cầu xuống bưu cục",
     status_dvvc:"dang_xu_ly",
     status_shop:"chua_xong",
@@ -356,30 +396,41 @@ function render(){
   if(fd) list = list.filter(t => t.status_dvvc === fd);
   if(fs) list = list.filter(t => t.status_shop === fs);
 
-  stTotal.textContent = tasks.filter(t=>!t.deleted).length;
-  stRed.textContent = tasks.filter(t=>!t.deleted && t.status_dvvc==="chua_xu_ly").length;
-  stYellow.textContent = tasks.filter(t=>!t.deleted && t.status_dvvc==="dang_xu_ly").length;
-  stGreen.textContent = tasks.filter(t=>!t.deleted && t.status_dvvc==="da_xu_ly").length;
-  stShop.textContent = tasks.filter(t=>!t.deleted && t.status_shop==="da_xong").length;
+  const active = tasks.filter(t=>!t.deleted);
+  stTotal.textContent = active.length;
+  stShopRed.textContent = active.filter(t=>t.status_shop==="chua_xong").length;
+  stShopGreen.textContent = active.filter(t=>t.status_shop==="da_xong").length;
+  stShopCancel.textContent = active.filter(t=>t.status_shop==="huy").length;
+  stDvvcRed.textContent = active.filter(t=>t.status_dvvc==="chua_xu_ly").length;
+  stDvvcYellow.textContent = active.filter(t=>t.status_dvvc==="dang_xu_ly").length;
+  stDvvcGreen.textContent = active.filter(t=>t.status_dvvc==="da_xu_ly").length;
+  stDvvcBlack.textContent = active.filter(t=>t.status_dvvc==="khong_xu_ly").length;
 
   tbody.innerHTML = list.map((t,i)=>`
     <tr>
       <td>${i+1}</td>
       <td>${formatTime(t.created_at)}</td>
-      <td><b style="color:#2563eb">${t.tracking}</b></td>
-      <td class="content-cell">${escapeHtml(t.shop)}</td>
-      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImg('${t.images[0]}')">📷 ${t.images.length}</button>` : ""}</td>
-      <td>${badgeDvvc(t.status_dvvc)}</td>
-      <td class="content-cell">${escapeHtml(t.dvvc || "")}</td>
-      <td>${badgeShop(t.status_shop)}</td>
-      <td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${t.history?.length || 0})</button></td>
       <td>
-        <div class="actions">
-          <button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>
-          <button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>
-          ${currentUser.role==="admin" ? `<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>` : ""}
+        <div class="code-wrap">
+          <span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span>
+          <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button>
         </div>
       </td>
+      <td class="content-cell">
+        <div class="content-preview" id="shopPrev_${t.id}">${escapeHtml(t.shop)}</div>
+        ${t.shop.length > 55 ? `<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>` : ""}
+      </td>
+      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImg('${t.images[0]}')">📷 ${t.images.length}</button>` : ""}</td>
+      <td>${badgeShop(t.status_shop)}</td>
+      <td><button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button></td>
+      <td class="content-cell">
+        <div class="content-preview">${escapeHtml(t.dvvc || "")}</div>
+        ${(t.dvvc || "").length > 55 ? `<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>` : ""}
+      </td>
+      <td>${badgeDvvc(t.status_dvvc)}</td>
+      <td><button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button></td>
+      <td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${t.history?.length || 0})</button></td>
+      <td>${currentUser.role==="admin" ? `<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>` : ""}</td>
     </tr>
   `).join("");
 }
@@ -437,11 +488,30 @@ function openHistory(id){
   historyModal.style.display = "flex";
 }
 
+function openDetail(id){
+  const t = tasks.find(x=>x.id===id);
+  if(!t) return;
+  detailContent.innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-label">Ngày ghi nhận</div><div class="detail-value">${formatTime(t.created_at)}</div>
+      <div class="detail-label">Mã vận đơn</div><div class="detail-value"><b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div>
+      <div class="detail-label">Nội dung Shop</div><div class="detail-value">${escapeHtml(t.shop)}</div>
+      <div class="detail-label">Tiến độ Shop</div><div class="detail-value">${badgeShop(t.status_shop)}</div>
+      <div class="detail-label">Nội dung ĐVVC</div><div class="detail-value">${escapeHtml(t.dvvc || "")}</div>
+      <div class="detail-label">Tiến độ ĐVVC</div><div class="detail-value">${badgeDvvc(t.status_dvvc)}</div>
+      <div class="detail-label">Ảnh</div><div class="detail-value">${t.images?.length ? t.images.map(src=>`<img class="preview-img" src="${src}" onclick="showImg('${src}')">`).join("") : "Không có ảnh"}</div>
+      <div class="detail-label">Lịch sử</div><div class="detail-value">${escapeHtml((t.history || []).join("\\n"))}</div>
+    </div>
+  `;
+  detailModal.style.display = "flex";
+}
+
 function closeAll(){
   createModal.style.display = "none";
   shopModal.style.display = "none";
   dvvcModal.style.display = "none";
   historyModal.style.display = "none";
+  detailModal.style.display = "none";
   imgModal.style.display = "none";
 }
 
@@ -527,11 +597,9 @@ function deleteTask(id){
   render();
 }
 
-function showImg(src){
-  bigImg.src = src;
-  imgModal.style.display = "flex";
+function copyTracking(code){
+  navigator.clipboard.writeText(code).then(()=>alert("Đã copy mã vận đơn: " + code));
 }
-
 
 function handleFileImages(event){
   const files = Array.from(event.target.files || []);
@@ -571,6 +639,11 @@ document.addEventListener("paste", function(e){
   });
   if(found) e.preventDefault();
 });
+
+function showImg(src){
+  bigImg.src = src;
+  imgModal.style.display = "flex";
+}
 
 window.addEventListener("load", function(){
   const saved = localStorage.getItem("xvd_user");
