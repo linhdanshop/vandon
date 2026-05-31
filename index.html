@@ -230,7 +230,8 @@ td:nth-child(9) .content-preview{border-left-color:#fed7aa;background:#fffaf3}
       Ghi nhớ đăng nhập
     </label>
     <button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button>
-    <p style="color:#6b7280;text-align:center;margin-bottom:0">Demo: admin / 123456</p>
+    <p style="color:#6b7280;text-align:center;margin-bottom:8px">Mặc định: admin / 123456</p>
+    <button type="button" class="btn-gray" style="width:100%;font-size:12px" onclick="resetDefaultLogin()">Reset tài khoản mặc định</button>
   </div>
 </div>
 
@@ -529,12 +530,17 @@ const USERS = {
 function loadSavedUsers(){
   try{
     const saved = JSON.parse(localStorage.getItem("xvd_users") || "{}");
+    const defaultUsers = ["admin", "shop01", "nhanvienjt01"];
     Object.keys(saved).forEach(u => {
+      // Không cho dữ liệu lưu trong trình duyệt ghi đè 3 tài khoản mặc định, tránh bị đổi mật khẩu rồi không đăng nhập được.
+      if(defaultUsers.includes(u)) return;
       if(saved[u] && saved[u].pass && saved[u].role){
         USERS[u] = saved[u];
       }
     });
-  }catch(e){}
+  }catch(e){
+    localStorage.removeItem("xvd_users");
+  }
 }
 
 function saveUsers(){
@@ -590,6 +596,14 @@ let tasks = [
     history:[]
   }
 ];
+
+function resetDefaultLogin(){
+  localStorage.removeItem("xvd_user");
+  localStorage.removeItem("xvd_users");
+  loginUser.value = "admin";
+  loginPass.value = "123456";
+  alert("Đã reset. Đăng nhập bằng admin / 123456");
+}
 
 function login(){
   const u = loginUser.value.trim();
