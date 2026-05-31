@@ -140,6 +140,22 @@
   }
 }
 
+
+
+/* ===== QUẢN LÝ TÀI KHOẢN: thêm nút Sửa + đổi tên/mật khẩu ===== */
+.account-grid.account-form{grid-template-columns:1.2fr 1.1fr 1fr 1fr auto auto!important;margin-bottom:10px}
+.account-row{grid-template-columns:1.2fr 1fr 1fr 1fr 160px!important}
+.account-actions{display:flex;gap:6px;justify-content:flex-end;align-items:center}
+.account-row b{color:#111827}.account-row .muted{color:#64748b;font-size:12px}
+#accountEditNote{font-size:12px;color:#2563eb;margin:4px 0 8px;min-height:16px;font-weight:700}
+.btn-purple{background:#7c3aed;color:#fff}
+@media(max-width:900px){
+  .account-grid.account-form{grid-template-columns:1fr 1fr!important}
+  .account-grid.account-form button{grid-column:auto!important}
+  .account-row{grid-template-columns:1fr 1fr!important;gap:6px!important}
+  .account-actions{grid-column:1/3;justify-content:flex-start}
+}
+
 </style>
 </head>
 <body>
@@ -171,7 +187,18 @@
 <div id="dvvcModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Cập nhật ĐVVC</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>Mã vận đơn</label><input id="d_tracking" disabled></div><div class="form-row"><label>Tiến độ ĐVVC</label><select id="d_status_dvvc"><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý được</option></select></div><div class="form-row"><label>Nội dung ĐVVC</label><textarea id="d_dvvc"></textarea></div><div class="form-row"><label>Ảnh ĐVVC bổ sung</label><input id="d_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview_dvvc" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button></div></div>
 <div id="historyModal" class="modal"><div class="modal-box modal-sm"><div class="modal-head"><h3>Lịch sử</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="h_content" class="history"></div></div></div>
 <div id="detailModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Chi tiết phiếu</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="detailContent"></div></div></div>
-<div id="accountModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Quản lý tài khoản</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="account-grid"><input id="a_user" placeholder="Tài khoản"><input id="a_pass" placeholder="Mật khẩu"><select id="a_role"><option value="shop">Shop</option><option value="dvvc">ĐVVC</option><option value="admin">Admin</option></select><select id="a_carrier"><option value="">Tất cả</option></select><button class="btn-green" onclick="addAccount()">Thêm</button></div><div id="accountList"></div></div></div>
+<div id="accountModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Quản lý tài khoản</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
+  <div id="accountEditNote"></div>
+  <div class="account-grid account-form">
+    <input id="a_user" placeholder="Tên đăng nhập">
+    <input id="a_pass" placeholder="Mật khẩu">
+    <select id="a_role"><option value="shop">Shop</option><option value="dvvc">ĐVVC</option><option value="admin">Admin</option></select>
+    <select id="a_carrier"><option value="">Tất cả</option></select>
+    <button id="accountSaveBtn" class="btn-green" onclick="addOrSaveAccount()">Thêm</button>
+    <button id="accountCancelBtn" class="btn-gray" style="display:none" onclick="cancelAccountEdit()">Hủy</button>
+  </div>
+  <div id="accountList"></div>
+</div></div>
 <div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeAll()"><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
 <script>
 const CARRIERS=["JT","Viettel","GHN"];
@@ -200,7 +227,50 @@ function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(
 function openHistory(id){const t=tasks.find(x=>x.id===id);h_content.textContent=getHistoryText(t);historyModal.style.display='flex'}function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này?'))return;const t=tasks.find(x=>x.id===id);t.deleted=true;t.history.push(`${formatTime(Date.now())} - ${currentUser.name}: xóa phiếu`);persist();render()}function copyTracking(c){navigator.clipboard.writeText(c).then(()=>alert('Đã copy mã: '+c))}async function copyTicket(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);const text=`${t.urgent?'🔥 GẤP\n':''}Ngày tạo: ${formatTime(t.created_at)}\nĐVVC: ${t.carrier}\nMã vận đơn: ${t.tracking}\nNội dung: ${t.shop||''}\nẢnh: ${imgs.length?imgs.length+' ảnh':'Không có ảnh'}`;try{await navigator.clipboard.writeText(text);alert('Đã copy phiếu dạng chữ. Ảnh nên gửi riêng bằng nút xem ảnh/tải ảnh nếu app không nhận ảnh dán.')}catch(e){alert('Không copy được trên trình duyệt này')}}
 function addFilesToList(files,target){Array.from(files||[]).forEach(file=>{if(!file.type.startsWith('image/'))return;const r=new FileReader();r.onload=e=>{if(target==='create'){pastedImages.push(e.target.result);renderPreview()}else{editImages.push(e.target.result);renderEditPreview()}};r.readAsDataURL(file)})}function handleFileImages(e){addFilesToList(e.target.files,'create')}function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}function renderPreview(){c_preview.innerHTML=pastedImages.map(src=>`<img class="preview-img" src="${src}" onclick="showImageGallery([\`${src}\`],0)">`).join('')}function renderEditPreview(){const html=editImages.map((src,i)=>`<div style="position:relative"><img class="preview-img" src="${src}" onclick="showImageGallery(editImages,${i})"><button class="btn-red btn-small" style="position:absolute;right:-5px;top:-5px;padding:1px 5px" onclick="removeEditImage(${i})">×</button></div>`).join('');edit_preview.innerHTML=html;edit_preview_dvvc.innerHTML=html}function removeEditImage(i){editImages.splice(i,1);renderEditPreview()}document.addEventListener('paste',e=>{if(!['flex'].includes(createModal.style.display)&&!['flex'].includes(shopModal.style.display)&&!['flex'].includes(dvvcModal.style.display))return;const files=[];Array.from(e.clipboardData?.items||[]).forEach(it=>{if(it.type.indexOf('image')===0){const f=it.getAsFile();if(f)files.push(f)}});if(files.length){addFilesToList(files,createModal.style.display==='flex'?'create':currentImageTarget);e.preventDefault()}})
 function showImageGalleryById(id,idx){const t=tasks.find(x=>x.id===id);showImageGallery(allImages(t),idx)}function showImageGallery(arr,idx=0){gallery=arr||[];galleryIndex=idx;renderGallery();imgModal.style.display='flex'}function renderGallery(){if(!gallery.length)return;bigImg.src=gallery[galleryIndex];imgCounter.textContent=`${galleryIndex+1}/${gallery.length}`;imgThumbs.innerHTML=gallery.map((s,i)=>`<img class="preview-img" style="width:45px;height:45px;${i===galleryIndex?'outline:3px solid #2563eb':''}" src="${s}" onclick="galleryIndex=${i};renderGallery()">`).join('')}function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.length)%gallery.length;renderGallery()}function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','imgModal'].forEach(id=>$(id).style.display='none')}
-function openAccount(){if(currentUser.role!=='admin')return;renderAccounts();accountModal.style.display='flex'}function addAccount(){const u=a_user.value.trim();if(!u)return alert('Chưa nhập tài khoản');USERS[u]={pass:a_pass.value||'123456',role:a_role.value,name:u,carrier:a_role.value==='dvvc'?a_carrier.value:''};saveUsers();a_user.value='';a_pass.value='';renderAccounts()}function deleteAccount(u){if(DEFAULT_USERS[u])return alert('Không xóa tài khoản mặc định');delete USERS[u];saveUsers();renderAccounts()}function renderAccounts(){accountList.innerHTML=Object.keys(USERS).map(u=>`<div class="account-row"><b>${u}</b><span>${USERS[u].role}</span><span>${USERS[u].carrier||'Tất cả'}</span><span>${USERS[u].pass}</span><button class="btn-red btn-small" onclick="deleteAccount('${u}')">Xóa</button></div>`).join('')}
+let editingAccountKey=null;
+function openAccount(){if(currentUser.role!=='admin')return;cancelAccountEdit();renderAccounts();accountModal.style.display='flex'}
+function roleName(r){return r==='admin'?'Admin':r==='shop'?'Shop':'ĐVVC'}
+function getAccountFormData(){
+  const u=a_user.value.trim();
+  const pass=a_pass.value.trim()||'123456';
+  const role=a_role.value;
+  const carrier=role==='dvvc'?a_carrier.value:'';
+  return {u,pass,role,carrier};
+}
+function addOrSaveAccount(){
+  const data=getAccountFormData();
+  if(!data.u)return alert('Chưa nhập tên đăng nhập');
+  if(data.role==='dvvc'&&!data.carrier)return alert('Tài khoản ĐVVC phải chọn đơn vị vận chuyển');
+  if(editingAccountKey){
+    if(editingAccountKey==='admin' && data.u!=='admin')return alert('Không đổi tên tài khoản admin');
+    if(data.u!==editingAccountKey && USERS[data.u])return alert('Tên đăng nhập mới đã tồn tại');
+    const old=USERS[editingAccountKey];
+    if(data.u!==editingAccountKey)delete USERS[editingAccountKey];
+    USERS[data.u]={pass:data.pass,role:data.role,name:data.u,carrier:data.carrier};
+    if(currentUser && currentUser.username===editingAccountKey){currentUser={username:data.u,...USERS[data.u]};localStorage.setItem('xvd_user',data.u);showApp();}
+    saveUsers();cancelAccountEdit();renderAccounts();alert('Đã lưu sửa tài khoản');return;
+  }
+  if(USERS[data.u])return alert('Tài khoản đã tồn tại');
+  USERS[data.u]={pass:data.pass,role:data.role,name:data.u,carrier:data.carrier};
+  saveUsers();clearAccountForm();renderAccounts();alert('Đã thêm tài khoản');
+}
+function editAccount(u){
+  if(!USERS[u])return;
+  editingAccountKey=u;
+  a_user.value=u;
+  a_user.disabled=(u==='admin');
+  a_pass.value=USERS[u].pass||'';
+  a_role.value=USERS[u].role||'shop';
+  a_carrier.value=USERS[u].carrier||'';
+  accountSaveBtn.textContent='Lưu sửa';
+  accountSaveBtn.className='btn-purple';
+  accountCancelBtn.style.display='inline-block';
+  accountEditNote.textContent='Đang sửa tài khoản: '+u;
+}
+function clearAccountForm(){a_user.value='';a_pass.value='';a_role.value='shop';a_carrier.value='';a_user.disabled=false;}
+function cancelAccountEdit(){editingAccountKey=null;clearAccountForm();if(document.getElementById('accountSaveBtn')){accountSaveBtn.textContent='Thêm';accountSaveBtn.className='btn-green';accountCancelBtn.style.display='none';accountEditNote.textContent='';}}
+function deleteAccount(u){if(DEFAULT_USERS[u])return alert('Không xóa tài khoản admin');if(!confirm('Xóa tài khoản '+u+'?'))return;delete USERS[u];saveUsers();if(editingAccountKey===u)cancelAccountEdit();renderAccounts()}
+function renderAccounts(){accountList.innerHTML=Object.keys(USERS).map(u=>{const acc=USERS[u];return `<div class="account-row"><b>${u}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span>${acc.pass||''}</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${u}')">Sửa</button>${u==='admin'?'<span class="muted">Không xóa</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${u}')">Xóa</button>`}</div></div>`}).join('')}
 window.addEventListener('load',()=>{const saved=localStorage.getItem('xvd_user');if(saved&&USERS[saved]){currentUser={username:saved,...USERS[saved]};showApp();renderQuick();setDefaultMonth()}loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()})});
 </script>
 </body></html>
