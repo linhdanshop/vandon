@@ -11,13 +11,14 @@ body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827;font
 .login-box{width:360px;background:white;border-radius:10px;padding:24px;box-shadow:0 2px 12px #0002}
 .login-box h2{text-align:center;margin:0 0 20px}
 input,textarea,select{width:100%;padding:9px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
-textarea{min-height:90px;resize:vertical}
-button{border:0;border-radius:6px;padding:9px 12px;cursor:pointer;font-weight:600}
+textarea{min-height:100px;resize:vertical}
+button{border:0;border-radius:6px;padding:8px 11px;cursor:pointer;font-weight:600}
 .btn-blue{background:#2563eb;color:white}
 .btn-green{background:#16a34a;color:white}
 .btn-red{background:#dc2626;color:white}
 .btn-gray{background:#e5e7eb;color:#111827}
-.btn-small{padding:6px 9px;font-size:13px}
+.btn-orange{background:#f59e0b;color:white}
+.btn-small{padding:6px 8px;font-size:13px}
 .app{display:none}
 .topbar{height:56px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
 .topbar h2{font-size:18px;margin:0}
@@ -27,7 +28,7 @@ button{border:0;border-radius:6px;padding:9px 12px;cursor:pointer;font-weight:60
 .stats{display:flex;gap:8px;margin-bottom:12px}
 .stat{background:white;border-radius:8px;padding:10px 14px;box-shadow:0 1px 4px #0001}
 .table-wrap{background:white;border-radius:8px;overflow:auto;box-shadow:0 1px 4px #0001}
-table{width:100%;border-collapse:collapse;min-width:1100px}
+table{width:100%;border-collapse:collapse;min-width:1260px}
 th,td{border-bottom:1px solid #e5e7eb;padding:9px;text-align:left;vertical-align:top}
 th{background:#f9fafb;position:sticky;top:0;z-index:1}
 tr:hover{background:#f9fafb}
@@ -37,20 +38,19 @@ tr:hover{background:#f9fafb}
 .green{background:#dcfce7;color:#166534}
 .black{background:#e5e7eb;color:#111827}
 .content-cell{max-width:280px;white-space:pre-wrap}
+.actions{display:flex;gap:5px;flex-wrap:wrap}
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:10;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:white;width:min(920px,96vw);max-height:92vh;overflow:auto;border-radius:10px;padding:16px}
+.modal-box{background:white;width:min(720px,96vw);max-height:92vh;overflow:auto;border-radius:10px;padding:16px}
+.modal-sm{width:min(520px,96vw)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .modal-head h3{margin:0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.full{grid-column:1/-1}
+.form-row{margin-bottom:12px}
 .quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .quick button{background:#eef2ff;color:#1d4ed8;font-size:13px;padding:6px 8px}
-.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px;max-height:180px;overflow:auto;white-space:pre-wrap}
-.img-list{display:flex;gap:8px;flex-wrap:wrap}
-.img-thumb{width:70px;height:70px;background:#e5e7eb;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px;max-height:250px;overflow:auto;white-space:pre-wrap;line-height:1.55}
 .img-view{max-width:90vw;max-height:85vh;border-radius:8px;background:white}
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-@media(max-width:800px){.grid{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.toolbar input,.toolbar select{max-width:none}.stats{overflow:auto}.topbar{height:auto;padding:10px;gap:8px;flex-wrap:wrap}}
+.note{font-size:12px;color:#6b7280;margin-top:4px}
+@media(max-width:800px){.toolbar{flex-wrap:wrap}.toolbar input,.toolbar select{max-width:none}.stats{overflow:auto}.topbar{height:auto;padding:10px;gap:8px;flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -115,7 +115,7 @@ tr:hover{background:#f9fafb}
             <th>Nội dung ĐVVC</th>
             <th>Tiến độ Shop</th>
             <th>Lịch sử</th>
-            <th>Thao tác</th>
+            <th>Thao tác riêng</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -124,69 +124,104 @@ tr:hover{background:#f9fafb}
   </div>
 </div>
 
-<div id="taskModal" class="modal">
+<!-- TẠO PHIẾU -->
+<div id="createModal" class="modal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3 id="modalTitle">Tạo phiếu</h3>
-      <button class="btn-gray" onclick="closeModal()">Đóng</button>
+      <h3>Tạo phiếu mới</h3>
+      <button class="btn-gray" onclick="closeAll()">Đóng</button>
     </div>
 
-    <div class="grid">
-      <div>
-        <label>Mã vận đơn</label>
-        <input id="m_tracking" placeholder="Nhập mã vận đơn">
-      </div>
-
-      <div>
-        <label>Ảnh</label>
-        <input id="m_images" type="file" multiple accept="image/*">
-      </div>
-
-      <div class="full">
-        <label>Nội dung Shop</label>
-        <textarea id="m_shop"></textarea>
-        <div class="quick" id="quickBox"></div>
-      </div>
-
-      <div>
-        <label>Tiến độ ĐVVC</label>
-        <select id="m_status_dvvc">
-          <option value="chua_xu_ly">Chưa xử lý</option>
-          <option value="dang_xu_ly">Đang xử lý</option>
-          <option value="da_xu_ly">Đã xử lý</option>
-          <option value="khong_xu_ly">Không xử lý được</option>
-        </select>
-      </div>
-
-      <div>
-        <label>Tiến độ Shop</label>
-        <select id="m_status_shop">
-          <option value="chua_xong">Chưa xong</option>
-          <option value="da_xong">Đã xong</option>
-        </select>
-      </div>
-
-      <div class="full">
-        <label>Nội dung ĐVVC</label>
-        <textarea id="m_dvvc"></textarea>
-      </div>
-
-      <div class="full">
-        <label>Lịch sử thao tác</label>
-        <div id="m_history" class="history"></div>
-      </div>
+    <div class="form-row">
+      <label>Mã vận đơn</label>
+      <input id="c_tracking" placeholder="Nhập mã vận đơn">
     </div>
 
-    <br>
-    <div class="actions">
-      <button class="btn-green" onclick="saveTask()">Lưu</button>
-      <button class="btn-gray" onclick="copyTask()">Copy nội dung</button>
-      <button id="deleteBtn" class="btn-red" onclick="deleteTask()">Xóa phiếu</button>
+    <div class="form-row">
+      <label>Nội dung Shop</label>
+      <textarea id="c_shop"></textarea>
+      <div class="quick" id="quickBox"></div>
+      <div class="note">Bấm mẫu nhanh để chèn vào nội dung, sau đó shop sửa lại tùy đơn.</div>
     </div>
+
+    <div class="form-row">
+      <label>Ảnh</label>
+      <input id="c_images" type="file" multiple accept="image/*">
+      <div class="note">Demo giao diện chưa lưu ảnh thật. Bản Firebase sẽ up ảnh lên Storage.</div>
+    </div>
+
+    <button class="btn-green" onclick="createTask()">Lưu phiếu</button>
   </div>
 </div>
 
-<div id="imgModal" class="modal" onclick="closeImg()">
+<!-- EDIT SHOP -->
+<div id="shopModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Sửa nội dung Shop</h3>
+      <button class="btn-gray" onclick="closeAll()">Đóng</button>
+    </div>
+    <div class="form-row">
+      <label>Mã vận đơn</label>
+      <input id="s_tracking" disabled>
+    </div>
+    <div class="form-row">
+      <label>Nội dung Shop</label>
+      <textarea id="s_shop"></textarea>
+      <div class="quick" id="quickBoxShop"></div>
+    </div>
+    <div class="form-row">
+      <label>Tiến độ Shop</label>
+      <select id="s_status_shop">
+        <option value="chua_xong">Chưa xong</option>
+        <option value="da_xong">Đã xong</option>
+      </select>
+    </div>
+    <button class="btn-green" onclick="saveShop()">Lưu Shop</button>
+  </div>
+</div>
+
+<!-- EDIT ĐVVC -->
+<div id="dvvcModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Cập nhật ĐVVC</h3>
+      <button class="btn-gray" onclick="closeAll()">Đóng</button>
+    </div>
+    <div class="form-row">
+      <label>Mã vận đơn</label>
+      <input id="d_tracking" disabled>
+    </div>
+    <div class="form-row">
+      <label>Tiến độ ĐVVC</label>
+      <select id="d_status_dvvc">
+        <option value="chua_xu_ly">Chưa xử lý</option>
+        <option value="dang_xu_ly">Đang xử lý</option>
+        <option value="da_xu_ly">Đã xử lý</option>
+        <option value="khong_xu_ly">Không xử lý được</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Nội dung ĐVVC</label>
+      <textarea id="d_dvvc" placeholder="ĐVVC phản hồi tại đây"></textarea>
+    </div>
+    <button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="historyModal" class="modal">
+  <div class="modal-box modal-sm">
+    <div class="modal-head">
+      <h3>Lịch sử thao tác</h3>
+      <button class="btn-gray" onclick="closeAll()">Đóng</button>
+    </div>
+    <div id="h_content" class="history"></div>
+  </div>
+</div>
+
+<!-- IMAGE -->
+<div id="imgModal" class="modal" onclick="closeAll()">
   <img id="bigImg" class="img-view" alt="Ảnh">
 </div>
 
@@ -307,140 +342,171 @@ function render(){
   stShop.textContent = tasks.filter(t=>!t.deleted && t.status_shop==="da_xong").length;
 
   tbody.innerHTML = list.map((t,i)=>`
-    <tr onclick="openEdit('${t.id}')">
+    <tr>
       <td>${i+1}</td>
       <td>${formatTime(t.created_at)}</td>
       <td><b style="color:#2563eb">${t.tracking}</b></td>
       <td class="content-cell">${escapeHtml(t.shop)}</td>
-      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="event.stopPropagation();showImg('${t.images[0]}')">📷 ${t.images.length}</button>` : ""}</td>
+      <td>${t.images?.length ? `<button class="btn-small btn-gray" onclick="showImg('${t.images[0]}')">📷 ${t.images.length}</button>` : ""}</td>
       <td>${badgeDvvc(t.status_dvvc)}</td>
       <td class="content-cell">${escapeHtml(t.dvvc || "")}</td>
       <td>${badgeShop(t.status_shop)}</td>
-      <td>${t.history?.length || 0}</td>
-      <td><button class="btn-small btn-blue" onclick="event.stopPropagation();openEdit('${t.id}')">Sửa</button></td>
+      <td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${t.history?.length || 0})</button></td>
+      <td>
+        <div class="actions">
+          <button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>
+          <button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>
+          ${currentUser.role==="admin" ? `<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>` : ""}
+        </div>
+      </td>
     </tr>
   `).join("");
 }
 
 function renderQuick(){
-  quickBox.innerHTML = QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join("");
+  const html = QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join("");
+  quickBox.innerHTML = html;
+  quickBoxShop.innerHTML = html.replaceAll("addQuick", "addQuickShop");
 }
 
 function addQuick(txt){
-  const old = m_shop.value.trim();
-  m_shop.value = old ? old + "\n" + txt : txt;
+  const old = c_shop.value.trim();
+  c_shop.value = old ? old + "\n" + txt : txt;
+}
+
+function addQuickShop(txt){
+  const old = s_shop.value.trim();
+  s_shop.value = old ? old + "\n" + txt : txt;
 }
 
 function openCreate(){
   editId = null;
-  modalTitle.textContent = "Tạo phiếu";
-  m_tracking.disabled = false;
-  m_tracking.value = "";
-  m_shop.value = "";
-  m_dvvc.value = "";
-  m_status_dvvc.value = "chua_xu_ly";
-  m_status_shop.value = "chua_xong";
-  m_history.textContent = "";
-  m_images.value = "";
-  deleteBtn.style.display = "none";
-  taskModal.style.display = "flex";
+  c_tracking.value = "";
+  c_shop.value = "";
+  c_images.value = "";
+  createModal.style.display = "flex";
 }
 
-function openEdit(id){
+function openShop(id){
   const t = tasks.find(x=>x.id===id);
   if(!t) return;
   editId = id;
-  modalTitle.textContent = "Cập nhật phiếu";
-  m_tracking.disabled = true;
-  m_tracking.value = t.tracking;
-  m_shop.value = t.shop;
-  m_dvvc.value = t.dvvc || "";
-  m_status_dvvc.value = t.status_dvvc;
-  m_status_shop.value = t.status_shop;
-  m_history.textContent = (t.history || []).join("\n");
-  m_images.value = "";
-  deleteBtn.style.display = currentUser.role === "admin" ? "inline-block" : "none";
-  taskModal.style.display = "flex";
+  s_tracking.value = t.tracking;
+  s_shop.value = t.shop;
+  s_status_shop.value = t.status_shop;
+  shopModal.style.display = "flex";
 }
 
-function closeModal(){
-  taskModal.style.display = "none";
+function openDvvc(id){
+  const t = tasks.find(x=>x.id===id);
+  if(!t) return;
+  editId = id;
+  d_tracking.value = t.tracking;
+  d_status_dvvc.value = t.status_dvvc;
+  d_dvvc.value = t.dvvc || "";
+  dvvcModal.style.display = "flex";
 }
 
-function saveTask(){
-  const tracking = m_tracking.value.trim().toUpperCase();
+function openHistory(id){
+  const t = tasks.find(x=>x.id===id);
+  if(!t) return;
+  h_content.textContent = (t.history || []).join("\n");
+  historyModal.style.display = "flex";
+}
+
+function closeAll(){
+  createModal.style.display = "none";
+  shopModal.style.display = "none";
+  dvvcModal.style.display = "none";
+  historyModal.style.display = "none";
+  imgModal.style.display = "none";
+}
+
+function createTask(){
+  const tracking = c_tracking.value.trim().toUpperCase();
   if(!tracking){
     alert("Chưa nhập mã vận đơn");
     return;
   }
-
-  const now = Date.now();
-
-  if(!editId){
-    let old = tasks.find(t=>t.id===tracking && !t.deleted);
-    if(old){
-      alert("Mã vận đơn đã tồn tại. Bấm vào phiếu để cập nhật.");
-      return;
-    }
-    tasks.unshift({
-      id: tracking,
-      created_at: now,
-      tracking,
-      shop: m_shop.value.trim(),
-      dvvc: m_dvvc.value.trim(),
-      status_dvvc: m_status_dvvc.value,
-      status_shop: m_status_shop.value,
-      images: [],
-      history: [`${formatTime(now)} - ${currentUser.name} tạo phiếu`]
-    });
-  }else{
-    const t = tasks.find(x=>x.id===editId);
-    const changes = [];
-
-    if(t.shop !== m_shop.value.trim()) changes.push("sửa nội dung Shop");
-    if(t.dvvc !== m_dvvc.value.trim()) changes.push("sửa nội dung ĐVVC");
-    if(t.status_dvvc !== m_status_dvvc.value) changes.push(`ĐVVC: ${statusDvvcText(t.status_dvvc)} -> ${statusDvvcText(m_status_dvvc.value)}`);
-    if(t.status_shop !== m_status_shop.value) changes.push(`Shop: ${statusShopText(t.status_shop)} -> ${statusShopText(m_status_shop.value)}`);
-
-    t.shop = m_shop.value.trim();
-    t.dvvc = m_dvvc.value.trim();
-    t.status_dvvc = m_status_dvvc.value;
-    t.status_shop = m_status_shop.value;
-    t.updated_at = now;
-
-    if(changes.length){
-      t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
-    }
+  let old = tasks.find(t=>t.id===tracking && !t.deleted);
+  if(old){
+    alert("Mã vận đơn đã tồn tại. Chỉ cập nhật lại phiếu cũ.");
+    return;
   }
-
-  closeModal();
+  const now = Date.now();
+  tasks.unshift({
+    id: tracking,
+    created_at: now,
+    tracking,
+    shop: c_shop.value.trim(),
+    dvvc: "",
+    status_dvvc: "chua_xu_ly",
+    status_shop: "chua_xong",
+    images: [],
+    history: [`${formatTime(now)} - ${currentUser.name} tạo phiếu`]
+  });
+  closeAll();
   render();
 }
 
-function deleteTask(){
+function saveShop(){
+  const t = tasks.find(x=>x.id===editId);
+  if(!t) return;
+
+  const now = Date.now();
+  const changes = [];
+
+  if(t.shop !== s_shop.value.trim()) changes.push("sửa nội dung Shop");
+  if(t.status_shop !== s_status_shop.value) changes.push(`Shop: ${statusShopText(t.status_shop)} -> ${statusShopText(s_status_shop.value)}`);
+
+  t.shop = s_shop.value.trim();
+  t.status_shop = s_status_shop.value;
+  t.updated_at = now;
+
+  if(changes.length){
+    t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
+  }
+
+  closeAll();
+  render();
+}
+
+function saveDvvc(){
+  const t = tasks.find(x=>x.id===editId);
+  if(!t) return;
+
+  const now = Date.now();
+  const changes = [];
+
+  if(t.status_dvvc !== d_status_dvvc.value) changes.push(`ĐVVC: ${statusDvvcText(t.status_dvvc)} -> ${statusDvvcText(d_status_dvvc.value)}`);
+  if(t.dvvc !== d_dvvc.value.trim()) changes.push("sửa nội dung ĐVVC");
+
+  t.status_dvvc = d_status_dvvc.value;
+  t.dvvc = d_dvvc.value.trim();
+  t.updated_at = now;
+
+  if(changes.length){
+    t.history.push(`${formatTime(now)} - ${currentUser.name}: ${changes.join("; ")}`);
+  }
+
+  closeAll();
+  render();
+}
+
+function deleteTask(id){
   if(currentUser.role !== "admin") return;
   if(!confirm("Xóa phiếu này?")) return;
-  const t = tasks.find(x=>x.id===editId);
+  const t = tasks.find(x=>x.id===id);
   if(t){
     t.deleted = true;
     t.history.push(`${formatTime(Date.now())} - ${currentUser.name} xóa phiếu`);
   }
-  closeModal();
   render();
-}
-
-function copyTask(){
-  const txt = `Mã vận đơn: ${m_tracking.value}\nNội dung Shop:\n${m_shop.value}\n\nNội dung ĐVVC:\n${m_dvvc.value}`;
-  navigator.clipboard.writeText(txt).then(()=>alert("Đã copy"));
 }
 
 function showImg(src){
   bigImg.src = src;
   imgModal.style.display = "flex";
-}
-
-function closeImg(){
-  imgModal.style.display = "none";
 }
 
 function escapeHtml(str){
