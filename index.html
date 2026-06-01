@@ -309,7 +309,7 @@ async function login(){
     try{
       const d=new Date();
       const day=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-      db.ref('logs/'+day).push({
+      await db.ref('logs/'+day).push({
         ts:Date.now(),
         username:raw,
         message:e.message||String(e)
@@ -460,22 +460,59 @@ async function openLogs(){
   if(!(currentUser&&currentUser.role==='admin'))return alert('Chỉ admin được xem logs');
   const box=$('logsContent'), modal=$('logsModal');
   if(!box||!modal)return alert('Thiếu khung Logs trong file HTML');
-  box.innerHTML='Đang tải logs...';modal.style.display='flex';
+  box.innerHTML='Đang tải logs...';
+  modal.style.display='flex';
+
   try{
-    const snap=await db.ref('logs').orderByChild('ts').limitToLast(200).once('value');
-    const arr=[];snap.forEach(ch=>arr.push({id:ch.key,...(ch.val()||{})}));arr.sort((a,b)=>(b.ts||0)-(a.ts||0));
-    box.innerHTML=arr.length?arr.map(l=>`<div class="log-item ${l.level==='error'?'err':''}"><div class="log-head"><span>${escapeHtml(l.action||'')}</span><span>${escapeHtml(dateOnly(l.ts))} ${escapeHtml(timeOnly(l.ts))}</span></div><div class="log-meta">${escapeHtml(l.user||'')} • ${escapeHtml(l.role||'')} ${escapeHtml(l.carrier||'')}</div><div class="log-detail">${escapeHtml(l.detail||'')}</div></div>`).join(''):'Chưa có logs';
-  }catch(e){box.innerHTML='<div style="color:#dc2626">Lỗi tải logs: '+escapeHtml(e.message)+'</div>'}
+    const snap=await db.ref('logs').once('value');
+    const arr=[];
+
+    snap.forEach(daySnap=>{
+      const dayKey=daySnap.key || '';
+      daySnap.forEach(logSnap=>{
+        const v=logSnap.val() || {};
+        arr.push({
+          id:logSnap.key,
+          day:dayKey,
+          ts:v.ts || 0,
+          username:v.username || '',
+          message:v.message || ''
+        });
+      });
+    });
+
+    arr.sort((a,b)=>(b.ts||0)-(a.ts||0));
+    const list=arr.slice(0,200);
+
+    box.innerHTML=list.length ? list.map(l=>`
+      <div class="log-item err">
+        <div class="log-head">
+          <span>LOGIN_ERROR</span>
+          <span>${escapeHtml(l.day || dateOnly(l.ts))} ${escapeHtml(timeOnly(l.ts))}</span>
+        </div>
+        <div class="log-meta">${escapeHtml(l.username || '')}</div>
+        <div class="log-detail">${escapeHtml(l.message || '')}</div>
+      </div>
+    `).join('') : 'Chưa có logs';
+
+  }catch(e){
+    box.innerHTML='<div style="color:#dc2626">Lỗi tải logs: '+escapeHtml(e.message)+'</div>';
+  }
 }
 async function clearOldLogs(){
-  if(!(currentUser&&currentUser.role==='admin'))return;
-  if(!confirm('Xóa logs cũ hơn 90 ngày?'))return;
-  const cutoff=Date.now()-90*24*60*60*1000;
+  return clearAllLogs();
+}
+
+async function clearAllLogs(){
+  if(!(currentUser&&currentUser.role==='admin'))return alert('Chỉ admin được xóa logs');
+  if(!confirm('Xóa toàn bộ logs?'))return;
   try{
-    const snap=await db.ref('logs').orderByChild('ts').endAt(cutoff).once('value');
-    const updates={};snap.forEach(ch=>updates[ch.key]=null);
-    await db.ref('logs').update(updates);logEvent('Xóa logs cũ','>90 ngày');openLogs();
-  }catch(e){alert('Lỗi xóa logs: '+e.message)}
+    await db.ref('logs').remove();
+    logsContent.innerHTML='Đã xóa toàn bộ logs';
+    alert('Đã xóa toàn bộ logs');
+  }catch(e){
+    alert('Lỗi xóa logs: '+e.message);
+  }
 }
 
 function openAccount(){if(currentUser.role!=='admin')return;cancelAccountEdit();renderAccounts();accountModal.style.display='flex'}
@@ -487,13 +524,6 @@ function clearAccountForm(){a_user.value='';a_pass.value='';a_role.value='shop';
 async function deleteAccount(u){if(u==='admin')return alert('Không xóa tài khoản admin');if(!confirm('Xóa tài khoản '+u+'?'))return;try{await db.ref('users/'+u).remove();if(editingAccountKey===u)cancelAccountEdit();logEvent('Xóa tài khoản',u);renderAccounts()}catch(e){alert('Lỗi: '+e.message)}}
 async function renderAccounts(){try{const snap=await db.ref('users').once('value');const users=snap.val()||{};accountList.innerHTML=Object.keys(users).sort().map(u=>{const acc=users[u];return `<div class="account-row"><b>${u}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span>${acc.password||''}</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${u}')">Sửa</button>${u==='admin'?'<span class="muted">Không xóa</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${u}')">Xóa</button>`}</div></div>`}).join('')}catch(e){accountList.innerHTML='<div style="color:#dc2626">Lỗi tải tài khoản: '+escapeHtml(e.message)+'</div>'}}
 window.addEventListener('load',()=>{const saved=localStorage.getItem('xvd_last_login');if(saved)loginUser.value=saved;loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()});auth.onAuthStateChanged(user=>{if(user&&user.email&&user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()&&!currentUser){currentUser={uid:user.uid,username:'admin',email:user.email,name:'Admin',role:'admin',carrier:'',active:true,authMode:'auth'};finishLogin()}})});
-
-async function clearAllLogs(){
-  if(!confirm('Xóa toàn bộ logs?')) return;
-  await db.ref('logs').remove();
-  alert('Đã xóa toàn bộ logs');
-  if(typeof openLogs==='function') openLogs();
-}
 </script>
 
 </body></html>
