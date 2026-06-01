@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, user-scalable=yes">
 <title>Xử lý vận đơn</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;background:#eef2f7;color:#111827;font-size:13px}button,input,select,textarea{font:inherit}button{border:0;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer}.btn-blue{background:#2563eb;color:#fff}.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#16a34a;color:#fff}.btn-red{background:#dc2626;color:#fff}.btn-gray{background:#e5e7eb;color:#111827}.btn-small{padding:5px 7px;font-size:12px}input,select,textarea{width:100%;border:1px solid #d1d5db;border-radius:7px;padding:7px 9px;background:#fff}textarea{min-height:90px;resize:vertical}.login-page{height:100vh;display:flex;align-items:center;justify-content:center}.login-box{width:360px;background:#fff;border-radius:12px;padding:22px;box-shadow:0 4px 18px #0002}.login-box h2{text-align:center;margin:0 0 16px}.login-msg{min-height:20px;margin:8px 0;font-size:12.5px}.login-msg.err{color:#dc2626}.login-msg.ok{color:#16a34a}.app{display:none}.topbar{height:46px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.topbar h2{font-size:17px;margin:0}.main{padding:10px}.toolbar{background:#fff;border-radius:10px;padding:8px;display:flex;gap:8px;align-items:center;margin-bottom:8px;box-shadow:0 1px 5px #0001;white-space:nowrap;overflow-x:auto}.toolbar .search{width:280px;min-width:220px}.toolbar .sel{width:145px;min-width:130px}.toolbar .dt{width:118px;min-width:118px}.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.stat-box{background:#fff;border-radius:10px;padding:7px 10px;box-shadow:0 1px 5px #0001}.stat-title{text-align:center;font-weight:900;margin-bottom:5px;color:#374151;font-size:13px}.stat-line{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}.stat-pill{background:#f3f4f6;border:1px solid transparent;border-radius:9px;padding:6px 9px;cursor:pointer;font-weight:700}.stat-pill b{font-size:16px}.stat-pill.active{background:#dbeafe;border-color:#2563eb;color:#1d4ed8}.table-wrap{background:#fff;border-radius:10px;overflow:auto;box-shadow:0 1px 5px #0001;max-height:calc(100vh - 145px)}table{width:100%;min-width:1720px;border-collapse:separate;border-spacing:0;table-layout:fixed}th,td{border-bottom:1px solid #e5e7eb;padding:4px 8px;vertical-align:top;text-align:left}th{position:sticky;top:0;z-index:1;background:#f8fafc;height:34px;white-space:nowrap;color:#374151}tbody tr:nth-child(even){background:#f6f9ff}tbody tr:hover{background:#eef6ff}th:nth-child(1),td:nth-child(1){width:42px;text-align:center;color:#64748b}th:nth-child(2),td:nth-child(2){width:130px}th:nth-child(3),td:nth-child(3){width:82px;text-align:center}th:nth-child(4),td:nth-child(4){width:90px;text-align:center}th:nth-child(5),td:nth-child(5){width:175px}th:nth-child(6),td:nth-child(6){width:305px}th:nth-child(7),td:nth-child(7){width:58px;text-align:center}th:nth-child(8),td:nth-child(8){width:105px;text-align:center}th:nth-child(9),td:nth-child(9){width:82px;text-align:center}th:nth-child(10),td:nth-child(10){width:290px}th:nth-child(11),td:nth-child(11){width:115px;text-align:center}th:nth-child(12),td:nth-child(12){width:84px;text-align:center}th:nth-child(13),td:nth-child(13){width:78px;text-align:center}th:nth-child(14),td:nth-child(14){width:58px;text-align:center}.code-link{color:#2563eb;font-weight:800;text-decoration:none;cursor:pointer}.code-wrap{display:flex;gap:6px;align-items:center;min-width:0}.code-wrap span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.content-preview{background:#f8fafc;border:1px solid #e5e7eb;border-left:3px solid #c7d2fe;border-radius:7px;padding:4px 8px;height:40px;line-height:17px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-wrap}.dvvc-preview{border-left-color:#fed7aa;background:#fffaf3}.more-btn{padding:0;background:transparent;color:#2563eb;font-size:11.5px}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11.5px;font-weight:800;white-space:nowrap}.red{background:#fee2e2;color:#b91c1c}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}.black{background:#e5e7eb;color:#111827}.carrier{background:#e0f2fe;color:#075985}.urgent{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}.row-urgent{background:#fff1f1!important}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:16px}.modal-box{background:#fff;width:min(780px,96vw);max-height:90vh;overflow:auto;border-radius:12px;padding:14px}.modal-sm{width:min(560px,96vw)}.modal-head{position:sticky;top:0;background:#fff;z-index:2;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb;padding-bottom:8px;margin-bottom:10px}.modal-head h3{margin:0}.form-row{margin-bottom:10px}.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.quick button{background:#eef2ff;color:#1d4ed8;font-size:12px}.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.preview-img{width:64px;height:64px;object-fit:cover;border-radius:7px;border:1px solid #d1d5db;cursor:pointer}.detail-grid{display:grid;grid-template-columns:145px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}.detail-label{font-weight:800;color:#374151}.detail-value{white-space:pre-wrap}.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.5;max-height:330px;overflow:auto}.copy-line{display:flex;gap:8px;align-items:flex-start}.copy-text{flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap}.img-view{max-width:92vw;max-height:76vh;border-radius:10px;background:#fff}.gallery-tools{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}.mobile-list{display:none}.mobile-card{background:#fff;border:1px solid #e5e7eb;border-radius:11px;margin-bottom:7px;box-shadow:0 1px 4px #0001;overflow:hidden}.mc-head{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid #e5e7eb}.mc-code{font-weight:900;color:#2563eb;text-decoration:none}.mc-date{font-size:11.5px;color:#64748b}.mc-body{padding:8px 10px;display:grid;gap:6px}.mc-label{font-size:11.5px;font-weight:900;color:#475569}.mc-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;background:#f8fafc;border-top:1px solid #e5e7eb;padding:7px}.mc-actions button{min-height:30px;padding:4px}.account-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center}.account-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center;border-top:1px solid #e5e7eb;padding:7px 0}.loading-spinner{display:inline-block;width:14px;height:14px;border:2px solid #e5e7eb;border-top:2px solid #2563eb;border-radius:50%;animation:spin .6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:900px){body{min-width:0;overflow-x:hidden}.app,.main,.topbar{min-width:0}.topbar{height:42px;position:sticky;top:0;z-index:10}.main{padding:6px}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;background:#eef2f7;color:#111827;font-size:13px}button,input,select,textarea{font:inherit}button{border:0;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer}.btn-blue{background:#2563eb;color:#fff}.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#16a34a;color:#fff}.btn-red{background:#dc2626;color:#fff}.btn-gray{background:#e5e7eb;color:#111827}.btn-small{padding:5px 7px;font-size:12px}input,select,textarea{width:100%;border:1px solid #d1d5db;border-radius:7px;padding:7px 9px;background:#fff}textarea{min-height:90px;resize:vertical}.login-page{height:100vh;display:flex;align-items:center;justify-content:center}.login-box{width:360px;background:#fff;border-radius:12px;padding:22px;box-shadow:0 4px 18px #0002}.login-box h2{text-align:center;margin:0 0 16px}.login-msg{min-height:20px;margin:8px 0;font-size:12.5px}.login-msg.err{color:#dc2626}.login-msg.ok{color:#16a34a}.app{display:none}.topbar{height:46px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.topbar h2{font-size:17px;margin:0}.main{padding:10px}.toolbar{background:#fff;border-radius:10px;padding:8px;display:flex;gap:8px;align-items:center;margin-bottom:8px;box-shadow:0 1px 5px #0001;white-space:nowrap;overflow-x:auto}.toolbar .search{width:280px;min-width:220px}.toolbar .sel{width:145px;min-width:130px}.toolbar .dt{width:118px;min-width:118px}.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.stat-box{background:#fff;border-radius:10px;padding:7px 10px;box-shadow:0 1px 5px #0001}.stat-title{text-align:center;font-weight:900;margin-bottom:5px;color:#374151;font-size:13px}.stat-line{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}.stat-pill{background:#f3f4f6;border:1px solid transparent;border-radius:9px;padding:6px 9px;cursor:pointer;font-weight:700}.stat-pill b{font-size:16px}.stat-pill.active{background:#dbeafe;border-color:#2563eb;color:#1d4ed8}.table-wrap{background:#fff;border-radius:10px;overflow:auto;box-shadow:0 1px 5px #0001;max-height:calc(100vh - 145px)}table{width:100%;min-width:1720px;border-collapse:separate;border-spacing:0;table-layout:fixed}th,td{border-bottom:1px solid #e5e7eb;padding:4px 8px;vertical-align:top;text-align:left}th{position:sticky;top:0;z-index:1;background:#f8fafc;height:34px;white-space:nowrap;color:#374151}tbody tr:nth-child(even){background:#f6f9ff}tbody tr:hover{background:#eef6ff}th:nth-child(1),td:nth-child(1){width:42px;text-align:center;color:#64748b}th:nth-child(2),td:nth-child(2){width:130px}th:nth-child(3),td:nth-child(3){width:82px;text-align:center}th:nth-child(4),td:nth-child(4){width:90px;text-align:center}th:nth-child(5),td:nth-child(5){width:175px}th:nth-child(6),td:nth-child(6){width:305px}th:nth-child(7),td:nth-child(7){width:58px;text-align:center}th:nth-child(8),td:nth-child(8){width:105px;text-align:center}th:nth-child(9),td:nth-child(9){width:82px;text-align:center}th:nth-child(10),td:nth-child(10){width:290px}th:nth-child(11),td:nth-child(11){width:115px;text-align:center}th:nth-child(12),td:nth-child(12){width:84px;text-align:center}th:nth-child(13),td:nth-child(13){width:78px;text-align:center}th:nth-child(14),td:nth-child(14){width:58px;text-align:center}.code-link{color:#2563eb;font-weight:800;text-decoration:none;cursor:pointer}.code-wrap{display:flex;gap:6px;align-items:center;min-width:0}.code-wrap span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.content-preview{background:#f8fafc;border:1px solid #e5e7eb;border-left:3px solid #c7d2fe;border-radius:7px;padding:4px 8px;height:40px;line-height:17px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-wrap}.dvvc-preview{border-left-color:#fed7aa;background:#fffaf3}.more-btn{padding:0;background:transparent;color:#2563eb;font-size:11.5px}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11.5px;font-weight:800;white-space:nowrap}.red{background:#fee2e2;color:#b91c1c}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}.black{background:#e5e7eb;color:#111827}.carrier{background:#e0f2fe;color:#075985}.urgent{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}.row-urgent{background:#fff1f1!important}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:16px}.modal-box{background:#fff;width:min(780px,96vw);max-height:90vh;overflow:auto;border-radius:12px;padding:14px}.modal-sm{width:min(560px,96vw)}.modal-head{position:sticky;top:0;background:#fff;z-index:2;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb;padding-bottom:8px;margin-bottom:10px}.modal-head h3{margin:0}.form-row{margin-bottom:10px}.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.quick button{background:#eef2ff;color:#1d4ed8;font-size:12px}.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.preview-img{width:64px;height:64px;object-fit:cover;border-radius:7px;border:1px solid #d1d5db;cursor:pointer}.detail-grid{display:grid;grid-template-columns:145px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}.detail-label{font-weight:800;color:#374151}.detail-value{white-space:pre-wrap}.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.5;max-height:330px;overflow:auto}.copy-line{display:flex;gap:8px;align-items:flex-start}.copy-text{flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap}.img-view{max-width:92vw;max-height:76vh;border-radius:10px;background:#fff}.gallery-tools{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}.mobile-list{display:none}.mobile-card{background:#fff;border:1px solid #e5e7eb;border-radius:11px;margin-bottom:7px;box-shadow:0 1px 4px #0001;overflow:hidden}.mc-head{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid #e5e7eb}.mc-code{font-weight:900;color:#2563eb;text-decoration:none}.mc-date{font-size:11.5px;color:#64748b}.mc-body{padding:8px 10px;display:grid;gap:6px}.mc-label{font-size:11.5px;font-weight:900;color:#475569}.mc-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;background:#f8fafc;border-top:1px solid #e5e7eb;padding:7px}.mc-actions button{min-height:30px;padding:4px}.account-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center}.account-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center;border-top:1px solid #e5e7eb;padding:7px 0}@media(max-width:900px){body{min-width:0;overflow-x:hidden}.app,.main,.topbar{min-width:0}.topbar{height:42px;position:sticky;top:0;z-index:10}.main{padding:6px}
 .toolbar{display:grid;grid-template-columns:92px 1fr 1fr;gap:5px;padding:6px;overflow:visible;white-space:normal}
 .toolbar .btn-blue:first-child{grid-column:1;grid-row:1;width:100%;min-height:34px;padding:6px 4px;font-size:12.5px}
 .toolbar .search{grid-column:2/4;grid-row:1;width:100%;min-width:0;height:34px}
@@ -21,8 +21,13 @@
 #dateToWrap{grid-column:3;grid-row:3}
 .toolbar label,.toolbar #applyBtn,.toolbar #clearDateBtn{display:none!important}
 .stats-wrap{grid-template-columns:1fr 1fr;gap:6px}.stat-box{padding:7px 6px}.stat-title{font-size:13px;margin-bottom:5px}.stat-line{display:grid;grid-template-columns:1fr 1fr;gap:5px}.stat-pill{text-align:center;font-size:12px;padding:6px 3px}.stat-pill b{font-size:15px}.table-wrap{display:none}.mobile-list{display:block}.modal{padding:8px;align-items:flex-start;overflow:auto}.modal-box{width:100%;max-height:calc(100dvh - 70px);margin-top:48px}.detail-grid{grid-template-columns:92px 1fr}.copy-line{flex-direction:column}.account-grid,.account-row{grid-template-columns:1fr 1fr}.account-grid button,.account-row button{grid-column:1/3}}
+
+
+/* ===== FIX CHỐT GIAO DIỆN 31/05 ===== */
 .btn-orange{background:#16a34a!important;color:#fff!important}
 .code-link,.mc-code{text-decoration:none!important}
+
+/* PC: thống kê cân đối, to và nhìn rõ hơn */
 @media(min-width:901px){
   .stats-wrap{grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:10px!important}
   .stat-box{min-height:82px!important;padding:12px 18px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;border-radius:12px!important;box-shadow:0 2px 8px #00000012!important}
@@ -32,6 +37,8 @@
   .stat-pill b{font-size:20px!important;line-height:1!important}
   .stat-pill.active{background:#dbeafe!important;border-color:#2563eb!important;color:#1d4ed8!important;box-shadow:0 0 0 1px #2563eb33 inset!important}
 }
+
+/* Mobile: lọc ngày chia đôi, bỏ mũi tên, không chồng chéo */
 @media(max-width:900px){
   .toolbar{grid-template-columns:repeat(6,1fr)!important;gap:5px!important}
   .toolbar .btn-blue:first-child{grid-column:1/3!important;grid-row:1!important}
@@ -46,6 +53,10 @@
   .stats-wrap{gap:6px!important;margin-bottom:7px!important}
   .stat-box{border-radius:10px!important;box-shadow:0 1px 5px #0001!important}
 }
+
+
+
+/* ===== THỐNG KÊ DẠNG CARD RÕ RÀNG ===== */
 .stats-dashboard{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:10px!important}
 .stats-dashboard .stat-box{background:#fff!important;border-radius:12px!important;padding:12px!important;box-shadow:0 2px 8px #00000012!important;display:block!important;min-height:auto!important}
 .stats-dashboard .stat-title{font-size:16px!important;font-weight:900!important;color:#1f2937!important;margin:0 0 10px!important;text-align:left!important;min-width:0!important}
@@ -60,6 +71,7 @@
 .stats-dashboard .stat-green{border-top-color:#22c55e!important}
 .stats-dashboard .stat-yellow{border-top-color:#f59e0b!important}
 .stats-dashboard .stat-black{border-top-color:#111827!important}
+
 @media(max-width:900px){
   .stats-dashboard{grid-template-columns:1fr 1fr!important;gap:6px!important;margin-bottom:7px!important}
   .stats-dashboard .stat-box{padding:7px 6px!important;border-radius:10px!important}
@@ -69,6 +81,10 @@
   .stats-dashboard .stat-pill .stat-label{font-size:11.5px!important}
   .stats-dashboard .stat-pill b{font-size:18px!important}
 }
+
+
+
+/* ===== FINAL: mã vận đơn dễ nhìn hơn ===== */
 .code-link{
   color:#2563eb!important;
   font-size:18px!important;
@@ -93,6 +109,10 @@
 @media(max-width:900px){
   .stats-dashboard .stat-pill b{font-size:18px!important}
 }
+
+
+
+/* ===== FIX MÃ VẬN ĐƠN: nhỏ hơn, mảnh hơn, cột rộng hơn ===== */
 @media(min-width:901px){
   table{min-width:1780px!important;}
   th:nth-child(5),td:nth-child(5){width:230px!important;}
@@ -119,6 +139,10 @@
     letter-spacing:.15px!important;
   }
 }
+
+
+
+/* ===== QUẢN LÝ TÀI KHOẢN: thêm nút Sửa + đổi tên/mật khẩu ===== */
 .account-grid.account-form{grid-template-columns:1.2fr 1.1fr 1fr 1fr auto auto!important;margin-bottom:10px}
 .account-row{grid-template-columns:1.2fr 1fr 1fr 1fr 160px!important}
 .account-actions{display:flex;gap:6px;justify-content:flex-end;align-items:center}
@@ -132,30 +156,11 @@
   .account-actions{grid-column:1/3;justify-content:flex-start}
 }
 
-/* ===== LỊCH SỬ + DANH SÁCH ĐÃ XÓA ===== */
-.history{background:#fff!important;border:0!important;padding:0!important;display:grid;gap:8px;max-height:420px;overflow:auto}
-.history-item{background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #2563eb;border-radius:9px;padding:9px 10px;white-space:pre-wrap;line-height:1.45}
-.history-item:nth-child(even){background:#fff7ed;border-left-color:#f59e0b}
-.history-item.deleted{background:#fef2f2;border-left-color:#ef4444}
-.history-empty{color:#64748b;background:#f8fafc;border:1px solid #e5e7eb;border-radius:9px;padding:10px}
-.deleted-mode-note{display:inline-flex;align-items:center;gap:6px;background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;border-radius:999px;padding:5px 9px;font-weight:800}
-.date-two-line{display:flex;flex-direction:column;line-height:1.25;gap:2px}.date-two-line .d1{font-weight:800}.date-two-line .d2{color:#64748b;font-size:12px}
-
-
-/* ===== ACCOUNT DB LOGIN ===== */
-.account-grid.account-form{grid-template-columns:1.2fr 1fr .8fr .8fr .75fr auto auto!important;margin-bottom:10px}
-.account-row{grid-template-columns:1.2fr .8fr .9fr .8fr .8fr 150px!important}
-.account-actions{display:flex;gap:6px;justify-content:flex-end;align-items:center}
-.account-row b{color:#111827}.account-row .muted{color:#64748b;font-size:12px}
-#accountEditNote{font-size:12px;color:#2563eb;margin:4px 0 8px;min-height:16px;font-weight:700}
-.btn-purple{background:#7c3aed;color:#fff}
-@media(max-width:900px){.account-grid.account-form{grid-template-columns:1fr 1fr!important}.account-grid.account-form button{grid-column:auto!important}.account-row{grid-template-columns:1fr 1fr!important;gap:6px!important}.account-actions{grid-column:1/3;justify-content:flex-start}}
-
 </style>
 </head>
 <body>
 <div id="loginPage" class="login-page"><div class="login-box"><h2>Xử lý vận đơn</h2><input id="loginUser" placeholder="Tài khoản"><br><br><input id="loginPass" type="password" placeholder="Mật khẩu"><div id="loginMsg" class="login-msg"></div><label style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><input id="rememberLogin" type="checkbox" style="width:auto" checked>Ghi nhớ đăng nhập</label><button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button></div></div>
-<div id="app" class="app"><div class="topbar"><h2>Xử lý vận đơn</h2><div><span id="helloUser"></span><button id="accountBtn" class="btn-gray btn-small" style="display:none" onclick="openAccount()">Tài khoản</button> <button class="btn-gray btn-small" onclick="logout()">Đăng xuất</button></div></div><div class="main"><div class="toolbar"><button id="createBtn" class="btn-blue" onclick="openCreate()">+ Tạo phiếu</button><input class="search" id="searchBox" placeholder="Tìm mã vận đơn / nội dung" oninput="render()"><select class="sel" id="filterCarrier" onchange="render()"><option value="">Tất cả ĐVVC</option></select><select class="sel" id="filterShop" onchange="render()"><option value="">Shop</option><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select><select class="sel" id="filterDvvc" onchange="render()"><option value="">Tiến độ ĐVVC</option><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý</option></select><label>Từ</label><span class="date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="date" onchange="setDateCustom()"></span><span class="arrow">→</span><label>Đến</label><span class="date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="date" onchange="setDateCustom()"></span><button id="applyBtn" class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button><button id="clearDateBtn" class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button><button id="deletedToggleBtn" class="btn-gray btn-small" style="display:none" onclick="toggleDeletedList()">Đã xóa</button></div>
+<div id="app" class="app"><div class="topbar"><h2>Xử lý vận đơn</h2><div><span id="helloUser"></span><button id="accountBtn" class="btn-gray btn-small" onclick="openAccount()">Tài khoản</button> <button class="btn-gray btn-small" onclick="logout()">Đăng xuất</button></div></div><div class="main"><div class="toolbar"><button id="createBtn" class="btn-blue" onclick="openCreate()">+ Tạo phiếu</button><input class="search" id="searchBox" placeholder="Tìm mã vận đơn / nội dung" oninput="render()"><select class="sel" id="filterCarrier" onchange="render()"><option value="">Tất cả ĐVVC</option></select><select class="sel" id="filterShop" onchange="render()"><option value="">Shop</option><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select><select class="sel" id="filterDvvc" onchange="render()"><option value="">Tiến độ ĐVVC</option><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý</option></select><label>Từ</label><span class="date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="date" onchange="setDateCustom()"></span><span class="arrow">→</span><label>Đến</label><span class="date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="date" onchange="setDateCustom()"></span><button id="applyBtn" class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button><button id="clearDateBtn" class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button></div>
 <div class="stats-wrap stats-dashboard">
   <div class="stat-box shop-stats">
     <div class="stat-title">Thống kê Shop</div>
@@ -182,26 +187,22 @@
 <div id="dvvcModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Cập nhật ĐVVC</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>Mã vận đơn</label><input id="d_tracking" disabled></div><div class="form-row"><label>Tiến độ ĐVVC</label><select id="d_status_dvvc"><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý được</option></select></div><div class="form-row"><label>Nội dung ĐVVC</label><textarea id="d_dvvc"></textarea></div><div class="form-row"><label>Ảnh ĐVVC bổ sung</label><input id="d_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview_dvvc" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button></div></div>
 <div id="historyModal" class="modal"><div class="modal-box modal-sm"><div class="modal-head"><h3>Lịch sử</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="h_content" class="history"></div></div></div>
 <div id="detailModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Chi tiết phiếu</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="detailContent"></div></div></div>
-
 <div id="accountModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Quản lý tài khoản</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
   <div id="accountEditNote"></div>
   <div class="account-grid account-form">
     <input id="a_user" placeholder="Tên đăng nhập">
     <input id="a_pass" placeholder="Mật khẩu">
-    <select id="a_role" onchange="accountRoleChanged()"><option value="shop">Shop</option><option value="dvvc">ĐVVC</option><option value="admin">Admin</option></select>
+    <select id="a_role"><option value="shop">Shop</option><option value="dvvc">ĐVVC</option><option value="admin">Admin</option></select>
     <select id="a_carrier"><option value="">Tất cả</option></select>
-    <select id="a_active"><option value="true">Hoạt động</option><option value="false">Khóa</option></select>
     <button id="accountSaveBtn" class="btn-green" onclick="addOrSaveAccount()">Thêm</button>
     <button id="accountCancelBtn" class="btn-gray" style="display:none" onclick="cancelAccountEdit()">Hủy</button>
   </div>
-  <div class="note">Tài khoản lưu tại Firebase Realtime Database → users. Admin có thể tạo/sửa mật khẩu ngay trên web.</div>
   <div id="accountList"></div>
 </div></div>
 <div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeAll()"><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
-
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database-compat.js"></script>
-
 <script>
 const firebaseConfig={
   apiKey:"AIzaSyDUZ2zz4FMSTF-M6QSZVTmBXY_6T4oniso",
@@ -212,64 +213,95 @@ const firebaseConfig={
   messagingSenderId:"1005910299241",
   appId:"1:1005910299241:web:fe20ac27d2d62f67e2c8f8"
 };
-
 firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
 const db=firebase.database();
 
-const CLOUDINARY_UPLOAD_PRESET="xulyvandon";
+const ADMIN_EMAIL="kythuatlado@gmail.com";
 const CLOUDINARY_CLOUD_NAME="dqcyr3vgr";
+const CLOUDINARY_UPLOAD_PRESET="xulyvandon";
 const CARRIERS=["JT","Viettel","GHN"];
 const QUICK_TEXTS=["Hạ COD còn lại 35k","G1P","Đổi thông tin giao hàng thành:","Giao sớm cho khách hối","Tạo đơn thu hồi từ khách về shop","Shop báo chuyển hoàn","Báo shipper giao lại","Báo shipper cập nhật đơn hàng","Khách đã trả ship, báo shipper cập nhật tiền","Trả hàng về shop"];
 
 let currentUser=null,editId=null,pastedImages=[],editImages=[],currentImageTarget='create',dateFilter={from:null,to:null,mode:'month'},gallery=[],galleryIndex=0;
-let allTasks=[];
-let unsubscribeTasks=null;
-let showDeletedOnly=false;
+let tasks=[];
+let showDeleted=false;
+let editingAccountKey=null;
+let tasksListenerStarted=false;
 
 function $(id){return document.getElementById(id)}
 function pad2(n){return String(n).padStart(2,'0')}
 function formatTime(ts){return new Date(ts).toLocaleString('vi-VN',{hour12:false})}
-function formatDateOnly(ts){const d=new Date(ts);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`}
-function formatTimeOnly(ts){const d=new Date(ts);return `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`}
-function dateCellHtml(ts){return `<div class="date-two-line"><span class="d1">${formatTimeOnly(ts)}</span><span class="d2">${formatDateOnly(ts)}</span></div>`}
 function fmtDate(ts){const d=new Date(ts);return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
 function shortDate(ts,fb){if(!ts)return fb;const d=new Date(ts);return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`}
+function dateOnly(ts){return new Date(ts).toLocaleDateString('vi-VN')}
+function timeOnly(ts){return new Date(ts).toLocaleTimeString('vi-VN',{hour12:false})}
 function updateDateLabels(){if($('dateFromWrap'))dateFromWrap.setAttribute('data-short',shortDate(dateFilter.from,'Từ'));if($('dateToWrap'))dateToWrap.setAttribute('data-short',shortDate(dateFilter.to,'Đến'))}
 function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
 function endOfDay(d){const x=new Date(d);x.setHours(23,59,59,999);return x}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function safeKey(s){return String(s||'').trim().toLowerCase().replace(/[.#$\[\]\/]/g,'_')}
-function roleName(r){return r==='admin'?'Admin':r==='shop'?'Shop':'ĐVVC'}
+function safeKey(s){return String(s||'').trim().replace(/[.#$\[\]/]/g,'_')}
 function setLoginMsg(m,t='err'){loginMsg.className='login-msg '+(t==='ok'?'ok':'err');loginMsg.textContent=m}
 
+function addFinalStyle(){
+  if($('finalRuntimeStyle'))return;
+  const st=document.createElement('style');st.id='finalRuntimeStyle';st.textContent=`
+    .date-cell{text-align:center!important;line-height:1.18}.date-main{font-size:14px;font-weight:800;color:#111827}.time-sub{font-size:13px;color:#64748b;font-weight:400;margin-top:3px}
+    .history-list{display:grid;gap:8px}.history-item{background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #93c5fd;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.45}.history-item:nth-child(even){background:#fff7ed;border-left-color:#fdba74}.history-item:first-child{border-left-color:#22c55e}
+    .deleted-toggle{background:#fff7ed!important;color:#9a3412!important;border:1px solid #fed7aa!important}.deleted-toggle.active{background:#dc2626!important;color:#fff!important;border-color:#dc2626!important}
+  `;document.head.appendChild(st);
+}
+addFinalStyle();
+
 async function login(){
-  const u=loginUser.value.trim().toLowerCase();
-  const p=loginPass.value;
-  if(!u)return setLoginMsg('Chưa nhập tài khoản');
-  if(!p)return setLoginMsg('Chưa nhập mật khẩu');
+  const raw=loginUser.value.trim(); const pass=loginPass.value;
+  if(!raw)return setLoginMsg('Chưa nhập tài khoản');
+  if(!pass)return setLoginMsg('Chưa nhập mật khẩu');
   setLoginMsg('Đang đăng nhập...','ok');
   try{
-    const key=safeKey(u);
-    const snap=await db.ref('users/'+key).once('value');
-    let data=snap.val();
-    if(!data && key==='admin' && p==='123456'){
-      data={username:'admin',password:'123456',name:'Admin',role:'admin',carrier:'',active:true,created_at:Date.now(),bootstrap:true};
-      await db.ref('users/admin').set(data);
+    if(raw.includes('@')){
+      if(raw.toLowerCase()!==ADMIN_EMAIL.toLowerCase()) throw new Error('Email này không phải tài khoản admin');
+      const cred=await auth.signInWithEmailAndPassword(raw,pass);
+      currentUser={uid:cred.user.uid,username:'admin',email:raw,name:'Admin',role:'admin',carrier:'',active:true,authMode:'auth'};
+      if(rememberLogin.checked)localStorage.setItem('xvd_last_login',raw);else localStorage.removeItem('xvd_last_login');
+      await ensureAdminProfile();
+      finishLogin();
+      return;
     }
-    if(!data)throw new Error('Không tồn tại tài khoản trong Database /users/'+key);
-    if(data.active===false)throw new Error('Tài khoản này đang bị khóa');
-    if(String(data.password)!==String(p))throw new Error('Sai mật khẩu');
-    currentUser={uid:key,username:key,name:data.name||key,role:data.role||'shop',carrier:data.carrier||'',active:data.active!==false};
-    if(rememberLogin.checked)localStorage.setItem('xvd_user',u);else localStorage.removeItem('xvd_user');
-    setLoginMsg('','ok');
-    showApp();renderQuick();setDefaultMonth();listenTasks();
-  }catch(e){setLoginMsg('Lỗi: '+(e.message||e))}
+    await auth.signInAnonymously();
+    const username=safeKey(raw);
+    const snap=await db.ref('users/'+username).once('value');
+    const u=snap.val();
+    if(!u)throw new Error('Không tồn tại tài khoản: '+raw);
+    if(u.active===false)throw new Error('Tài khoản đã bị khóa');
+    if(String(u.password)!==String(pass))throw new Error('Sai mật khẩu');
+    currentUser={username,uid:auth.currentUser.uid,name:u.name||username,role:u.role||'shop',carrier:u.carrier||'',active:u.active!==false,authMode:'db'};
+    if(rememberLogin.checked)localStorage.setItem('xvd_last_login',raw);else localStorage.removeItem('xvd_last_login');
+    finishLogin();
+  }catch(e){
+    try{if(auth.currentUser && auth.currentUser.isAnonymous)await auth.signOut()}catch(_e){}
+    setLoginMsg('Lỗi: '+(e.message||e));
+  }
+}
+
+async function ensureAdminProfile(){
+  try{
+    await db.ref('users/admin').update({username:'admin',name:'Admin',role:'admin',carrier:'',active:true,email:ADMIN_EMAIL,authAdmin:true,updated_at:Date.now()});
+  }catch(e){console.warn('Không ghi được profile admin:',e.message)}
+}
+
+function finishLogin(){
+  setLoginMsg('', 'ok');
+  showApp();
+  renderQuick();
+  setDefaultMonth();
+  loadTasks();
 }
 
 async function logout(){
-  try{if(unsubscribeTasks)db.ref('tasks').off('value',unsubscribeTasks)}catch(e){}
-  localStorage.removeItem('xvd_user');
-  currentUser=null;allTasks=[];showDeletedOnly=false;
+  try{await auth.signOut()}catch(e){}
+  localStorage.removeItem('xvd_last_login');
+  currentUser=null;tasks=[];showDeleted=false;tasksListenerStarted=false;
   app.style.display='none';loginPage.style.display='flex';
 }
 
@@ -283,41 +315,41 @@ function fillCarrierSelect(sel,all=false){sel.innerHTML=(all?'<option value="">T
 function showApp(){
   loginPage.style.display='none';app.style.display='block';
   helloUser.textContent=`${currentUser.name||currentUser.username}${currentUser.carrier?' - '+currentUser.carrier:''} `;
+  accountBtn.style.display=currentUser.role==='admin'?'':'none';
   createBtn.style.display=canCreateTask()?'':'none';
-  if($('accountBtn')) accountBtn.style.display=currentUser.role==='admin'?'':'none';
-  if($('deletedToggleBtn')) deletedToggleBtn.style.display=currentUser.role==='admin'?'':'none';
-  fillCarrierSelect(filterCarrier,true);fillCarrierSelect(c_carrier);fillCarrierSelect(s_carrier);
+  fillCarrierSelect(filterCarrier,true);fillCarrierSelect(c_carrier);fillCarrierSelect(s_carrier);fillCarrierSelect(a_carrier,true);
   if(currentUser.role==='dvvc'){filterCarrier.value=currentUser.carrier;filterCarrier.disabled=true}else{filterCarrier.disabled=false}
+  addDeletedButton();
 }
+function addDeletedButton(){
+  if($('deletedBtn')){deletedBtn.style.display=currentUser&&currentUser.role==='admin'?'':'none';return}
+  const b=document.createElement('button');b.id='deletedBtn';b.className='btn-small deleted-toggle';b.textContent='Đã xóa';b.onclick=toggleDeleted;
+  const tb=document.querySelector('.toolbar'); if(tb)tb.appendChild(b);
+  b.style.display=currentUser&&currentUser.role==='admin'?'':'none';
+}
+function toggleDeleted(){showDeleted=!showDeleted;deletedBtn.classList.toggle('active',showDeleted);deletedBtn.textContent=showDeleted?'Đang xem đã xóa':'Đã xóa';render()}
 
 function statusShopText(s){return {chua_xong:'Chưa xong',da_xong:'Đã xong',huy:'Hủy'}[s]||s}
 function statusDvvcText(s){return {chua_xu_ly:'Chưa xử lý',dang_xu_ly:'Đang xử lý',da_xu_ly:'Đã xử lý',khong_xu_ly:'Không xử lý được'}[s]||s}
 function badgeShop(s){const cls=s==='da_xong'?'green':s==='huy'?'black':'red';return `<span class="badge ${cls}">${statusShopText(s)}</span>`}
 function badgeDvvc(s){const cls=s==='chua_xu_ly'?'red':s==='dang_xu_ly'?'yellow':s==='da_xu_ly'?'green':'black';return `<span class="badge ${cls}">${statusDvvcText(s)}</span>`}
-
-function setDefaultMonth(){
-  const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);
-  dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};
-  dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render();
-}
+function setDefaultMonth(){const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render()}
 function setDateCustom(){dateFilter={from:dateFrom.value?startOfDay(new Date(dateFrom.value+'T00:00')).getTime():null,to:dateTo.value?endOfDay(new Date(dateTo.value+'T00:00')).getTime():null,mode:'custom'};updateDateLabels();render()}
 function clearDateFilter(){dateFilter={from:null,to:null,mode:''};dateFrom.value='';dateTo.value='';updateDateLabels();render()}
 
-function listenTasks(){
-  const ref=db.ref('tasks');
-  if(unsubscribeTasks)ref.off('value',unsubscribeTasks);
-  unsubscribeTasks=snap=>{
-    const arr=[];
-    snap.forEach(child=>{const t=child.val()||{};t.id=child.key;arr.push(t)});
-    allTasks=arr.sort((a,b)=>(b.created_at||0)-(a.created_at||0));
+function loadTasks(){
+  if(tasksListenerStarted)return; tasksListenerStarted=true;
+  db.ref('tasks').off();
+  db.ref('tasks').on('value',snap=>{
+    tasks=[]; snap.forEach(ch=>{const t=ch.val()||{}; t.id=ch.key; tasks.push(t)});
+    tasks.sort((a,b)=>(b.created_at||0)-(a.created_at||0));
     render();
-  };
-  ref.on('value',unsubscribeTasks,err=>alert('Lỗi tải Firebase Database: '+err.message));
+  },err=>setLoginMsg('Lỗi tải dữ liệu: '+err.message));
 }
-
 function getBaseList(){
   const q=searchBox.value.trim().toLowerCase();
-  let list=allTasks.filter(t=>(showDeletedOnly?!!t.deleted:!t.deleted)&&visibleByUser(t));
+  let list=tasks.filter(t=>visibleByUser(t));
+  if(showDeleted)list=list.filter(t=>!!t.deleted); else list=list.filter(t=>!t.deleted);
   if(dateFilter.from)list=list.filter(t=>(t.created_at||0)>=dateFilter.from);
   if(dateFilter.to)list=list.filter(t=>(t.created_at||0)<=dateFilter.to);
   if(filterCarrier.value)list=list.filter(t=>t.carrier===filterCarrier.value);
@@ -328,221 +360,51 @@ function render(){
   let base=getBaseList(),list=[...base];
   if(filterShop.value)list=list.filter(t=>t.status_shop===filterShop.value);
   if(filterDvvc.value)list=list.filter(t=>t.status_dvvc===filterDvvc.value);
-  stTotal.textContent=base.length;stShopRed.textContent=base.filter(t=>t.status_shop==='chua_xong').length;stShopGreen.textContent=base.filter(t=>t.status_shop==='da_xong').length;stShopCancel.textContent=base.filter(t=>t.status_shop==='huy').length;stDvvcRed.textContent=base.filter(t=>t.status_dvvc==='chua_xu_ly').length;stDvvcYellow.textContent=base.filter(t=>t.status_dvvc==='dang_xu_ly').length;stDvvcGreen.textContent=base.filter(t=>t.status_dvvc==='da_xu_ly').length;stDvvcBlack.textContent=base.filter(t=>t.status_dvvc==='khong_xu_ly').length;
-  updateStatActive();
-  tbody.innerHTML=list.map((t,i)=>rowHtml(t,i)).join('');
-  mobileList.innerHTML=list.map((t,i)=>cardHtml(t,i)).join('');
+  stTotal.textContent=base.length;stShopRed.textContent=base.filter(t=>t.status_shop==='chua_xong').length;stShopGreen.textContent=base.filter(t=>t.status_shop==='da_xong').length;stShopCancel.textContent=base.filter(t=>t.status_shop==='huy').length;stDvvcRed.textContent=base.filter(t=>t.status_dvvc==='chua_xu_ly').length;stDvvcYellow.textContent=base.filter(t=>t.status_dvvc==='dang_xu_ly').length;stDvvcGreen.textContent=base.filter(t=>t.status_dvvc==='da_xu_ly').length;stDvvcBlack.textContent=base.filter(t=>t.status_dvvc==='khong_xu_ly').length;updateStatActive();
+  tbody.innerHTML=list.map((t,i)=>rowHtml(t,i)).join('');mobileList.innerHTML=list.map((t,i)=>cardHtml(t,i)).join('');
 }
-function rowHtml(t,i){const imgs=allImages(t);return `<tr class="${t.urgent?'row-urgent':''}"><td>${i+1}</td><td>${dateCellHtml(t.created_at)}</td><td>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</td><td><span class="badge carrier">${t.carrier||''}</span></td><td><div class="code-wrap"><span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span><button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div></td><td><div class="content-preview">${escapeHtml(t.shop)}</div>${(t.shop||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 ${imgs.length}</button>`:''}</td><td>${badgeShop(t.status_shop)}</td><td>${canEditShop()?`<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div>${(t.dvvc||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${badgeDvvc(t.status_dvvc)}</td><td>${canEditDvvc(t)?`<button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${(t.history||[]).length})</button></td><td>${canDeleteTask()?`<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:''}</td></tr>`}
-function cardHtml(t,i){const imgs=allImages(t);return `<div class="mobile-card ${t.urgent?'row-urgent':''}"><div class="mc-head"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${formatTimeOnly(t.created_at)} ${formatDateOnly(t.created_at)} • ${t.carrier}</div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div><div class="mc-body"><div><div class="mc-label">Shop</div><div class="content-preview">${escapeHtml(t.shop||'')}</div></div><div>${badgeShop(t.status_shop)} ${badgeDvvc(t.status_dvvc)} <span class="badge carrier">${t.carrier}</span></div><div><div class="mc-label">ĐVVC</div><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div></div>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${imgs.length})</button>`:'<span class="mc-label">Không có ảnh</span>'}</div><div class="mc-actions">${canEditShop()?`<button class="btn-blue btn-small" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem</button>`}${canEditDvvc(t)?`<button class="btn-orange btn-small" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem ĐVVC</button>`}<button class="btn-gray btn-small" onclick="openHistory('${t.id}')">Lịch sử</button>${canDeleteTask()?`<button class="btn-red btn-small" onclick="deleteTask('${t.id}')">Xóa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Chi tiết</button>`}</div></div>`}
-function updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value){const el=document.querySelector('.stat-pill');if(el)el.classList.add('active')}document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}
-function filterByShop(s){filterShop.value=filterShop.value===s?'':s;filterDvvc.value='';render()}
-function filterByDvvc(s){filterDvvc.value=filterDvvc.value===s?'':s;filterShop.value='';render()}
-function clearStatusFilter(){filterShop.value='';filterDvvc.value='';render()}
+function dateHtml(ts){return `<div class="date-cell"><div class="date-main">${dateOnly(ts)}</div><div class="time-sub">${timeOnly(ts)}</div></div>`}
+function rowHtml(t,i){const imgs=allImages(t);return `<tr class="${t.urgent?'row-urgent':''}"><td>${i+1}</td><td>${dateHtml(t.created_at)}</td><td>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</td><td><span class="badge carrier">${t.carrier||''}</span></td><td><div class="code-wrap"><span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span><button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div></td><td><div class="content-preview">${escapeHtml(t.shop)}</div>${(t.shop||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 ${imgs.length}</button>`:''}</td><td>${badgeShop(t.status_shop)}</td><td>${canEditShop()?`<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div>${(t.dvvc||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${badgeDvvc(t.status_dvvc)}</td><td>${canEditDvvc(t)?`<button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${(t.history||[]).length})</button></td><td>${canDeleteTask()&&!t.deleted?`<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:''}</td></tr>`}
+function cardHtml(t,i){const imgs=allImages(t);return `<div class="mobile-card ${t.urgent?'row-urgent':''}"><div class="mc-head"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${dateOnly(t.created_at)} ${timeOnly(t.created_at)} • ${t.carrier}</div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div><div class="mc-body"><div><div class="mc-label">Shop</div><div class="content-preview">${escapeHtml(t.shop||'')}</div></div><div>${badgeShop(t.status_shop)} ${badgeDvvc(t.status_dvvc)} <span class="badge carrier">${t.carrier}</span></div><div><div class="mc-label">ĐVVC</div><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div></div>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${imgs.length})</button>`:'<span class="mc-label">Không có ảnh</span>'}</div><div class="mc-actions">${canEditShop()?`<button class="btn-blue btn-small" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem</button>`}${canEditDvvc(t)?`<button class="btn-orange btn-small" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem ĐVVC</button>`}<button class="btn-gray btn-small" onclick="openHistory('${t.id}')">Lịch sử</button>${canDeleteTask()&&!t.deleted?`<button class="btn-red btn-small" onclick="deleteTask('${t.id}')">Xóa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Chi tiết</button>`}</div></div>`}
+function updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value){const f=document.querySelector('.stat-pill');if(f)f.classList.add('active')}document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}
+function filterByShop(s){filterShop.value=filterShop.value===s?'':s;filterDvvc.value='';render()}function filterByDvvc(s){filterDvvc.value=filterDvvc.value===s?'':s;filterShop.value='';render()}function clearStatusFilter(){filterShop.value='';filterDvvc.value='';render()}
 function renderQuick(){const html=QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join('');quickBox.innerHTML=html;quickBoxShop.innerHTML=html.replaceAll('addQuick','addQuickShop')}
-function addQuick(x){c_shop.value=(c_shop.value.trim()?c_shop.value.trim()+'\n':'')+x}
-function addQuickShop(x){s_shop.value=(s_shop.value.trim()?s_shop.value.trim()+'\n':'')+x}
-
-async function compressImageFile(file,quality=0.70,maxWidth=1600){
-  if(!file||!file.type.startsWith('image/'))return file;
-  const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=URL.createObjectURL(file)});
-  const ratio=Math.min(1,maxWidth/img.width);
-  const canvas=document.createElement('canvas');canvas.width=Math.round(img.width*ratio);canvas.height=Math.round(img.height*ratio);
-  const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);
-  URL.revokeObjectURL(img.src);
-  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));
-  return new File([blob],(file.name||'image').replace(/\.[^.]+$/,'.jpg'),{type:'image/jpeg'});
-}
-async function uploadToCloudinary(file,tracking,side){
-  const compressed=await compressImageFile(file,0.70,1600);
-  const formData=new FormData();
-  const stamp=Date.now()+'_'+Math.random().toString(36).slice(2,7);
-  formData.append('file',compressed);
-  formData.append('upload_preset',CLOUDINARY_UPLOAD_PRESET);
-  formData.append('folder','xulyvandon');
-  formData.append('public_id',`${tracking||'NO_CODE'}_${side||'img'}_${stamp}`);
-  const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,{method:'POST',body:formData});
-  const data=await res.json();
-  if(!res.ok||!data.secure_url)throw new Error(data.error?.message||'Upload Cloudinary thất bại');
-  return data.secure_url;
-}
-function dataUrlToFile(src,name){const arr=src.split(',');const mime=arr[0].match(/:(.*?);/)?.[1]||'image/png';const bstr=atob(arr[1]);let n=bstr.length;const u8arr=new Uint8Array(n);while(n--)u8arr[n]=bstr.charCodeAt(n);return new File([u8arr],name,{type:mime})}
-async function uploadImageList(list,tracking,side){
-  const urls=[];
-  for(const item of list||[]){
-    if(!item)continue;
-    if(typeof item==='string'&&item.startsWith('http')){urls.push(item);continue;}
-    const file=typeof item==='string'&&item.startsWith('data:')?dataUrlToFile(item,`${tracking}_${side}.png`):item;
-    const url=await uploadToCloudinary(file,tracking,side);
-    urls.push(url);
-  }
-  return urls;
-}
-
+function addQuick(x){c_shop.value=(c_shop.value.trim()?c_shop.value.trim()+'\n':'')+x}function addQuickShop(x){s_shop.value=(s_shop.value.trim()?s_shop.value.trim()+'\n':'')+x}
 function openCreate(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');editId=null;c_carrier.value=CARRIERS[0];c_tracking.value='';c_shop.value='';c_urgent.checked=false;pastedImages=[];c_images.value='';renderPreview();createModal.style.display='flex'}
-function openShop(id){if(!canEditShop())return alert('Chỉ Shop/Admin được sửa phần Shop');const t=allTasks.find(x=>x.id===id);if(!t)return;editId=id;s_carrier.value=t.carrier;s_tracking.value=t.tracking;s_shop.value=t.shop;s_urgent.checked=!!t.urgent;s_status_shop.value=t.status_shop;editImages=[...(t.shop_images||t.images||[])];currentImageTarget='shop';renderEditPreview();shopModal.style.display='flex'}
-function openDvvc(id){const t=allTasks.find(x=>x.id===id);if(!t)return;if(!canEditDvvc(t))return alert('Tài khoản này chỉ được sửa đơn của '+currentUser.carrier);editId=id;d_tracking.value=t.tracking;d_status_dvvc.value=t.status_dvvc;d_dvvc.value=t.dvvc||'';editImages=[...(t.dvvc_images||[])];currentImageTarget='dvvc';renderEditPreview();dvvcModal.style.display='flex'}
-function historyValue(v){return String(v??'').trim()||'(trống)'}
-function pushChange(arr,label,oldVal,newVal){if(String(oldVal??'')!==String(newVal??''))arr.push(`${label}:\n- Cũ: ${historyValue(oldVal)}\n- Mới: ${historyValue(newVal)}`)}
-function saveBtnLoading(btn,loading){if(!btn)return;btn.disabled=!!loading;if(loading){btn.dataset.old=btn.innerHTML;btn.innerHTML='<span class="loading-spinner"></span> Đang lưu...'}else if(btn.dataset.old){btn.innerHTML=btn.dataset.old;delete btn.dataset.old}}
-async function createTask(){
-  if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');
-  const tracking=c_tracking.value.trim().toUpperCase();
-  if(!tracking)return alert('Chưa nhập mã vận đơn');
-  const exists=await db.ref('tasks/'+safeKey(tracking)).once('value');
-  if(exists.exists()&&!exists.val().deleted)return alert('Mã vận đơn đã tồn tại');
-  const btn=createModal.querySelector('.btn-green');saveBtnLoading(btn,true);
-  try{
-    const now=Date.now();
-    const shopImages=await uploadImageList(pastedImages,tracking,'shop');
-    const newTask={id:tracking,created_at:now,carrier:c_carrier.value,tracking,shop:c_shop.value.trim(),dvvc:'',status_dvvc:'chua_xu_ly',status_shop:'chua_xong',urgent:c_urgent.checked,shop_images:shopImages,dvvc_images:[],images:[],created_by:currentUser.uid,created_by_name:currentUser.username,history:[`${formatTime(now)} - ${currentUser.username}: tạo phiếu`]};
-    await db.ref('tasks/'+safeKey(tracking)).set(newTask);
-    closeAll();
-  }catch(e){alert('Lỗi lưu phiếu: '+e.message)}finally{saveBtnLoading(btn,false)}
-}
-async function saveShop(){
-  const t=allTasks.find(x=>x.id===editId);if(!t)return;
-  const btn=shopModal.querySelector('.btn-green');saveBtnLoading(btn,true);
-  try{
-    const now=Date.now(),changes=[];
-    const newImages=await uploadImageList(editImages,t.tracking,'shop');
-    pushChange(changes,'Đơn vị vận chuyển',t.carrier,s_carrier.value);pushChange(changes,'Nội dung Shop',t.shop,s_shop.value.trim());pushChange(changes,'Gấp',t.urgent?'Có':'Không',s_urgent.checked?'Có':'Không');pushChange(changes,'Tiến độ Shop',statusShopText(t.status_shop),statusShopText(s_status_shop.value));pushChange(changes,'Ảnh Shop',(t.shop_images||[]).length+' ảnh',newImages.length+' ảnh');
-    const history=[...(t.history||[])];if(changes.length)history.push(`${formatTime(now)} - ${currentUser.username}:\n${changes.join('\n')}`);
-    await db.ref('tasks/'+t.id).update({carrier:s_carrier.value,shop:s_shop.value.trim(),urgent:s_urgent.checked,status_shop:s_status_shop.value,shop_images:newImages,updated_at:now,updated_by:currentUser.uid,history});
-    closeAll();
-  }catch(e){alert('Lỗi lưu Shop: '+e.message)}finally{saveBtnLoading(btn,false)}
-}
-async function saveDvvc(){
-  const t=allTasks.find(x=>x.id===editId);if(!t)return;
-  const btn=dvvcModal.querySelector('.btn-green');saveBtnLoading(btn,true);
-  try{
-    const now=Date.now(),changes=[];
-    const newImages=await uploadImageList(editImages,t.tracking,'dvvc');
-    pushChange(changes,'Tiến độ ĐVVC',statusDvvcText(t.status_dvvc),statusDvvcText(d_status_dvvc.value));pushChange(changes,'Nội dung ĐVVC',t.dvvc,d_dvvc.value.trim());pushChange(changes,'Ảnh ĐVVC',(t.dvvc_images||[]).length+' ảnh',newImages.length+' ảnh');
-    const history=[...(t.history||[])];if(changes.length)history.push(`${formatTime(now)} - ${currentUser.username}:\n${changes.join('\n')}`);
-    await db.ref('tasks/'+t.id).update({status_dvvc:d_status_dvvc.value,dvvc:d_dvvc.value.trim(),dvvc_images:newImages,updated_at:now,updated_by:currentUser.uid,history});
-    closeAll();
-  }catch(e){alert('Lỗi lưu ĐVVC: '+e.message)}finally{saveBtnLoading(btn,false)}
-}
+function openShop(id){if(!canEditShop())return alert('Chỉ Shop/Admin được sửa phần Shop');const t=tasks.find(x=>x.id===id);if(!t)return;editId=id;s_carrier.value=t.carrier;s_tracking.value=t.tracking;s_shop.value=t.shop;s_urgent.checked=!!t.urgent;s_status_shop.value=t.status_shop;editImages=[...(t.shop_images||t.images||[])];currentImageTarget='shop';renderEditPreview();shopModal.style.display='flex'}
+function openDvvc(id){const t=tasks.find(x=>x.id===id);if(!t)return;if(!canEditDvvc(t))return alert('Tài khoản này chỉ được sửa đơn của '+currentUser.carrier);editId=id;d_tracking.value=t.tracking;d_status_dvvc.value=t.status_dvvc;d_dvvc.value=t.dvvc||'';editImages=[...(t.dvvc_images||[])];currentImageTarget='dvvc';renderEditPreview();dvvcModal.style.display='flex'}
+function historyValue(v){return String(v??'').trim()||'(trống)'}function pushChange(arr,label,oldVal,newVal){if(String(oldVal??'')!==String(newVal??''))arr.push(`${label}:\n- Cũ: ${historyValue(oldVal)}\n- Mới: ${historyValue(newVal)}`)}
+async function createTask(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');const tracking=c_tracking.value.trim().toUpperCase();if(!tracking)return alert('Chưa nhập mã vận đơn');if(tasks.some(t=>!t.deleted&&t.id===tracking))return alert('Mã vận đơn đã tồn tại');const now=Date.now();let uploaded=[];try{uploaded=await uploadImagesFromData(pastedImages,tracking,'shop')}catch(e){return alert('Upload ảnh lỗi: '+e.message)}const newTask={id:tracking,created_at:now,carrier:c_carrier.value,tracking,shop:c_shop.value.trim(),dvvc:'',status_dvvc:'chua_xu_ly',status_shop:'chua_xong',urgent:c_urgent.checked,shop_images:uploaded,dvvc_images:[],images:[],history:[`${formatTime(now)} - ${currentUser.name||currentUser.username}: tạo phiếu`]};try{await db.ref('tasks/'+tracking).set(newTask);closeAll()}catch(e){alert('Lỗi lưu phiếu: '+e.message)}}
+async function saveShop(){const t=tasks.find(x=>x.id===editId);if(!t)return;const now=Date.now(),changes=[];let newImages=[...(t.shop_images||[])];const added=editImages.filter(x=>!String(x).startsWith('http'));if(added.length){try{newImages=[...newImages,...await uploadImagesFromData(added,t.tracking,'shop')]}catch(e){return alert('Upload ảnh lỗi: '+e.message)}}pushChange(changes,'Đơn vị vận chuyển',t.carrier,s_carrier.value);pushChange(changes,'Nội dung Shop',t.shop,s_shop.value.trim());pushChange(changes,'Gấp',t.urgent?'Có':'Không',s_urgent.checked?'Có':'Không');pushChange(changes,'Tiến độ Shop',statusShopText(t.status_shop),statusShopText(s_status_shop.value));pushChange(changes,'Ảnh Shop',(t.shop_images||[]).length+' ảnh',newImages.length+' ảnh');const updates={carrier:s_carrier.value,shop:s_shop.value.trim(),urgent:s_urgent.checked,status_shop:s_status_shop.value,shop_images:newImages,updated_at:now,history:changes.length?[...(t.history||[]),`${formatTime(now)} - ${currentUser.name||currentUser.username}:\n${changes.join('\n')}`]:(t.history||[])};try{await db.ref('tasks/'+editId).update(updates);closeAll()}catch(e){alert('Lỗi lưu: '+e.message)}}
+async function saveDvvc(){const t=tasks.find(x=>x.id===editId);if(!t)return;const now=Date.now(),changes=[];let newImages=[...(t.dvvc_images||[])];const added=editImages.filter(x=>!String(x).startsWith('http'));if(added.length){try{newImages=[...newImages,...await uploadImagesFromData(added,t.tracking,'dvvc')]}catch(e){return alert('Upload ảnh lỗi: '+e.message)}}pushChange(changes,'Tiến độ ĐVVC',statusDvvcText(t.status_dvvc),statusDvvcText(d_status_dvvc.value));pushChange(changes,'Nội dung ĐVVC',t.dvvc,d_dvvc.value.trim());pushChange(changes,'Ảnh ĐVVC',(t.dvvc_images||[]).length+' ảnh',newImages.length+' ảnh');const updates={status_dvvc:d_status_dvvc.value,dvvc:d_dvvc.value.trim(),dvvc_images:newImages,updated_at:now,history:changes.length?[...(t.history||[]),`${formatTime(now)} - ${currentUser.name||currentUser.username}:\n${changes.join('\n')}`]:(t.history||[])};try{await db.ref('tasks/'+editId).update(updates);closeAll()}catch(e){alert('Lỗi lưu: '+e.message)}}
 function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}
-function openDetail(id){const t=allTasks.find(x=>x.id===id);if(!t)return;const imgs=allImages(t);detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${formatTime(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${t.carrier}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${historyHtml(t)}</div></div>`;detailModal.style.display='flex'}
-function getHistoryItems(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`])}
-function getHistoryText(t){return getHistoryItems(t).join('\n')}
-function historyHtml(t){const items=getHistoryItems(t);if(!items.length)return '<div class="history-empty">Chưa có lịch sử</div>';return '<div class="history-list">'+items.map(x=>`<div class="history-item ${String(x).includes('xóa phiếu')?'deleted':''}">${escapeHtml(x)}</div>`).join('')+'</div>'}
-function openHistory(id){const t=allTasks.find(x=>x.id===id);if(!t)return;h_content.innerHTML=historyHtml(t);historyModal.style.display='flex'}
-async function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này?'))return;const t=allTasks.find(x=>x.id===id);if(!t)return;try{await db.ref('tasks/'+id).update({deleted:true,deleted_at:Date.now(),deleted_by:currentUser.uid,history:[...(t.history||[]),`${formatTime(Date.now())} - ${currentUser.username}: xóa phiếu`]});render()}catch(e){alert('Lỗi xóa: '+e.message)}}
-function toggleDeletedList(){if(!canDeleteTask())return;showDeletedOnly=!showDeletedOnly;if($('deletedToggleBtn')){deletedToggleBtn.textContent=showDeletedOnly?'Đang xem đã xóa':'Đã xóa';deletedToggleBtn.className=showDeletedOnly?'btn-red btn-small':'btn-gray btn-small'}render()}
+function openDetail(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);if(!t)return;detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${dateOnly(t.created_at)} ${timeOnly(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${t.carrier}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${historyHtml(t)}</div></div>`;detailModal.style.display='flex'}
+function getHistoryText(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]).join('\n')}
+function historyHtml(t){const arr=(t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]);return `<div class="history-list">${arr.map(x=>`<div class="history-item">${escapeHtml(x)}</div>`).join('')}</div>`}
+function openHistory(id){const t=tasks.find(x=>x.id===id);if(!t)return;h_content.innerHTML=historyHtml(t);historyModal.style.display='flex'}
+async function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này? Dữ liệu vẫn lưu trong DB.'))return;const t=tasks.find(x=>x.id===id);if(!t)return;try{await db.ref('tasks/'+id).update({deleted:true,deleted_at:Date.now(),deleted_by:currentUser.username,history:[...(t.history||[]),`${formatTime(Date.now())} - ${currentUser.name||currentUser.username}: xóa phiếu`]})}catch(e){alert('Lỗi xóa: '+e.message)}}
 function copyTracking(c){navigator.clipboard.writeText(c).then(()=>alert('Đã copy mã: '+c)).catch(e=>alert('Copy lỗi: '+e.message))}
-async function copyTicket(id){
-  const t=allTasks.find(x=>x.id===id);if(!t)return;
-  const shopImgs=t.shop_images||[];
-  const lines=[];
-  if(t.urgent)lines.push('🔥 GẤP');
-  lines.push('Ngày tạo: '+formatTimeOnly(t.created_at)+' '+formatDateOnly(t.created_at));
-  lines.push('ĐVVC: '+(t.carrier||''));
-  lines.push('Mã vận đơn: '+(t.tracking||''));
-  lines.push('Nội dung Shop:');
-  lines.push(t.shop||'(trống)');
-  lines.push('Ảnh Shop: '+(shopImgs.length?`Có ${shopImgs.length} ảnh vào web xem.`:'Không có ảnh.'));
-  try{await navigator.clipboard.writeText(lines.join('\n'));alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}
-}
+async function copyTicket(id){const t=tasks.find(x=>x.id===id);if(!t)return;const n=(t.shop_images||[]).length;const text=`${t.urgent?'🔥 GẤP\n':''}Ngày tạo: ${timeOnly(t.created_at)} ${dateOnly(t.created_at)}\nĐVVC: ${t.carrier}\nMã vận đơn: ${t.tracking}\nNội dung Shop:\n${t.shop||''}\nẢnh Shop: ${n?`Có ${n} ảnh vào web xem`:'Không có ảnh'}`;try{await navigator.clipboard.writeText(text);alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}}
 function addFilesToList(files,target){Array.from(files||[]).forEach(file=>{if(!file.type.startsWith('image/'))return;const r=new FileReader();r.onload=e=>{if(target==='create'){pastedImages.push(e.target.result);renderPreview()}else{editImages.push(e.target.result);renderEditPreview()}};r.readAsDataURL(file)})}
-function handleFileImages(e){addFilesToList(e.target.files,'create')}
-function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}
+function handleFileImages(e){addFilesToList(e.target.files,'create')}function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}
 function renderPreview(){c_preview.innerHTML=pastedImages.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGallery([...pastedImages],${i})">`).join('')}
 function renderEditPreview(){const html=editImages.map((src,i)=>`<div style="position:relative"><img class="preview-img" src="${src}" onclick="showImageGallery([...editImages],${i})"><button class="btn-red btn-small" style="position:absolute;right:-5px;top:-5px;padding:1px 5px" onclick="removeEditImage(${i})">×</button></div>`).join('');edit_preview.innerHTML=html;edit_preview_dvvc.innerHTML=html}
 function removeEditImage(i){editImages.splice(i,1);renderEditPreview()}
 document.addEventListener('paste',e=>{if(!['flex'].includes(createModal.style.display)&&!['flex'].includes(shopModal.style.display)&&!['flex'].includes(dvvcModal.style.display))return;const files=[];Array.from(e.clipboardData?.items||[]).forEach(it=>{if(it.type.indexOf('image')===0){const f=it.getAsFile();if(f)files.push(f)}});if(files.length){addFilesToList(files,createModal.style.display==='flex'?'create':currentImageTarget);e.preventDefault()}})
-function showImageGalleryById(id,idx){const t=allTasks.find(x=>x.id===id);if(!t)return;showImageGallery(allImages(t),idx)}
-function showImageGallery(arr,idx=0){gallery=arr||[];galleryIndex=idx;renderGallery();imgModal.style.display='flex'}
-function renderGallery(){if(!gallery.length)return;bigImg.src=gallery[galleryIndex];imgCounter.textContent=`${galleryIndex+1}/${gallery.length}`;imgThumbs.innerHTML=gallery.map((s,i)=>`<img class="preview-img" style="width:45px;height:45px;${i===galleryIndex?'outline:3px solid #2563eb':''}" src="${s}" onclick="galleryIndex=${i};renderGallery()">`).join('')}
-function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.length)%gallery.length;renderGallery()}
-function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}
+function dataURLtoBlob(dataurl){if(String(dataurl).startsWith('http'))return null;const arr=dataurl.split(','),mime=(arr[0].match(/:(.*?);/)||[])[1]||'image/png',bstr=atob(arr[1]);let n=bstr.length,u8arr=new Uint8Array(n);while(n--)u8arr[n]=bstr.charCodeAt(n);return new Blob([u8arr],{type:mime})}
+function compressDataURL(dataurl,quality=.7,maxW=1400){return new Promise((resolve,reject)=>{if(String(dataurl).startsWith('http'))return resolve(dataurl);const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW}const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,w,h);resolve(c.toDataURL('image/jpeg',quality))};img.onerror=reject;img.src=dataurl})}
+async function uploadImagesFromData(arr,tracking,type){const urls=[];for(let i=0;i<arr.length;i++){const src=arr[i];if(String(src).startsWith('http')){urls.push(src);continue}const compressed=await compressDataURL(src,.7);const blob=dataURLtoBlob(compressed);const form=new FormData();form.append('file',blob,`${tracking}_${type}_${Date.now()}_${i}.jpg`);form.append('upload_preset',CLOUDINARY_UPLOAD_PRESET);form.append('folder','xulyvandon');form.append('public_id',`${tracking}_${type}_${Date.now()}_${i}`);const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,{method:'POST',body:form});const data=await res.json();if(!data.secure_url)throw new Error(data.error?.message||'Cloudinary upload thất bại');urls.push(data.secure_url)}return urls}
+function showImageGalleryById(id,idx){const t=tasks.find(x=>x.id===id);if(!t)return;showImageGallery(allImages(t),idx)}function showImageGallery(arr,idx=0){gallery=arr||[];galleryIndex=idx;renderGallery();imgModal.style.display='flex'}function renderGallery(){if(!gallery.length)return;bigImg.src=gallery[galleryIndex];imgCounter.textContent=`${galleryIndex+1}/${gallery.length}`;imgThumbs.innerHTML=gallery.map((s,i)=>`<img class="preview-img" style="width:45px;height:45px;${i===galleryIndex?'outline:3px solid #2563eb':''}" src="${s}" onclick="galleryIndex=${i};renderGallery()">`).join('')}function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.length)%gallery.length;renderGallery()}function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}
 function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','imgModal'].forEach(id=>$(id).style.display='none')}
-
-let editingAccountKey=null;
-function accountRoleChanged(){
-  if(!$('a_carrier'))return;
-  a_carrier.disabled = a_role.value!=='dvvc';
-  if(a_role.value!=='dvvc') a_carrier.value='';
-}
-function clearAccountForm(){
-  a_user.value='';a_pass.value='';a_role.value='shop';a_carrier.value='';a_active.value='true';a_user.disabled=false;accountRoleChanged();
-}
-function cancelAccountEdit(){
-  editingAccountKey=null;clearAccountForm();
-  if($('accountSaveBtn')){accountSaveBtn.textContent='Thêm';accountSaveBtn.className='btn-green';accountCancelBtn.style.display='none';accountEditNote.textContent='';}
-}
-function openAccount(){
-  if(!currentUser||currentUser.role!=='admin')return alert('Chỉ admin được quản lý tài khoản');
-  fillCarrierSelect(a_carrier,true);
-  cancelAccountEdit();renderAccounts();accountModal.style.display='flex';
-}
-function getAccountFormData(){
-  const username=safeKey(a_user.value);
-  const pass=a_pass.value.trim();
-  const role=a_role.value;
-  const carrier=role==='dvvc'?a_carrier.value:'';
-  const active=a_active.value==='true';
-  return {username,pass,role,carrier,active};
-}
-async function addOrSaveAccount(){
-  if(!currentUser||currentUser.role!=='admin')return alert('Chỉ admin được tạo/sửa tài khoản');
-  const data=getAccountFormData();
-  if(!data.username)return alert('Chưa nhập tên đăng nhập');
-  if(!data.pass)return alert('Chưa nhập mật khẩu');
-  if(data.role==='dvvc'&&!data.carrier)return alert('Tài khoản ĐVVC phải chọn đơn vị vận chuyển');
-  if(editingAccountKey==='admin'&&data.username!=='admin')return alert('Không đổi tên tài khoản admin');
-  try{
-    if(editingAccountKey && editingAccountKey!==data.username){
-      const exists=await db.ref('users/'+data.username).once('value');
-      if(exists.exists())return alert('Tên đăng nhập mới đã tồn tại');
-      await db.ref('users/'+editingAccountKey).remove();
-    }else if(!editingAccountKey){
-      const exists=await db.ref('users/'+data.username).once('value');
-      if(exists.exists())return alert('Tài khoản đã tồn tại');
-    }
-    const obj={username:data.username,password:data.pass,name:data.username,role:data.role,carrier:data.carrier,active:data.active,updated_at:Date.now(),updated_by:currentUser.username};
-    if(!editingAccountKey)obj.created_at=Date.now();
-    await db.ref('users/'+data.username).update(obj);
-    if(currentUser.username===(editingAccountKey||data.username)){
-      currentUser={...currentUser,...obj,uid:data.username};localStorage.setItem('xvd_user',data.username);showApp();
-    }
-    cancelAccountEdit();renderAccounts();alert(editingAccountKey?'Đã lưu tài khoản':'Đã thêm tài khoản');
-  }catch(e){alert('Lỗi lưu tài khoản: '+(e.message||e));}
-}
-async function editAccount(username){
-  if(!currentUser||currentUser.role!=='admin')return;
-  const key=safeKey(username);
-  const snap=await db.ref('users/'+key).once('value');
-  const u=snap.val();if(!u)return alert('Không thấy tài khoản');
-  editingAccountKey=key;
-  a_user.value=u.username||key;a_user.disabled=(key==='admin');
-  a_pass.value=u.password||'';a_role.value=u.role||'shop';a_carrier.value=u.carrier||'';a_active.value=(u.active===false?'false':'true');accountRoleChanged();
-  accountSaveBtn.textContent='Lưu sửa';accountSaveBtn.className='btn-purple';accountCancelBtn.style.display='inline-block';accountEditNote.textContent='Đang sửa tài khoản: '+key;
-}
-async function deleteAccount(username){
-  if(!currentUser||currentUser.role!=='admin')return;
-  const key=safeKey(username);
-  if(key==='admin')return alert('Không xóa tài khoản admin');
-  if(!confirm('Xóa tài khoản '+key+'?'))return;
-  try{await db.ref('users/'+key).remove();if(editingAccountKey===key)cancelAccountEdit();renderAccounts();}
-  catch(e){alert('Lỗi xóa tài khoản: '+(e.message||e));}
-}
-async function renderAccounts(){
-  try{
-    const snap=await db.ref('users').once('value');
-    const users=snap.val()||{};
-    const keys=Object.keys(users).sort((a,b)=>a.localeCompare(b));
-    accountList.innerHTML=keys.map(k=>{const u=users[k]||{};const active=u.active===false?'Khóa':'Hoạt động';return `<div class="account-row"><b>${escapeHtml(u.username||k)}</b><span>${roleName(u.role)}</span><span>${escapeHtml(u.carrier||'Tất cả')}</span><span>${escapeHtml(u.password||'')}</span><span>${active}</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${k}')">Sửa</button>${k==='admin'?'<span class="muted">Không xóa</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${k}')">Xóa</button>`}</div></div>`}).join('') || '<div class="note">Chưa có tài khoản nào</div>';
-  }catch(e){accountList.innerHTML='<div class="login-msg err">Lỗi tải tài khoản: '+escapeHtml(e.message||e)+'</div>';}
-}
-window.addEventListener('load',()=>{
-  const saved=localStorage.getItem('xvd_user');
-  if(saved){loginUser.value=saved;}
-  loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()});
-});
+function openAccount(){if(currentUser.role!=='admin')return;cancelAccountEdit();renderAccounts();accountModal.style.display='flex'}
+function roleName(r){return r==='admin'?'Admin':r==='shop'?'Shop':'ĐVVC'}
+function getAccountFormData(){const u=safeKey(a_user.value);const pass=a_pass.value.trim()||'123456';const role=a_role.value;const carrier=role==='dvvc'?a_carrier.value:'';return {u,pass,role,carrier}}
+async function addOrSaveAccount(){const data=getAccountFormData();if(!data.u)return alert('Chưa nhập tên đăng nhập');if(data.role==='dvvc'&&!data.carrier)return alert('Tài khoản ĐVVC phải chọn đơn vị vận chuyển');try{if(editingAccountKey){if(editingAccountKey==='admin'&&data.u!=='admin')return alert('Không đổi tên tài khoản admin');const oldSnap=await db.ref('users/'+editingAccountKey).once('value');const old=oldSnap.val()||{};const obj={username:data.u,password:data.pass,role:data.role,name:data.u,carrier:data.carrier,active:true,updated_at:Date.now()};if(data.u!==editingAccountKey){await db.ref('users/'+data.u).set(obj);await db.ref('users/'+editingAccountKey).remove()}else await db.ref('users/'+editingAccountKey).update(obj);cancelAccountEdit();renderAccounts();alert('Đã lưu sửa tài khoản');return}const exists=await db.ref('users/'+data.u).once('value');if(exists.exists())return alert('Tài khoản đã tồn tại');await db.ref('users/'+data.u).set({username:data.u,password:data.pass,role:data.role,name:data.u,carrier:data.carrier,active:true,created_at:Date.now()});clearAccountForm();renderAccounts();alert('Đã thêm tài khoản')}catch(e){alert('Lỗi tài khoản: '+e.message)}}
+async function editAccount(u){const snap=await db.ref('users/'+u).once('value');const acc=snap.val();if(!acc)return;editingAccountKey=u;a_user.value=u;a_user.disabled=(u==='admin');a_pass.value=acc.password||'';a_role.value=acc.role||'shop';a_carrier.value=acc.carrier||'';accountSaveBtn.textContent='Lưu sửa';accountSaveBtn.className='btn-purple';accountCancelBtn.style.display='inline-block';accountEditNote.textContent='Đang sửa tài khoản: '+u}
+function clearAccountForm(){a_user.value='';a_pass.value='';a_role.value='shop';a_carrier.value='';a_user.disabled=false}function cancelAccountEdit(){editingAccountKey=null;clearAccountForm();if($('accountSaveBtn')){accountSaveBtn.textContent='Thêm';accountSaveBtn.className='btn-green';accountCancelBtn.style.display='none';accountEditNote.textContent=''}}
+async function deleteAccount(u){if(u==='admin')return alert('Không xóa tài khoản admin');if(!confirm('Xóa tài khoản '+u+'?'))return;try{await db.ref('users/'+u).remove();if(editingAccountKey===u)cancelAccountEdit();renderAccounts()}catch(e){alert('Lỗi: '+e.message)}}
+async function renderAccounts(){try{const snap=await db.ref('users').once('value');const users=snap.val()||{};accountList.innerHTML=Object.keys(users).sort().map(u=>{const acc=users[u];return `<div class="account-row"><b>${u}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span>${acc.password||''}</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${u}')">Sửa</button>${u==='admin'?'<span class="muted">Không xóa</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${u}')">Xóa</button>`}</div></div>`}).join('')}catch(e){accountList.innerHTML='<div style="color:#dc2626">Lỗi tải tài khoản: '+escapeHtml(e.message)+'</div>'}}
+window.addEventListener('load',()=>{const saved=localStorage.getItem('xvd_last_login');if(saved)loginUser.value=saved;loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()});auth.onAuthStateChanged(user=>{if(user&&user.email&&user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()&&!currentUser){currentUser={uid:user.uid,username:'admin',email:user.email,name:'Admin',role:'admin',carrier:'',active:true,authMode:'auth'};finishLogin()}})});
 </script>
 
-</body>
-</html>
+</body></html>
