@@ -335,10 +335,20 @@ function finishLogin(){
 }
 
 async function logout(){
-  try{await auth.signOut()}catch(e){}
+  try{ db.ref('tasks').off(); }catch(e){}
+  tasksListenerStarted=false;
+
+  try{ await auth.signOut(); }catch(e){}
+
   localStorage.removeItem('xvd_last_login');
-  currentUser=null;tasks=[];showDeleted=false;tasksListenerStarted=false;
-  app.style.display='none';loginPage.style.display='flex';
+  currentUser=null;
+  tasks=[];
+  showDeleted=false;
+
+  try{ setLoginMsg('', 'ok'); }catch(e){}
+
+  app.style.display='none';
+  loginPage.style.display='flex';
 }
 
 function canCreateTask(){return currentUser&&(currentUser.role==='admin'||currentUser.role==='shop')}
