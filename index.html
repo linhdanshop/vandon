@@ -323,7 +323,6 @@ async function ensureAdminProfile(){
 }
 
 function finishLogin(){
-  logEvent('Đăng nhập',`${currentUser.username||currentUser.email} - ${currentUser.role||''} ${currentUser.carrier||''}`);
   setLoginMsg('', 'ok');
   showApp();
   renderQuick();
