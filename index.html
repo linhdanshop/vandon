@@ -206,7 +206,7 @@
   </div>
   <div id="accountList"></div>
 </div></div>
-<div id="logsModal" class="modal"><div class="modal-box modal-sm"><div class="modal-head"><h3>Logs hệ thống</h3><div><button class="btn-red btn-small" onclick="clearOldLogs()">Xóa logs cũ</button> <button class="btn-gray" onclick="closeAll()">Đóng</button></div></div><div id="logsContent" class="log-list"></div></div></div>
+<div id="logsModal" class="modal"><div class="modal-box modal-sm"><div class="modal-head"><h3>Logs hệ thống</h3><div><button class="btn-red btn-small" onclick="clearAllLogs()">Xóa toàn bộ</button> <button class="btn-gray" onclick="closeAll()">Đóng</button></div></div><div id="logsContent" class="log-list"></div></div></div>
 <div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeImage()"><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button><button class="btn-gray" onclick="closeImage()">Đóng</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
@@ -259,12 +259,7 @@ function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;',
 function safeKey(s){return String(s||'').trim().replace(/[.#$\[\]/]/g,'_')}
 function setLoginMsg(m,t='err'){loginMsg.className='login-msg '+(t==='ok'?'ok':'err');loginMsg.textContent=m}
 function logUserName(){return (currentUser&&(currentUser.name||currentUser.username||currentUser.email))||'unknown'}
-function logEvent(action,detail='',level='info'){
-  try{
-    if(!db)return;
-    db.ref('logs').push({ts:Date.now(),level,action:String(action||''),detail:String(detail||''),user:logUserName(),role:(currentUser&&currentUser.role)||'',carrier:(currentUser&&currentUser.carrier)||''});
-  }catch(e){console.warn('log lỗi',e)}
-}
+function logEvent(){return;}
 window.addEventListener('error',e=>logEvent('JS ERROR',`${e.message}
 ${e.filename||''}:${e.lineno||''}`,'error'));
 window.addEventListener('unhandledrejection',e=>logEvent('PROMISE ERROR',String(e.reason&&e.reason.message?e.reason.message:e.reason),'error'));
@@ -311,7 +306,15 @@ async function login(){
     finishLogin();
   }catch(e){
     try{if(auth.currentUser && auth.currentUser.isAnonymous)await auth.signOut()}catch(_e){}
-    logEvent('Đăng nhập lỗi',`${raw}: ${e.message||e}`,'error');
+    try{
+      const d=new Date();
+      const day=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      db.ref('logs/'+day).push({
+        ts:Date.now(),
+        username:raw,
+        message:e.message||String(e)
+      });
+    }catch(_){}
     setLoginMsg('Lỗi: '+(e.message||e));
   }
 }
@@ -484,6 +487,13 @@ function clearAccountForm(){a_user.value='';a_pass.value='';a_role.value='shop';
 async function deleteAccount(u){if(u==='admin')return alert('Không xóa tài khoản admin');if(!confirm('Xóa tài khoản '+u+'?'))return;try{await db.ref('users/'+u).remove();if(editingAccountKey===u)cancelAccountEdit();logEvent('Xóa tài khoản',u);renderAccounts()}catch(e){alert('Lỗi: '+e.message)}}
 async function renderAccounts(){try{const snap=await db.ref('users').once('value');const users=snap.val()||{};accountList.innerHTML=Object.keys(users).sort().map(u=>{const acc=users[u];return `<div class="account-row"><b>${u}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span>${acc.password||''}</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${u}')">Sửa</button>${u==='admin'?'<span class="muted">Không xóa</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${u}')">Xóa</button>`}</div></div>`}).join('')}catch(e){accountList.innerHTML='<div style="color:#dc2626">Lỗi tải tài khoản: '+escapeHtml(e.message)+'</div>'}}
 window.addEventListener('load',()=>{const saved=localStorage.getItem('xvd_last_login');if(saved)loginUser.value=saved;loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()});auth.onAuthStateChanged(user=>{if(user&&user.email&&user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()&&!currentUser){currentUser={uid:user.uid,username:'admin',email:user.email,name:'Admin',role:'admin',carrier:'',active:true,authMode:'auth'};finishLogin()}})});
+
+async function clearAllLogs(){
+  if(!confirm('Xóa toàn bộ logs?')) return;
+  await db.ref('logs').remove();
+  alert('Đã xóa toàn bộ logs');
+  if(typeof openLogs==='function') openLogs();
+}
 </script>
 
 </body></html>
