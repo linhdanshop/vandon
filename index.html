@@ -132,11 +132,21 @@
   .account-row{grid-template-columns:1fr 1fr!important;gap:6px!important}
   .account-actions{grid-column:1/3;justify-content:flex-start}
 }
+
+/* ===== LỊCH SỬ + DANH SÁCH ĐÃ XÓA ===== */
+.history{background:#fff!important;border:0!important;padding:0!important;display:grid;gap:8px;max-height:420px;overflow:auto}
+.history-item{background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #2563eb;border-radius:9px;padding:9px 10px;white-space:pre-wrap;line-height:1.45}
+.history-item:nth-child(even){background:#fff7ed;border-left-color:#f59e0b}
+.history-item.deleted{background:#fef2f2;border-left-color:#ef4444}
+.history-empty{color:#64748b;background:#f8fafc;border:1px solid #e5e7eb;border-radius:9px;padding:10px}
+.deleted-mode-note{display:inline-flex;align-items:center;gap:6px;background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;border-radius:999px;padding:5px 9px;font-weight:800}
+.date-two-line{display:flex;flex-direction:column;line-height:1.25;gap:2px}.date-two-line .d1{font-weight:800}.date-two-line .d2{color:#64748b;font-size:12px}
+
 </style>
 </head>
 <body>
 <div id="loginPage" class="login-page"><div class="login-box"><h2>Xử lý vận đơn</h2><input id="loginUser" placeholder="Tài khoản"><br><br><input id="loginPass" type="password" placeholder="Mật khẩu"><div id="loginMsg" class="login-msg"></div><label style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><input id="rememberLogin" type="checkbox" style="width:auto" checked>Ghi nhớ đăng nhập</label><button class="btn-blue" style="width:100%" onclick="login()">Đăng nhập</button></div></div>
-<div id="app" class="app"><div class="topbar"><h2>Xử lý vận đơn</h2><div><span id="helloUser"></span><button id="accountBtn" class="btn-gray btn-small" onclick="openAccount()">Tài khoản</button> <button class="btn-gray btn-small" onclick="logout()">Đăng xuất</button></div></div><div class="main"><div class="toolbar"><button id="createBtn" class="btn-blue" onclick="openCreate()">+ Tạo phiếu</button><input class="search" id="searchBox" placeholder="Tìm mã vận đơn / nội dung" oninput="render()"><select class="sel" id="filterCarrier" onchange="render()"><option value="">Tất cả ĐVVC</option></select><select class="sel" id="filterShop" onchange="render()"><option value="">Shop</option><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select><select class="sel" id="filterDvvc" onchange="render()"><option value="">Tiến độ ĐVVC</option><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý</option></select><label>Từ</label><span class="date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="date" onchange="setDateCustom()"></span><span class="arrow">→</span><label>Đến</label><span class="date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="date" onchange="setDateCustom()"></span><button id="applyBtn" class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button><button id="clearDateBtn" class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button></div>
+<div id="app" class="app"><div class="topbar"><h2>Xử lý vận đơn</h2><div><span id="helloUser"></span><button class="btn-gray btn-small" onclick="logout()">Đăng xuất</button></div></div><div class="main"><div class="toolbar"><button id="createBtn" class="btn-blue" onclick="openCreate()">+ Tạo phiếu</button><input class="search" id="searchBox" placeholder="Tìm mã vận đơn / nội dung" oninput="render()"><select class="sel" id="filterCarrier" onchange="render()"><option value="">Tất cả ĐVVC</option></select><select class="sel" id="filterShop" onchange="render()"><option value="">Shop</option><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy</option></select><select class="sel" id="filterDvvc" onchange="render()"><option value="">Tiến độ ĐVVC</option><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý</option></select><label>Từ</label><span class="date-wrap" id="dateFromWrap"><input class="dt" id="dateFrom" type="date" onchange="setDateCustom()"></span><span class="arrow">→</span><label>Đến</label><span class="date-wrap" id="dateToWrap"><input class="dt" id="dateTo" type="date" onchange="setDateCustom()"></span><button id="applyBtn" class="btn-blue btn-small" onclick="setDateCustom()">Áp dụng</button><button id="clearDateBtn" class="btn-gray btn-small" onclick="clearDateFilter()">Bỏ lọc</button><button id="deletedToggleBtn" class="btn-gray btn-small" style="display:none" onclick="toggleDeletedList()">Đã xóa</button></div>
 <div class="stats-wrap stats-dashboard">
   <div class="stat-box shop-stats">
     <div class="stat-title">Thống kê Shop</div>
@@ -163,22 +173,9 @@
 <div id="dvvcModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Cập nhật ĐVVC</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>Mã vận đơn</label><input id="d_tracking" disabled></div><div class="form-row"><label>Tiến độ ĐVVC</label><select id="d_status_dvvc"><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Không xử lý được</option></select></div><div class="form-row"><label>Nội dung ĐVVC</label><textarea id="d_dvvc"></textarea></div><div class="form-row"><label>Ảnh ĐVVC bổ sung</label><input id="d_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview_dvvc" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button></div></div>
 <div id="historyModal" class="modal"><div class="modal-box modal-sm"><div class="modal-head"><h3>Lịch sử</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="h_content" class="history"></div></div></div>
 <div id="detailModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Chi tiết phiếu</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="detailContent"></div></div></div>
-<div id="accountModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Quản lý tài khoản</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div>
-  <div id="accountEditNote"></div>
-  <div class="account-grid account-form">
-    <input id="a_user" placeholder="Tên đăng nhập">
-    <input id="a_pass" placeholder="Mật khẩu">
-    <select id="a_role"><option value="shop">Shop</option><option value="dvvc">ĐVVC</option><option value="admin">Admin</option></select>
-    <select id="a_carrier"><option value="">Tất cả</option></select>
-    <button id="accountSaveBtn" class="btn-green" onclick="addOrSaveAccount()">Thêm</button>
-    <button id="accountCancelBtn" class="btn-gray" style="display:none" onclick="cancelAccountEdit()">Hủy</button>
-  </div>
-  <div id="accountList"></div>
-</div></div>
 <div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeAll()"><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database-compat.js"></script>
 
 <script>
@@ -193,89 +190,62 @@ const firebaseConfig={
 };
 
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
 const db=firebase.database();
-const secondaryApp=firebase.initializeApp(firebaseConfig,"adminCreateUserApp");
-const secondaryAuth=secondaryApp.auth();
 
 const CLOUDINARY_UPLOAD_PRESET="xulyvandon";
 const CLOUDINARY_CLOUD_NAME="dqcyr3vgr";
-const AUTH_DOMAIN_SUFFIX="@vd.local";
 const CARRIERS=["JT","Viettel","GHN"];
 const QUICK_TEXTS=["Hạ COD còn lại 35k","G1P","Đổi thông tin giao hàng thành:","Giao sớm cho khách hối","Tạo đơn thu hồi từ khách về shop","Shop báo chuyển hoàn","Báo shipper giao lại","Báo shipper cập nhật đơn hàng","Khách đã trả ship, báo shipper cập nhật tiền","Trả hàng về shop"];
 
 let currentUser=null,editId=null,pastedImages=[],editImages=[],currentImageTarget='create',dateFilter={from:null,to:null,mode:'month'},gallery=[],galleryIndex=0;
 let allTasks=[];
-let editingAccountUid=null;
 let unsubscribeTasks=null;
+let showDeletedOnly=false;
 
 function $(id){return document.getElementById(id)}
 function pad2(n){return String(n).padStart(2,'0')}
 function formatTime(ts){return new Date(ts).toLocaleString('vi-VN',{hour12:false})}
+function formatDateOnly(ts){const d=new Date(ts);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`}
+function formatTimeOnly(ts){const d=new Date(ts);return `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`}
+function dateCellHtml(ts){return `<div class="date-two-line"><span class="d1">${formatTimeOnly(ts)}</span><span class="d2">${formatDateOnly(ts)}</span></div>`}
 function fmtDate(ts){const d=new Date(ts);return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
 function shortDate(ts,fb){if(!ts)return fb;const d=new Date(ts);return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`}
 function updateDateLabels(){if($('dateFromWrap'))dateFromWrap.setAttribute('data-short',shortDate(dateFilter.from,'Từ'));if($('dateToWrap'))dateToWrap.setAttribute('data-short',shortDate(dateFilter.to,'Đến'))}
 function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
 function endOfDay(d){const x=new Date(d);x.setHours(23,59,59,999);return x}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function safeKey(s){return String(s||'').replace(/[.#$\[\]/]/g,'_')}
-function emailFromLoginName(name){const u=String(name||'').trim().toLowerCase();return u.includes('@')?u:u+AUTH_DOMAIN_SUFFIX}
-function usernameFromEmail(email){return String(email||'').split('@')[0]}
+function safeKey(s){return String(s||'').trim().toLowerCase().replace(/[.#$\[\]\/]/g,'_')}
 function roleName(r){return r==='admin'?'Admin':r==='shop'?'Shop':'ĐVVC'}
 function setLoginMsg(m,t='err'){loginMsg.className='login-msg '+(t==='ok'?'ok':'err');loginMsg.textContent=m}
 
-function seedUserDataFromEmail(email){
-  const username=usernameFromEmail(email);
-  if(username==='admin')return {username,email,name:'Admin',role:'admin',carrier:'',active:true,created_at:Date.now(),seeded:true};
-  if(username==='shop01')return {username,email,name:'shop01',role:'shop',carrier:'',active:true,created_at:Date.now(),seeded:true};
-  if(username==='jt01')return {username,email,name:'jt01',role:'dvvc',carrier:'JT',active:true,created_at:Date.now(),seeded:true};
-  if(username==='ghn01')return {username,email,name:'ghn01',role:'dvvc',carrier:'GHN',active:true,created_at:Date.now(),seeded:true};
-  if(username==='viettel01'||username==='vtp01')return {username,email,name:username,role:'dvvc',carrier:'Viettel',active:true,created_at:Date.now(),seeded:true};
-  return null;
-}
-
-async function getOrSeedCurrentUser(firebaseUser){
-  const ref=db.ref('users/'+firebaseUser.uid);
-  const snap=await ref.once('value');
-  let data=snap.val();
-  if(!data){
-    data=seedUserDataFromEmail(firebaseUser.email);
-    if(!data)throw new Error('Tài khoản Auth có tồn tại nhưng chưa được admin gán quyền trong /users');
-    await ref.set(data);
-  }
-  if(data.active===false)throw new Error('Tài khoản này đang bị khóa');
-  return {uid:firebaseUser.uid,username:data.username||usernameFromEmail(firebaseUser.email),email:firebaseUser.email,...data};
-}
-
 async function login(){
-  const u=loginUser.value.trim();
+  const u=loginUser.value.trim().toLowerCase();
   const p=loginPass.value;
   if(!u)return setLoginMsg('Chưa nhập tài khoản');
   if(!p)return setLoginMsg('Chưa nhập mật khẩu');
   setLoginMsg('Đang đăng nhập...','ok');
   try{
-    const cred=await auth.signInWithEmailAndPassword(emailFromLoginName(u),p);
-    currentUser=await getOrSeedCurrentUser(cred.user);
+    const key=safeKey(u);
+    const snap=await db.ref('users/'+key).once('value');
+    let data=snap.val();
+    if(!data && key==='admin' && p==='123456'){
+      data={username:'admin',password:'123456',name:'Admin',role:'admin',carrier:'',active:true,created_at:Date.now(),bootstrap:true};
+      await db.ref('users/admin').set(data);
+    }
+    if(!data)throw new Error('Không tồn tại tài khoản trong Database /users/'+key);
+    if(data.active===false)throw new Error('Tài khoản này đang bị khóa');
+    if(String(data.password)!==String(p))throw new Error('Sai mật khẩu');
+    currentUser={uid:key,username:key,name:data.name||key,role:data.role||'shop',carrier:data.carrier||'',active:data.active!==false};
     if(rememberLogin.checked)localStorage.setItem('xvd_user',u);else localStorage.removeItem('xvd_user');
     setLoginMsg('','ok');
-    showApp();
-    renderQuick();
-    setDefaultMonth();
-    listenTasks();
-  }catch(e){
-    let msg=e.message||String(e);
-    if(e.code==='auth/user-not-found')msg='Không tồn tại tài khoản Firebase Auth';
-    if(e.code==='auth/wrong-password'||e.code==='auth/invalid-credential')msg='Sai tài khoản hoặc mật khẩu';
-    if(e.code==='auth/invalid-email')msg='Email đăng nhập không hợp lệ';
-    setLoginMsg('Lỗi: '+msg);
-  }
+    showApp();renderQuick();setDefaultMonth();listenTasks();
+  }catch(e){setLoginMsg('Lỗi: '+(e.message||e))}
 }
 
 async function logout(){
   try{if(unsubscribeTasks)db.ref('tasks').off('value',unsubscribeTasks)}catch(e){}
-  await auth.signOut();
   localStorage.removeItem('xvd_user');
-  currentUser=null;allTasks=[];
+  currentUser=null;allTasks=[];showDeletedOnly=false;
   app.style.display='none';loginPage.style.display='flex';
 }
 
@@ -289,9 +259,9 @@ function fillCarrierSelect(sel,all=false){sel.innerHTML=(all?'<option value="">T
 function showApp(){
   loginPage.style.display='none';app.style.display='block';
   helloUser.textContent=`${currentUser.name||currentUser.username}${currentUser.carrier?' - '+currentUser.carrier:''} `;
-  accountBtn.style.display=currentUser.role==='admin'?'':'none';
   createBtn.style.display=canCreateTask()?'':'none';
-  fillCarrierSelect(filterCarrier,true);fillCarrierSelect(c_carrier);fillCarrierSelect(s_carrier);fillCarrierSelect(a_carrier,true);
+  if($('deletedToggleBtn')) deletedToggleBtn.style.display=currentUser.role==='admin'?'':'none';
+  fillCarrierSelect(filterCarrier,true);fillCarrierSelect(c_carrier);fillCarrierSelect(s_carrier);
   if(currentUser.role==='dvvc'){filterCarrier.value=currentUser.carrier;filterCarrier.disabled=true}else{filterCarrier.disabled=false}
 }
 
@@ -322,7 +292,7 @@ function listenTasks(){
 
 function getBaseList(){
   const q=searchBox.value.trim().toLowerCase();
-  let list=allTasks.filter(t=>!t.deleted&&visibleByUser(t));
+  let list=allTasks.filter(t=>(showDeletedOnly?!!t.deleted:!t.deleted)&&visibleByUser(t));
   if(dateFilter.from)list=list.filter(t=>(t.created_at||0)>=dateFilter.from);
   if(dateFilter.to)list=list.filter(t=>(t.created_at||0)<=dateFilter.to);
   if(filterCarrier.value)list=list.filter(t=>t.carrier===filterCarrier.value);
@@ -338,8 +308,8 @@ function render(){
   tbody.innerHTML=list.map((t,i)=>rowHtml(t,i)).join('');
   mobileList.innerHTML=list.map((t,i)=>cardHtml(t,i)).join('');
 }
-function rowHtml(t,i){const imgs=allImages(t);return `<tr class="${t.urgent?'row-urgent':''}"><td>${i+1}</td><td>${formatTime(t.created_at)}</td><td>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</td><td><span class="badge carrier">${t.carrier||''}</span></td><td><div class="code-wrap"><span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span><button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div></td><td><div class="content-preview">${escapeHtml(t.shop)}</div>${(t.shop||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 ${imgs.length}</button>`:''}</td><td>${badgeShop(t.status_shop)}</td><td>${canEditShop()?`<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div>${(t.dvvc||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${badgeDvvc(t.status_dvvc)}</td><td>${canEditDvvc(t)?`<button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${(t.history||[]).length})</button></td><td>${canDeleteTask()?`<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:''}</td></tr>`}
-function cardHtml(t,i){const imgs=allImages(t);return `<div class="mobile-card ${t.urgent?'row-urgent':''}"><div class="mc-head"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${formatTime(t.created_at)} • ${t.carrier}</div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div><div class="mc-body"><div><div class="mc-label">Shop</div><div class="content-preview">${escapeHtml(t.shop||'')}</div></div><div>${badgeShop(t.status_shop)} ${badgeDvvc(t.status_dvvc)} <span class="badge carrier">${t.carrier}</span></div><div><div class="mc-label">ĐVVC</div><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div></div>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${imgs.length})</button>`:'<span class="mc-label">Không có ảnh</span>'}</div><div class="mc-actions">${canEditShop()?`<button class="btn-blue btn-small" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem</button>`}${canEditDvvc(t)?`<button class="btn-orange btn-small" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem ĐVVC</button>`}<button class="btn-gray btn-small" onclick="openHistory('${t.id}')">Lịch sử</button>${canDeleteTask()?`<button class="btn-red btn-small" onclick="deleteTask('${t.id}')">Xóa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Chi tiết</button>`}</div></div>`}
+function rowHtml(t,i){const imgs=allImages(t);return `<tr class="${t.urgent?'row-urgent':''}"><td>${i+1}</td><td>${dateCellHtml(t.created_at)}</td><td>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</td><td><span class="badge carrier">${t.carrier||''}</span></td><td><div class="code-wrap"><span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span><button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div></td><td><div class="content-preview">${escapeHtml(t.shop)}</div>${(t.shop||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 ${imgs.length}</button>`:''}</td><td>${badgeShop(t.status_shop)}</td><td>${canEditShop()?`<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div>${(t.dvvc||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${badgeDvvc(t.status_dvvc)}</td><td>${canEditDvvc(t)?`<button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${(t.history||[]).length})</button></td><td>${canDeleteTask()?`<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:''}</td></tr>`}
+function cardHtml(t,i){const imgs=allImages(t);return `<div class="mobile-card ${t.urgent?'row-urgent':''}"><div class="mc-head"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${formatTimeOnly(t.created_at)} ${formatDateOnly(t.created_at)} • ${t.carrier}</div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div><div class="mc-body"><div><div class="mc-label">Shop</div><div class="content-preview">${escapeHtml(t.shop||'')}</div></div><div>${badgeShop(t.status_shop)} ${badgeDvvc(t.status_dvvc)} <span class="badge carrier">${t.carrier}</span></div><div><div class="mc-label">ĐVVC</div><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div></div>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${imgs.length})</button>`:'<span class="mc-label">Không có ảnh</span>'}</div><div class="mc-actions">${canEditShop()?`<button class="btn-blue btn-small" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem</button>`}${canEditDvvc(t)?`<button class="btn-orange btn-small" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem ĐVVC</button>`}<button class="btn-gray btn-small" onclick="openHistory('${t.id}')">Lịch sử</button>${canDeleteTask()?`<button class="btn-red btn-small" onclick="deleteTask('${t.id}')">Xóa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Chi tiết</button>`}</div></div>`}
 function updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value){const el=document.querySelector('.stat-pill');if(el)el.classList.add('active')}document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}
 function filterByShop(s){filterShop.value=filterShop.value===s?'':s;filterDvvc.value='';render()}
 function filterByDvvc(s){filterDvvc.value=filterDvvc.value===s?'':s;filterShop.value='';render()}
@@ -430,12 +400,27 @@ async function saveDvvc(){
   }catch(e){alert('Lỗi lưu ĐVVC: '+e.message)}finally{saveBtnLoading(btn,false)}
 }
 function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}
-function openDetail(id){const t=allTasks.find(x=>x.id===id);if(!t)return;const imgs=allImages(t);detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${formatTime(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${t.carrier}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${escapeHtml(getHistoryText(t))}</div></div>`;detailModal.style.display='flex'}
-function getHistoryText(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]).join('\n')}
-function openHistory(id){const t=allTasks.find(x=>x.id===id);if(!t)return;h_content.textContent=getHistoryText(t);historyModal.style.display='flex'}
-async function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này?'))return;const t=allTasks.find(x=>x.id===id);if(!t)return;try{await db.ref('tasks/'+id).update({deleted:true,deleted_at:Date.now(),deleted_by:currentUser.uid,history:[...(t.history||[]),`${formatTime(Date.now())} - ${currentUser.username}: xóa phiếu`]})}catch(e){alert('Lỗi xóa: '+e.message)}}
+function openDetail(id){const t=allTasks.find(x=>x.id===id);if(!t)return;const imgs=allImages(t);detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${formatTime(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${t.carrier}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${historyHtml(t)}</div></div>`;detailModal.style.display='flex'}
+function getHistoryItems(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`])}
+function getHistoryText(t){return getHistoryItems(t).join('\n')}
+function historyHtml(t){const items=getHistoryItems(t);if(!items.length)return '<div class="history-empty">Chưa có lịch sử</div>';return '<div class="history-list">'+items.map(x=>`<div class="history-item ${String(x).includes('xóa phiếu')?'deleted':''}">${escapeHtml(x)}</div>`).join('')+'</div>'}
+function openHistory(id){const t=allTasks.find(x=>x.id===id);if(!t)return;h_content.innerHTML=historyHtml(t);historyModal.style.display='flex'}
+async function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này?'))return;const t=allTasks.find(x=>x.id===id);if(!t)return;try{await db.ref('tasks/'+id).update({deleted:true,deleted_at:Date.now(),deleted_by:currentUser.uid,history:[...(t.history||[]),`${formatTime(Date.now())} - ${currentUser.username}: xóa phiếu`]});render()}catch(e){alert('Lỗi xóa: '+e.message)}}
+function toggleDeletedList(){if(!canDeleteTask())return;showDeletedOnly=!showDeletedOnly;if($('deletedToggleBtn')){deletedToggleBtn.textContent=showDeletedOnly?'Đang xem đã xóa':'Đã xóa';deletedToggleBtn.className=showDeletedOnly?'btn-red btn-small':'btn-gray btn-small'}render()}
 function copyTracking(c){navigator.clipboard.writeText(c).then(()=>alert('Đã copy mã: '+c)).catch(e=>alert('Copy lỗi: '+e.message))}
-async function copyTicket(id){const t=allTasks.find(x=>x.id===id);if(!t)return;const shopImgs=t.shop_images||[];const dvvcImgs=t.dvvc_images||[];const lines=[];if(t.urgent)lines.push('🔥 GẤP');lines.push('Ngày tạo: '+formatTime(t.created_at));lines.push('ĐVVC: '+(t.carrier||''));lines.push('Mã vận đơn: '+(t.tracking||''));lines.push('');lines.push('Nội dung Shop:');lines.push(t.shop||'(trống)');lines.push('');lines.push('Ảnh Shop:');lines.push(shopImgs.length?shopImgs.join('\n'):'Không có ảnh');lines.push('');lines.push('Nội dung ĐVVC:');lines.push(t.dvvc||'(trống)');lines.push('');lines.push('Ảnh ĐVVC:');lines.push(dvvcImgs.length?dvvcImgs.join('\n'):'Không có ảnh');try{await navigator.clipboard.writeText(lines.join('\n'));alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}}
+async function copyTicket(id){
+  const t=allTasks.find(x=>x.id===id);if(!t)return;
+  const shopImgs=t.shop_images||[];
+  const lines=[];
+  if(t.urgent)lines.push('🔥 GẤP');
+  lines.push('Ngày tạo: '+formatTimeOnly(t.created_at)+' '+formatDateOnly(t.created_at));
+  lines.push('ĐVVC: '+(t.carrier||''));
+  lines.push('Mã vận đơn: '+(t.tracking||''));
+  lines.push('Nội dung Shop:');
+  lines.push(t.shop||'(trống)');
+  lines.push('Ảnh Shop: '+(shopImgs.length?`Có ${shopImgs.length} ảnh vào web xem.`:'Không có ảnh.'));
+  try{await navigator.clipboard.writeText(lines.join('\n'));alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}
+}
 function addFilesToList(files,target){Array.from(files||[]).forEach(file=>{if(!file.type.startsWith('image/'))return;const r=new FileReader();r.onload=e=>{if(target==='create'){pastedImages.push(e.target.result);renderPreview()}else{editImages.push(e.target.result);renderEditPreview()}};r.readAsDataURL(file)})}
 function handleFileImages(e){addFilesToList(e.target.files,'create')}
 function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}
@@ -450,43 +435,10 @@ function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.len
 function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}
 function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','imgModal'].forEach(id=>$(id).style.display='none')}
 
-function openAccount(){if(currentUser.role!=='admin')return;cancelAccountEdit();renderAccounts();accountModal.style.display='flex'}
-function getAccountFormData(){const u=a_user.value.trim().toLowerCase();const pass=a_pass.value.trim();const role=a_role.value;const carrier=role==='dvvc'?a_carrier.value:'';return {u,pass,role,carrier,email:emailFromLoginName(u)}}
-async function addOrSaveAccount(){
-  const data=getAccountFormData();
-  if(!data.u)return alert('Chưa nhập tên đăng nhập');
-  if(data.role==='dvvc'&&!data.carrier)return alert('Tài khoản ĐVVC phải chọn đơn vị vận chuyển');
-  try{
-    if(editingAccountUid){
-      const snap=await db.ref('users/'+editingAccountUid).once('value');const old=snap.val()||{};
-      const updates={username:old.username||data.u,email:old.email||data.email,name:data.u,role:data.role,carrier:data.carrier,active:true,updated_at:Date.now(),updated_by:currentUser.uid};
-      await db.ref('users/'+editingAccountUid).update(updates);
-      if(data.pass){
-        if(editingAccountUid===currentUser.uid){await auth.currentUser.updatePassword(data.pass);alert('Đã lưu và đổi mật khẩu tài khoản đang đăng nhập')}
-        else alert('Đã lưu quyền/ĐVVC. Đổi mật khẩu tài khoản khác cần Firebase Admin SDK/backend, web tĩnh không đổi trực tiếp được.')
-      }else alert('Đã lưu sửa tài khoản');
-      cancelAccountEdit();renderAccounts();return;
-    }
-    if(!data.pass)return alert('Tài khoản mới phải nhập mật khẩu');
-    const cred=await secondaryAuth.createUserWithEmailAndPassword(data.email,data.pass);
-    await db.ref('users/'+cred.user.uid).set({username:data.u,email:data.email,name:data.u,role:data.role,carrier:data.carrier,active:true,created_at:Date.now(),created_by:currentUser.uid});
-    await secondaryAuth.signOut();
-    clearAccountForm();renderAccounts();alert('Đã tạo tài khoản Firebase Auth + phân quyền');
-  }catch(e){alert('Lỗi tài khoản: '+(e.message||e))}
-}
-async function editAccount(uid){const snap=await db.ref('users/'+uid).once('value');const acc=snap.val();if(!acc)return;editingAccountUid=uid;a_user.value=acc.username||usernameFromEmail(acc.email);a_user.disabled=true;a_pass.value='';a_pass.placeholder=uid===currentUser.uid?'Mật khẩu mới':'Mật khẩu mới (cần backend nếu đổi tài khoản khác)';a_role.value=acc.role||'shop';a_carrier.value=acc.carrier||'';accountSaveBtn.textContent='Lưu sửa';accountSaveBtn.className='btn-purple';accountCancelBtn.style.display='inline-block';accountEditNote.textContent='Đang sửa tài khoản: '+(acc.username||acc.email)}
-function clearAccountForm(){a_user.value='';a_pass.value='';a_pass.placeholder='Mật khẩu';a_role.value='shop';a_carrier.value='';a_user.disabled=false}
-function cancelAccountEdit(){editingAccountUid=null;clearAccountForm();if($('accountSaveBtn')){accountSaveBtn.textContent='Thêm';accountSaveBtn.className='btn-green';accountCancelBtn.style.display='none';accountEditNote.textContent=''}}
-async function deleteAccount(uid){if(uid===currentUser.uid)return alert('Không xóa tài khoản đang đăng nhập');if(!confirm('Xóa quyền tài khoản này? Auth vẫn còn, nhưng không có /users thì không vào web được.'))return;try{await db.ref('users/'+uid).remove();if(editingAccountUid===uid)cancelAccountEdit();renderAccounts()}catch(e){alert('Lỗi xóa: '+e.message)}}
-async function renderAccounts(){try{const snap=await db.ref('users').once('value');const users=snap.val()||{};accountList.innerHTML=Object.keys(users).map(uid=>{const acc=users[uid];return `<div class="account-row"><b>${acc.username||usernameFromEmail(acc.email)||uid}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span style="color:#9ca3af;font-size:11px">Firebase Auth</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${uid}')">Sửa</button>${uid===currentUser.uid?'<span class="muted">Đang dùng</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${uid}')">Xóa</button>`}</div></div>`}).join('')||'<div class="note">Chưa có user trong Database.</div>'}catch(e){accountList.innerHTML='<div class="note">Lỗi tải tài khoản: '+escapeHtml(e.message)+'</div>'}}
-
+function openAccount(){alert('Quản lý tài khoản bằng Firebase Database > users. Web đã bỏ tạo/sửa tài khoản.')}
 window.addEventListener('load',()=>{
-  auth.onAuthStateChanged(async user=>{
-    if(user){
-      try{currentUser=await getOrSeedCurrentUser(user);showApp();renderQuick();setDefaultMonth();listenTasks()}
-      catch(e){setLoginMsg('Lỗi: '+e.message);await auth.signOut();loginPage.style.display='flex';app.style.display='none'}
-    }else{loginPage.style.display='flex';app.style.display='none'}
-  });
+  const saved=localStorage.getItem('xvd_user');
+  if(saved){loginUser.value=saved;}
   loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 });
 </script>
