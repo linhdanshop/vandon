@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, user-scalable=yes">
 <title>Xử lý vận đơn</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;background:#eef2f7;color:#111827;font-size:13px}button,input,select,textarea{font:inherit}button{border:0;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer}.btn-blue{background:#2563eb;color:#fff}.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#16a34a;color:#fff}.btn-red{background:#dc2626;color:#fff}.btn-gray{background:#e5e7eb;color:#111827}.btn-small{padding:5px 7px;font-size:12px}input,select,textarea{width:100%;border:1px solid #d1d5db;border-radius:7px;padding:7px 9px;background:#fff}textarea{min-height:90px;resize:vertical}.login-page{height:100vh;display:flex;align-items:center;justify-content:center}.login-box{width:360px;background:#fff;border-radius:12px;padding:22px;box-shadow:0 4px 18px #0002}.login-box h2{text-align:center;margin:0 0 16px}.login-msg{min-height:20px;margin:8px 0;font-size:12.5px}.login-msg.err{color:#dc2626}.login-msg.ok{color:#16a34a}.app{display:none}.topbar{height:46px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.topbar h2{font-size:17px;margin:0}.main{padding:10px}.toolbar{background:#fff;border-radius:10px;padding:8px;display:flex;gap:8px;align-items:center;margin-bottom:8px;box-shadow:0 1px 5px #0001;white-space:nowrap;overflow-x:auto}.toolbar .search{width:280px;min-width:220px}.toolbar .sel{width:145px;min-width:130px}.toolbar .dt{width:118px;min-width:118px}.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.stat-box{background:#fff;border-radius:10px;padding:7px 10px;box-shadow:0 1px 5px #0001}.stat-title{text-align:center;font-weight:900;margin-bottom:5px;color:#374151;font-size:13px}.stat-line{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}.stat-pill{background:#f3f4f6;border:1px solid transparent;border-radius:9px;padding:6px 9px;cursor:pointer;font-weight:700}.stat-pill b{font-size:16px}.stat-pill.active{background:#dbeafe;border-color:#2563eb;color:#1d4ed8}.table-wrap{background:#fff;border-radius:10px;overflow:auto;box-shadow:0 1px 5px #0001;max-height:calc(100vh - 145px)}table{width:100%;min-width:1720px;border-collapse:separate;border-spacing:0;table-layout:fixed}th,td{border-bottom:1px solid #e5e7eb;padding:4px 8px;vertical-align:top;text-align:left}th{position:sticky;top:0;z-index:1;background:#f8fafc;height:34px;white-space:nowrap;color:#374151}tbody tr:nth-child(even){background:#f6f9ff}tbody tr:hover{background:#eef6ff}th:nth-child(1),td:nth-child(1){width:42px;text-align:center;color:#64748b}th:nth-child(2),td:nth-child(2){width:130px}th:nth-child(3),td:nth-child(3){width:82px;text-align:center}th:nth-child(4),td:nth-child(4){width:90px;text-align:center}th:nth-child(5),td:nth-child(5){width:175px}th:nth-child(6),td:nth-child(6){width:305px}th:nth-child(7),td:nth-child(7){width:58px;text-align:center}th:nth-child(8),td:nth-child(8){width:105px;text-align:center}th:nth-child(9),td:nth-child(9){width:82px;text-align:center}th:nth-child(10),td:nth-child(10){width:290px}th:nth-child(11),td:nth-child(11){width:115px;text-align:center}th:nth-child(12),td:nth-child(12){width:84px;text-align:center}th:nth-child(13),td:nth-child(13){width:78px;text-align:center}th:nth-child(14),td:nth-child(14){width:58px;text-align:center}.code-link{color:#2563eb;font-weight:800;text-decoration:none;cursor:pointer}.code-wrap{display:flex;gap:6px;align-items:center;min-width:0}.code-wrap span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.content-preview{background:#f8fafc;border:1px solid #e5e7eb;border-left:3px solid #c7d2fe;border-radius:7px;padding:4px 8px;height:40px;line-height:17px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-wrap}.dvvc-preview{border-left-color:#fed7aa;background:#fffaf3}.more-btn{padding:0;background:transparent;color:#2563eb;font-size:11.5px}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11.5px;font-weight:800;white-space:nowrap}.red{background:#fee2e2;color:#b91c1c}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}.black{background:#e5e7eb;color:#111827}.carrier{background:#e0f2fe;color:#075985}.urgent{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}.row-urgent{background:#fff1f1!important}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:16px}.modal-box{background:#fff;width:min(780px,96vw);max-height:90vh;overflow:auto;border-radius:12px;padding:14px}.modal-sm{width:min(560px,96vw)}.modal-head{position:sticky;top:0;background:#fff;z-index:2;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb;padding-bottom:8px;margin-bottom:10px}.modal-head h3{margin:0}.form-row{margin-bottom:10px}.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.quick button{background:#eef2ff;color:#1d4ed8;font-size:12px}.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.preview-img{width:64px;height:64px;object-fit:cover;border-radius:7px;border:1px solid #d1d5db;cursor:pointer}.detail-grid{display:grid;grid-template-columns:145px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}.detail-label{font-weight:800;color:#374151}.detail-value{white-space:pre-wrap}.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.5;max-height:330px;overflow:auto}.copy-line{display:flex;gap:8px;align-items:flex-start}.copy-text{flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap}.img-view{max-width:92vw;max-height:76vh;border-radius:10px;background:#fff}.gallery-tools{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}.mobile-list{display:none}.mobile-card{background:#fff;border:1px solid #e5e7eb;border-radius:11px;margin-bottom:7px;box-shadow:0 1px 4px #0001;overflow:hidden}.mc-head{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid #e5e7eb}.mc-code{font-weight:900;color:#2563eb;text-decoration:none}.mc-date{font-size:11.5px;color:#64748b}.mc-body{padding:8px 10px;display:grid;gap:6px}.mc-label{font-size:11.5px;font-weight:900;color:#475569}.mc-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;background:#f8fafc;border-top:1px solid #e5e7eb;padding:7px}.mc-actions button{min-height:30px;padding:4px}.account-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center}.account-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center;border-top:1px solid #e5e7eb;padding:7px 0}@media(max-width:900px){body{min-width:0;overflow-x:hidden}.app,.main,.topbar{min-width:0}.topbar{height:42px;position:sticky;top:0;z-index:10}.main{padding:6px}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;background:#eef2f7;color:#111827;font-size:13px}button,input,select,textarea{font:inherit}button{border:0;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer}.btn-blue{background:#2563eb;color:#fff}.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#16a34a;color:#fff}.btn-red{background:#dc2626;color:#fff}.btn-gray{background:#e5e7eb;color:#111827}.btn-small{padding:5px 7px;font-size:12px}input,select,textarea{width:100%;border:1px solid #d1d5db;border-radius:7px;padding:7px 9px;background:#fff}textarea{min-height:90px;resize:vertical}.login-page{height:100vh;display:flex;align-items:center;justify-content:center}.login-box{width:360px;background:#fff;border-radius:12px;padding:22px;box-shadow:0 4px 18px #0002}.login-box h2{text-align:center;margin:0 0 16px}.login-msg{min-height:20px;margin:8px 0;font-size:12.5px}.login-msg.err{color:#dc2626}.login-msg.ok{color:#16a34a}.app{display:none}.topbar{height:46px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.topbar h2{font-size:17px;margin:0}.main{padding:10px}.toolbar{background:#fff;border-radius:10px;padding:8px;display:flex;gap:8px;align-items:center;margin-bottom:8px;box-shadow:0 1px 5px #0001;white-space:nowrap;overflow-x:auto}.toolbar .search{width:280px;min-width:220px}.toolbar .sel{width:145px;min-width:130px}.toolbar .dt{width:118px;min-width:118px}.stats-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.stat-box{background:#fff;border-radius:10px;padding:7px 10px;box-shadow:0 1px 5px #0001}.stat-title{text-align:center;font-weight:900;margin-bottom:5px;color:#374151;font-size:13px}.stat-line{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}.stat-pill{background:#f3f4f6;border:1px solid transparent;border-radius:9px;padding:6px 9px;cursor:pointer;font-weight:700}.stat-pill b{font-size:16px}.stat-pill.active{background:#dbeafe;border-color:#2563eb;color:#1d4ed8}.table-wrap{background:#fff;border-radius:10px;overflow:auto;box-shadow:0 1px 5px #0001;max-height:calc(100vh - 145px)}table{width:100%;min-width:1720px;border-collapse:separate;border-spacing:0;table-layout:fixed}th,td{border-bottom:1px solid #e5e7eb;padding:4px 8px;vertical-align:top;text-align:left}th{position:sticky;top:0;z-index:1;background:#f8fafc;height:34px;white-space:nowrap;color:#374151}tbody tr:nth-child(even){background:#f6f9ff}tbody tr:hover{background:#eef6ff}th:nth-child(1),td:nth-child(1){width:42px;text-align:center;color:#64748b}th:nth-child(2),td:nth-child(2){width:130px}th:nth-child(3),td:nth-child(3){width:82px;text-align:center}th:nth-child(4),td:nth-child(4){width:90px;text-align:center}th:nth-child(5),td:nth-child(5){width:175px}th:nth-child(6),td:nth-child(6){width:305px}th:nth-child(7),td:nth-child(7){width:58px;text-align:center}th:nth-child(8),td:nth-child(8){width:105px;text-align:center}th:nth-child(9),td:nth-child(9){width:82px;text-align:center}th:nth-child(10),td:nth-child(10){width:290px}th:nth-child(11),td:nth-child(11){width:115px;text-align:center}th:nth-child(12),td:nth-child(12){width:84px;text-align:center}th:nth-child(13),td:nth-child(13){width:78px;text-align:center}th:nth-child(14),td:nth-child(14){width:58px;text-align:center}.code-link{color:#2563eb;font-weight:800;text-decoration:none;cursor:pointer}.code-wrap{display:flex;gap:6px;align-items:center;min-width:0}.code-wrap span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.content-preview{background:#f8fafc;border:1px solid #e5e7eb;border-left:3px solid #c7d2fe;border-radius:7px;padding:4px 8px;height:40px;line-height:17px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-wrap}.dvvc-preview{border-left-color:#fed7aa;background:#fffaf3}.more-btn{padding:0;background:transparent;color:#2563eb;font-size:11.5px}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11.5px;font-weight:800;white-space:nowrap}.red{background:#fee2e2;color:#b91c1c}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}.black{background:#e5e7eb;color:#111827}.carrier{background:#e0f2fe;color:#075985}.urgent{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}.row-urgent{background:#fff1f1!important}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:16px}.modal-box{background:#fff;width:min(780px,96vw);max-height:90vh;overflow:auto;border-radius:12px;padding:14px}.modal-sm{width:min(560px,96vw)}.modal-head{position:sticky;top:0;background:#fff;z-index:2;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb;padding-bottom:8px;margin-bottom:10px}.modal-head h3{margin:0}.form-row{margin-bottom:10px}.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.quick button{background:#eef2ff;color:#1d4ed8;font-size:12px}.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.preview-img{width:64px;height:64px;object-fit:cover;border-radius:7px;border:1px solid #d1d5db;cursor:pointer}.detail-grid{display:grid;grid-template-columns:145px 1fr;gap:8px;border-top:1px solid #e5e7eb;padding-top:10px}.detail-label{font-weight:800;color:#374151}.detail-value{white-space:pre-wrap}.history{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.5;max-height:330px;overflow:auto}.copy-line{display:flex;gap:8px;align-items:flex-start}.copy-text{flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:8px;white-space:pre-wrap}.img-view{max-width:92vw;max-height:76vh;border-radius:10px;background:#fff}.gallery-tools{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}.mobile-list{display:none}.mobile-card{background:#fff;border:1px solid #e5e7eb;border-radius:11px;margin-bottom:7px;box-shadow:0 1px 4px #0001;overflow:hidden}.mc-head{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid #e5e7eb}.mc-code{font-weight:900;color:#2563eb;text-decoration:none}.mc-date{font-size:11.5px;color:#64748b}.mc-body{padding:8px 10px;display:grid;gap:6px}.mc-label{font-size:11.5px;font-weight:900;color:#475569}.mc-actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;background:#f8fafc;border-top:1px solid #e5e7eb;padding:7px}.mc-actions button{min-height:30px;padding:4px}.account-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center}.account-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:6px;align-items:center;border-top:1px solid #e5e7eb;padding:7px 0}.loading-spinner{display:inline-block;width:14px;height:14px;border:2px solid #e5e7eb;border-top:2px solid #2563eb;border-radius:50%;animation:spin .6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:900px){body{min-width:0;overflow-x:hidden}.app,.main,.topbar{min-width:0}.topbar{height:42px;position:sticky;top:0;z-index:10}.main{padding:6px}
 .toolbar{display:grid;grid-template-columns:92px 1fr 1fr;gap:5px;padding:6px;overflow:visible;white-space:normal}
 .toolbar .btn-blue:first-child{grid-column:1;grid-row:1;width:100%;min-height:34px;padding:6px 4px;font-size:12.5px}
 .toolbar .search{grid-column:2/4;grid-row:1;width:100%;min-width:0;height:34px}
@@ -21,13 +22,8 @@
 #dateToWrap{grid-column:3;grid-row:3}
 .toolbar label,.toolbar #applyBtn,.toolbar #clearDateBtn{display:none!important}
 .stats-wrap{grid-template-columns:1fr 1fr;gap:6px}.stat-box{padding:7px 6px}.stat-title{font-size:13px;margin-bottom:5px}.stat-line{display:grid;grid-template-columns:1fr 1fr;gap:5px}.stat-pill{text-align:center;font-size:12px;padding:6px 3px}.stat-pill b{font-size:15px}.table-wrap{display:none}.mobile-list{display:block}.modal{padding:8px;align-items:flex-start;overflow:auto}.modal-box{width:100%;max-height:calc(100dvh - 70px);margin-top:48px}.detail-grid{grid-template-columns:92px 1fr}.copy-line{flex-direction:column}.account-grid,.account-row{grid-template-columns:1fr 1fr}.account-grid button,.account-row button{grid-column:1/3}}
-
-
-/* ===== FIX CHỐT GIAO DIỆN 31/05 ===== */
 .btn-orange{background:#16a34a!important;color:#fff!important}
 .code-link,.mc-code{text-decoration:none!important}
-
-/* PC: thống kê cân đối, to và nhìn rõ hơn */
 @media(min-width:901px){
   .stats-wrap{grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:10px!important}
   .stat-box{min-height:82px!important;padding:12px 18px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;border-radius:12px!important;box-shadow:0 2px 8px #00000012!important}
@@ -37,8 +33,6 @@
   .stat-pill b{font-size:20px!important;line-height:1!important}
   .stat-pill.active{background:#dbeafe!important;border-color:#2563eb!important;color:#1d4ed8!important;box-shadow:0 0 0 1px #2563eb33 inset!important}
 }
-
-/* Mobile: lọc ngày chia đôi, bỏ mũi tên, không chồng chéo */
 @media(max-width:900px){
   .toolbar{grid-template-columns:repeat(6,1fr)!important;gap:5px!important}
   .toolbar .btn-blue:first-child{grid-column:1/3!important;grid-row:1!important}
@@ -53,10 +47,6 @@
   .stats-wrap{gap:6px!important;margin-bottom:7px!important}
   .stat-box{border-radius:10px!important;box-shadow:0 1px 5px #0001!important}
 }
-
-
-
-/* ===== THỐNG KÊ DẠNG CARD RÕ RÀNG ===== */
 .stats-dashboard{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:10px!important}
 .stats-dashboard .stat-box{background:#fff!important;border-radius:12px!important;padding:12px!important;box-shadow:0 2px 8px #00000012!important;display:block!important;min-height:auto!important}
 .stats-dashboard .stat-title{font-size:16px!important;font-weight:900!important;color:#1f2937!important;margin:0 0 10px!important;text-align:left!important;min-width:0!important}
@@ -71,7 +61,6 @@
 .stats-dashboard .stat-green{border-top-color:#22c55e!important}
 .stats-dashboard .stat-yellow{border-top-color:#f59e0b!important}
 .stats-dashboard .stat-black{border-top-color:#111827!important}
-
 @media(max-width:900px){
   .stats-dashboard{grid-template-columns:1fr 1fr!important;gap:6px!important;margin-bottom:7px!important}
   .stats-dashboard .stat-box{padding:7px 6px!important;border-radius:10px!important}
@@ -81,10 +70,6 @@
   .stats-dashboard .stat-pill .stat-label{font-size:11.5px!important}
   .stats-dashboard .stat-pill b{font-size:18px!important}
 }
-
-
-
-/* ===== FINAL: mã vận đơn dễ nhìn hơn ===== */
 .code-link{
   color:#2563eb!important;
   font-size:18px!important;
@@ -109,10 +94,6 @@
 @media(max-width:900px){
   .stats-dashboard .stat-pill b{font-size:18px!important}
 }
-
-
-
-/* ===== FIX MÃ VẬN ĐƠN: nhỏ hơn, mảnh hơn, cột rộng hơn ===== */
 @media(min-width:901px){
   table{min-width:1780px!important;}
   th:nth-child(5),td:nth-child(5){width:230px!important;}
@@ -139,10 +120,6 @@
     letter-spacing:.15px!important;
   }
 }
-
-
-
-/* ===== QUẢN LÝ TÀI KHOẢN: thêm nút Sửa + đổi tên/mật khẩu ===== */
 .account-grid.account-form{grid-template-columns:1.2fr 1.1fr 1fr 1fr auto auto!important;margin-bottom:10px}
 .account-row{grid-template-columns:1.2fr 1fr 1fr 1fr 160px!important}
 .account-actions{display:flex;gap:6px;justify-content:flex-end;align-items:center}
@@ -155,7 +132,6 @@
   .account-row{grid-template-columns:1fr 1fr!important;gap:6px!important}
   .account-actions{grid-column:1/3;justify-content:flex-start}
 }
-
 </style>
 </head>
 <body>
@@ -200,77 +176,321 @@
   <div id="accountList"></div>
 </div></div>
 <div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeAll()"><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database-compat.js"></script>
+
 <script>
+const firebaseConfig={
+  apiKey:"AIzaSyDUZ2zz4FMSTF-M6QSZVTmBXY_6T4oniso",
+  authDomain:"xulyvandon-1a560.firebaseapp.com",
+  databaseURL:"https://xulyvandon-1a560-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"xulyvandon-1a560",
+  storageBucket:"xulyvandon-1a560.firebasestorage.app",
+  messagingSenderId:"1005910299241",
+  appId:"1:1005910299241:web:fe20ac27d2d62f67e2c8f8"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.database();
+const secondaryApp=firebase.initializeApp(firebaseConfig,"adminCreateUserApp");
+const secondaryAuth=secondaryApp.auth();
+
+const CLOUDINARY_UPLOAD_PRESET="xulyvandon";
+const CLOUDINARY_CLOUD_NAME="dqcyr3vgr";
+const AUTH_DOMAIN_SUFFIX="@vd.local";
 const CARRIERS=["JT","Viettel","GHN"];
-const DEFAULT_USERS={admin:{pass:"123456",role:"admin",name:"Admin",carrier:""}};
-let USERS={...DEFAULT_USERS};function loadSavedUsers(){try{const s=JSON.parse(localStorage.getItem('xvd_users')||'{}');USERS={...DEFAULT_USERS,...s};['shop01','jt01','viettel01','ghn01'].forEach(k=>{if(USERS[k]&&USERS[k].pass==='123456')delete USERS[k]});USERS.admin=DEFAULT_USERS.admin;}catch(e){USERS={...DEFAULT_USERS}}}function saveUsers(){const extra={};Object.keys(USERS).forEach(k=>{if(!DEFAULT_USERS[k])extra[k]=USERS[k]});localStorage.setItem('xvd_users',JSON.stringify(extra));}loadSavedUsers();
 const QUICK_TEXTS=["Hạ COD còn lại 35k","G1P","Đổi thông tin giao hàng thành:","Giao sớm cho khách hối","Tạo đơn thu hồi từ khách về shop","Shop báo chuyển hoàn","Báo shipper giao lại","Báo shipper cập nhật đơn hàng","Khách đã trả ship, báo shipper cập nhật tiền","Trả hàng về shop"];
+
 let currentUser=null,editId=null,pastedImages=[],editImages=[],currentImageTarget='create',dateFilter={from:null,to:null,mode:'month'},gallery=[],galleryIndex=0;
-let tasks=JSON.parse(localStorage.getItem('xvd_tasks_v5')||'null')||[{id:'SPX123456789',created_at:Date.now(),carrier:'JT',tracking:'SPX123456789',shop:'Hạ COD còn lại 35k\nKhách xác nhận nhận hàng trong hôm nay.',dvvc:'Đã gửi yêu cầu xuống bưu cục',status_dvvc:'dang_xu_ly',status_shop:'chua_xong',urgent:true,images:[],shop_images:[],dvvc_images:[],history:[]},{id:'GHN987654321',created_at:Date.now()-3600000,carrier:'GHN',tracking:'GHN987654321',shop:'Giao sớm cho khách hối',dvvc:'',status_dvvc:'chua_xu_ly',status_shop:'chua_xong',urgent:false,images:[],shop_images:[],dvvc_images:[],history:[]}];
-function persist(){localStorage.setItem('xvd_tasks_v5',JSON.stringify(tasks));}function $(id){return document.getElementById(id)}function pad2(n){return String(n).padStart(2,'0')}function formatTime(ts){return new Date(ts).toLocaleString('vi-VN',{hour12:false})}function fmtDate(ts){const d=new Date(ts);return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
+let allTasks=[];
+let editingAccountUid=null;
+let unsubscribeTasks=null;
+
+function $(id){return document.getElementById(id)}
+function pad2(n){return String(n).padStart(2,'0')}
+function formatTime(ts){return new Date(ts).toLocaleString('vi-VN',{hour12:false})}
+function fmtDate(ts){const d=new Date(ts);return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
 function shortDate(ts,fb){if(!ts)return fb;const d=new Date(ts);return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}`}
-function updateDateLabels(){if(document.getElementById('dateFromWrap'))dateFromWrap.setAttribute('data-short',shortDate(dateFilter.from,'Từ'));if(document.getElementById('dateToWrap'))dateToWrap.setAttribute('data-short',shortDate(dateFilter.to,'Đến'));}function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}function endOfDay(d){const x=new Date(d);x.setHours(23,59,59,999);return x}function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function setLoginMsg(m,t='err'){loginMsg.className='login-msg '+(t==='ok'?'ok':'err');loginMsg.textContent=m}function login(){const u=loginUser.value.trim(),p=loginPass.value;if(!u)return setLoginMsg('Chưa nhập tài khoản');if(!USERS[u])return setLoginMsg('Không tồn tại tài khoản: '+u);if(String(USERS[u].pass)!==String(p))return setLoginMsg('Sai mật khẩu');currentUser={username:u,...USERS[u]};if(rememberLogin.checked)localStorage.setItem('xvd_user',u);else localStorage.removeItem('xvd_user');showApp();renderQuick();setDefaultMonth();}function logout(){localStorage.removeItem('xvd_user');currentUser=null;app.style.display='none';loginPage.style.display='flex'}
-function canCreateTask(){return currentUser&&(currentUser.role==='admin'||currentUser.role==='shop')}function canEditShop(){return currentUser&&(currentUser.role==='admin'||currentUser.role==='shop')}function canEditDvvc(t){return currentUser&&(currentUser.role==='admin'||(currentUser.role==='dvvc'&&(!t||currentUser.carrier===t.carrier)))}function canDeleteTask(){return currentUser&&currentUser.role==='admin'}function visibleByUser(t){return !currentUser||currentUser.role!=='dvvc'||t.carrier===currentUser.carrier}
-function fillCarrierSelect(sel,all=false){sel.innerHTML=(all?'<option value="">Tất cả ĐVVC</option>':'')+CARRIERS.map(c=>`<option value="${c}">${c}</option>`).join('')}function showApp(){loginPage.style.display='none';app.style.display='block';helloUser.textContent=`${currentUser.name}${currentUser.carrier?' - '+currentUser.carrier:''} `;accountBtn.style.display=currentUser.role==='admin'?'':'none';createBtn.style.display=canCreateTask()?'':'none';fillCarrierSelect(filterCarrier,true);fillCarrierSelect(c_carrier);fillCarrierSelect(s_carrier);fillCarrierSelect(a_carrier,true);if(currentUser.role==='dvvc'){filterCarrier.value=currentUser.carrier;filterCarrier.disabled=true}else{filterCarrier.disabled=false} }
-function statusShopText(s){return {chua_xong:'Chưa xong',da_xong:'Đã xong',huy:'Hủy'}[s]||s}function statusDvvcText(s){return {chua_xu_ly:'Chưa xử lý',dang_xu_ly:'Đang xử lý',da_xu_ly:'Đã xử lý',khong_xu_ly:'Không xử lý được'}[s]||s}function badgeShop(s){const cls=s==='da_xong'?'green':s==='huy'?'black':'red';return `<span class="badge ${cls}">${statusShopText(s)}</span>`}function badgeDvvc(s){const cls=s==='chua_xu_ly'?'red':s==='dang_xu_ly'?'yellow':s==='da_xu_ly'?'green':'black';return `<span class="badge ${cls}">${statusDvvcText(s)}</span>`}
-function setDefaultMonth(){const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render()}function setDateCustom(){dateFilter={from:dateFrom.value?startOfDay(new Date(dateFrom.value+'T00:00')).getTime():null,to:dateTo.value?endOfDay(new Date(dateTo.value+'T00:00')).getTime():null,mode:'custom'};updateDateLabels();render()}function clearDateFilter(){dateFilter={from:null,to:null,mode:''};dateFrom.value='';dateTo.value='';updateDateLabels();render()}function getBaseList(){const q=searchBox.value.trim().toLowerCase();let list=tasks.filter(t=>!t.deleted&&visibleByUser(t));if(dateFilter.from)list=list.filter(t=>t.created_at>=dateFilter.from);if(dateFilter.to)list=list.filter(t=>t.created_at<=dateFilter.to);if(filterCarrier.value)list=list.filter(t=>t.carrier===filterCarrier.value);if(q)list=list.filter(t=>[t.tracking,t.shop,t.dvvc,t.carrier].some(x=>String(x||'').toLowerCase().includes(q)));return list}
-function render(){let base=getBaseList(),list=[...base];if(filterShop.value)list=list.filter(t=>t.status_shop===filterShop.value);if(filterDvvc.value)list=list.filter(t=>t.status_dvvc===filterDvvc.value);stTotal.textContent=base.length;stShopRed.textContent=base.filter(t=>t.status_shop==='chua_xong').length;stShopGreen.textContent=base.filter(t=>t.status_shop==='da_xong').length;stShopCancel.textContent=base.filter(t=>t.status_shop==='huy').length;stDvvcRed.textContent=base.filter(t=>t.status_dvvc==='chua_xu_ly').length;stDvvcYellow.textContent=base.filter(t=>t.status_dvvc==='dang_xu_ly').length;stDvvcGreen.textContent=base.filter(t=>t.status_dvvc==='da_xu_ly').length;stDvvcBlack.textContent=base.filter(t=>t.status_dvvc==='khong_xu_ly').length;updateStatActive();tbody.innerHTML=list.map((t,i)=>rowHtml(t,i)).join('');mobileList.innerHTML=list.map((t,i)=>cardHtml(t,i)).join('')}
+function updateDateLabels(){if($('dateFromWrap'))dateFromWrap.setAttribute('data-short',shortDate(dateFilter.from,'Từ'));if($('dateToWrap'))dateToWrap.setAttribute('data-short',shortDate(dateFilter.to,'Đến'))}
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
+function endOfDay(d){const x=new Date(d);x.setHours(23,59,59,999);return x}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function safeKey(s){return String(s||'').replace(/[.#$\[\]/]/g,'_')}
+function emailFromLoginName(name){const u=String(name||'').trim().toLowerCase();return u.includes('@')?u:u+AUTH_DOMAIN_SUFFIX}
+function usernameFromEmail(email){return String(email||'').split('@')[0]}
+function roleName(r){return r==='admin'?'Admin':r==='shop'?'Shop':'ĐVVC'}
+function setLoginMsg(m,t='err'){loginMsg.className='login-msg '+(t==='ok'?'ok':'err');loginMsg.textContent=m}
+
+function seedUserDataFromEmail(email){
+  const username=usernameFromEmail(email);
+  if(username==='admin')return {username,email,name:'Admin',role:'admin',carrier:'',active:true,created_at:Date.now(),seeded:true};
+  if(username==='shop01')return {username,email,name:'shop01',role:'shop',carrier:'',active:true,created_at:Date.now(),seeded:true};
+  if(username==='jt01')return {username,email,name:'jt01',role:'dvvc',carrier:'JT',active:true,created_at:Date.now(),seeded:true};
+  if(username==='ghn01')return {username,email,name:'ghn01',role:'dvvc',carrier:'GHN',active:true,created_at:Date.now(),seeded:true};
+  if(username==='viettel01'||username==='vtp01')return {username,email,name:username,role:'dvvc',carrier:'Viettel',active:true,created_at:Date.now(),seeded:true};
+  return null;
+}
+
+async function getOrSeedCurrentUser(firebaseUser){
+  const ref=db.ref('users/'+firebaseUser.uid);
+  const snap=await ref.once('value');
+  let data=snap.val();
+  if(!data){
+    data=seedUserDataFromEmail(firebaseUser.email);
+    if(!data)throw new Error('Tài khoản Auth có tồn tại nhưng chưa được admin gán quyền trong /users');
+    await ref.set(data);
+  }
+  if(data.active===false)throw new Error('Tài khoản này đang bị khóa');
+  return {uid:firebaseUser.uid,username:data.username||usernameFromEmail(firebaseUser.email),email:firebaseUser.email,...data};
+}
+
+async function login(){
+  const u=loginUser.value.trim();
+  const p=loginPass.value;
+  if(!u)return setLoginMsg('Chưa nhập tài khoản');
+  if(!p)return setLoginMsg('Chưa nhập mật khẩu');
+  setLoginMsg('Đang đăng nhập...','ok');
+  try{
+    const cred=await auth.signInWithEmailAndPassword(emailFromLoginName(u),p);
+    currentUser=await getOrSeedCurrentUser(cred.user);
+    if(rememberLogin.checked)localStorage.setItem('xvd_user',u);else localStorage.removeItem('xvd_user');
+    setLoginMsg('','ok');
+    showApp();
+    renderQuick();
+    setDefaultMonth();
+    listenTasks();
+  }catch(e){
+    let msg=e.message||String(e);
+    if(e.code==='auth/user-not-found')msg='Không tồn tại tài khoản Firebase Auth';
+    if(e.code==='auth/wrong-password'||e.code==='auth/invalid-credential')msg='Sai tài khoản hoặc mật khẩu';
+    if(e.code==='auth/invalid-email')msg='Email đăng nhập không hợp lệ';
+    setLoginMsg('Lỗi: '+msg);
+  }
+}
+
+async function logout(){
+  try{if(unsubscribeTasks)db.ref('tasks').off('value',unsubscribeTasks)}catch(e){}
+  await auth.signOut();
+  localStorage.removeItem('xvd_user');
+  currentUser=null;allTasks=[];
+  app.style.display='none';loginPage.style.display='flex';
+}
+
+function canCreateTask(){return currentUser&&(currentUser.role==='admin'||currentUser.role==='shop')}
+function canEditShop(){return currentUser&&(currentUser.role==='admin'||currentUser.role==='shop')}
+function canEditDvvc(t){return currentUser&&(currentUser.role==='admin'||(currentUser.role==='dvvc'&&(!t||currentUser.carrier===t.carrier)))}
+function canDeleteTask(){return currentUser&&currentUser.role==='admin'}
+function visibleByUser(t){return !currentUser||currentUser.role!=='dvvc'||t.carrier===currentUser.carrier}
+function fillCarrierSelect(sel,all=false){sel.innerHTML=(all?'<option value="">Tất cả ĐVVC</option>':'')+CARRIERS.map(c=>`<option value="${c}">${c}</option>`).join('')}
+
+function showApp(){
+  loginPage.style.display='none';app.style.display='block';
+  helloUser.textContent=`${currentUser.name||currentUser.username}${currentUser.carrier?' - '+currentUser.carrier:''} `;
+  accountBtn.style.display=currentUser.role==='admin'?'':'none';
+  createBtn.style.display=canCreateTask()?'':'none';
+  fillCarrierSelect(filterCarrier,true);fillCarrierSelect(c_carrier);fillCarrierSelect(s_carrier);fillCarrierSelect(a_carrier,true);
+  if(currentUser.role==='dvvc'){filterCarrier.value=currentUser.carrier;filterCarrier.disabled=true}else{filterCarrier.disabled=false}
+}
+
+function statusShopText(s){return {chua_xong:'Chưa xong',da_xong:'Đã xong',huy:'Hủy'}[s]||s}
+function statusDvvcText(s){return {chua_xu_ly:'Chưa xử lý',dang_xu_ly:'Đang xử lý',da_xu_ly:'Đã xử lý',khong_xu_ly:'Không xử lý được'}[s]||s}
+function badgeShop(s){const cls=s==='da_xong'?'green':s==='huy'?'black':'red';return `<span class="badge ${cls}">${statusShopText(s)}</span>`}
+function badgeDvvc(s){const cls=s==='chua_xu_ly'?'red':s==='dang_xu_ly'?'yellow':s==='da_xu_ly'?'green':'black';return `<span class="badge ${cls}">${statusDvvcText(s)}</span>`}
+
+function setDefaultMonth(){
+  const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);
+  dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};
+  dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render();
+}
+function setDateCustom(){dateFilter={from:dateFrom.value?startOfDay(new Date(dateFrom.value+'T00:00')).getTime():null,to:dateTo.value?endOfDay(new Date(dateTo.value+'T00:00')).getTime():null,mode:'custom'};updateDateLabels();render()}
+function clearDateFilter(){dateFilter={from:null,to:null,mode:''};dateFrom.value='';dateTo.value='';updateDateLabels();render()}
+
+function listenTasks(){
+  const ref=db.ref('tasks');
+  if(unsubscribeTasks)ref.off('value',unsubscribeTasks);
+  unsubscribeTasks=snap=>{
+    const arr=[];
+    snap.forEach(child=>{const t=child.val()||{};t.id=child.key;arr.push(t)});
+    allTasks=arr.sort((a,b)=>(b.created_at||0)-(a.created_at||0));
+    render();
+  };
+  ref.on('value',unsubscribeTasks,err=>alert('Lỗi tải Firebase Database: '+err.message));
+}
+
+function getBaseList(){
+  const q=searchBox.value.trim().toLowerCase();
+  let list=allTasks.filter(t=>!t.deleted&&visibleByUser(t));
+  if(dateFilter.from)list=list.filter(t=>(t.created_at||0)>=dateFilter.from);
+  if(dateFilter.to)list=list.filter(t=>(t.created_at||0)<=dateFilter.to);
+  if(filterCarrier.value)list=list.filter(t=>t.carrier===filterCarrier.value);
+  if(q)list=list.filter(t=>[t.tracking,t.shop,t.dvvc,t.carrier].some(x=>String(x||'').toLowerCase().includes(q)));
+  return list;
+}
+function render(){
+  let base=getBaseList(),list=[...base];
+  if(filterShop.value)list=list.filter(t=>t.status_shop===filterShop.value);
+  if(filterDvvc.value)list=list.filter(t=>t.status_dvvc===filterDvvc.value);
+  stTotal.textContent=base.length;stShopRed.textContent=base.filter(t=>t.status_shop==='chua_xong').length;stShopGreen.textContent=base.filter(t=>t.status_shop==='da_xong').length;stShopCancel.textContent=base.filter(t=>t.status_shop==='huy').length;stDvvcRed.textContent=base.filter(t=>t.status_dvvc==='chua_xu_ly').length;stDvvcYellow.textContent=base.filter(t=>t.status_dvvc==='dang_xu_ly').length;stDvvcGreen.textContent=base.filter(t=>t.status_dvvc==='da_xu_ly').length;stDvvcBlack.textContent=base.filter(t=>t.status_dvvc==='khong_xu_ly').length;
+  updateStatActive();
+  tbody.innerHTML=list.map((t,i)=>rowHtml(t,i)).join('');
+  mobileList.innerHTML=list.map((t,i)=>cardHtml(t,i)).join('');
+}
 function rowHtml(t,i){const imgs=allImages(t);return `<tr class="${t.urgent?'row-urgent':''}"><td>${i+1}</td><td>${formatTime(t.created_at)}</td><td>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</td><td><span class="badge carrier">${t.carrier||''}</span></td><td><div class="code-wrap"><span class="code-link" onclick="openDetail('${t.id}')">${t.tracking}</span><button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div></td><td><div class="content-preview">${escapeHtml(t.shop)}</div>${(t.shop||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 ${imgs.length}</button>`:''}</td><td>${badgeShop(t.status_shop)}</td><td>${canEditShop()?`<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div>${(t.dvvc||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td><td>${badgeDvvc(t.status_dvvc)}</td><td>${canEditDvvc(t)?`<button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td><td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${(t.history||[]).length})</button></td><td>${canDeleteTask()?`<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:''}</td></tr>`}
 function cardHtml(t,i){const imgs=allImages(t);return `<div class="mobile-card ${t.urgent?'row-urgent':''}"><div class="mc-head"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${formatTime(t.created_at)} • ${t.carrier}</div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div><div class="mc-body"><div><div class="mc-label">Shop</div><div class="content-preview">${escapeHtml(t.shop||'')}</div></div><div>${badgeShop(t.status_shop)} ${badgeDvvc(t.status_dvvc)} <span class="badge carrier">${t.carrier}</span></div><div><div class="mc-label">ĐVVC</div><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div></div>${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${imgs.length})</button>`:'<span class="mc-label">Không có ảnh</span>'}</div><div class="mc-actions">${canEditShop()?`<button class="btn-blue btn-small" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem</button>`}${canEditDvvc(t)?`<button class="btn-orange btn-small" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem ĐVVC</button>`}<button class="btn-gray btn-small" onclick="openHistory('${t.id}')">Lịch sử</button>${canDeleteTask()?`<button class="btn-red btn-small" onclick="deleteTask('${t.id}')">Xóa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Chi tiết</button>`}</div></div>`}
-function updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value)document.querySelector('.stat-pill').classList.add('active');document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}function filterByShop(s){filterShop.value=filterShop.value===s?'':s;filterDvvc.value='';render()}function filterByDvvc(s){filterDvvc.value=filterDvvc.value===s?'':s;filterShop.value='';render()}function clearStatusFilter(){filterShop.value='';filterDvvc.value='';render()}
-function renderQuick(){const html=QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join('');quickBox.innerHTML=html;quickBoxShop.innerHTML=html.replaceAll('addQuick','addQuickShop')}function addQuick(x){c_shop.value=(c_shop.value.trim()?c_shop.value.trim()+'\n':'')+x}function addQuickShop(x){s_shop.value=(s_shop.value.trim()?s_shop.value.trim()+'\n':'')+x}
-function openCreate(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');editId=null;c_carrier.value=CARRIERS[0];c_tracking.value='';c_shop.value='';c_urgent.checked=false;pastedImages=[];c_images.value='';renderPreview();createModal.style.display='flex'}function openShop(id){if(!canEditShop())return alert('Chỉ Shop/Admin được sửa phần Shop');const t=tasks.find(x=>x.id===id);editId=id;s_carrier.value=t.carrier;s_tracking.value=t.tracking;s_shop.value=t.shop;s_urgent.checked=!!t.urgent;s_status_shop.value=t.status_shop;editImages=[...(t.shop_images||t.images||[])];currentImageTarget='shop';renderEditPreview();shopModal.style.display='flex'}function openDvvc(id){const t=tasks.find(x=>x.id===id);if(!canEditDvvc(t))return alert('Tài khoản này chỉ được sửa đơn của '+currentUser.carrier);editId=id;d_tracking.value=t.tracking;d_status_dvvc.value=t.status_dvvc;d_dvvc.value=t.dvvc||'';editImages=[...(t.dvvc_images||[])];currentImageTarget='dvvc';renderEditPreview();dvvcModal.style.display='flex'}
-function historyValue(v){return String(v??'').trim()||'(trống)'}function pushChange(arr,label,oldVal,newVal){if(String(oldVal??'')!==String(newVal??''))arr.push(`${label}:\n- Cũ: ${historyValue(oldVal)}\n- Mới: ${historyValue(newVal)}`)}function createTask(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');const tracking=c_tracking.value.trim().toUpperCase();if(!tracking)return alert('Chưa nhập mã vận đơn');if(tasks.some(t=>!t.deleted&&t.id===tracking))return alert('Mã vận đơn đã tồn tại');const now=Date.now();tasks.unshift({id:tracking,created_at:now,carrier:c_carrier.value,tracking,shop:c_shop.value.trim(),dvvc:'',status_dvvc:'chua_xu_ly',status_shop:'chua_xong',urgent:c_urgent.checked,shop_images:[...pastedImages],dvvc_images:[],images:[],history:[`${formatTime(now)} - ${currentUser.name}: tạo phiếu`]});persist();closeAll();render()}
-function saveShop(){const t=tasks.find(x=>x.id===editId);if(!t)return;const now=Date.now(),changes=[];pushChange(changes,'Đơn vị vận chuyển',t.carrier,s_carrier.value);pushChange(changes,'Nội dung Shop',t.shop,s_shop.value.trim());pushChange(changes,'Gấp',t.urgent?'Có':'Không',s_urgent.checked?'Có':'Không');pushChange(changes,'Tiến độ Shop',statusShopText(t.status_shop),statusShopText(s_status_shop.value));pushChange(changes,'Ảnh Shop',(t.shop_images||[]).length+' ảnh',editImages.length+' ảnh');t.carrier=s_carrier.value;t.shop=s_shop.value.trim();t.urgent=s_urgent.checked;t.status_shop=s_status_shop.value;t.shop_images=[...editImages];t.updated_at=now;if(changes.length)t.history.push(`${formatTime(now)} - ${currentUser.name}:\n${changes.join('\n')}`);persist();closeAll();render()}function saveDvvc(){const t=tasks.find(x=>x.id===editId);if(!t)return;const now=Date.now(),changes=[];pushChange(changes,'Tiến độ ĐVVC',statusDvvcText(t.status_dvvc),statusDvvcText(d_status_dvvc.value));pushChange(changes,'Nội dung ĐVVC',t.dvvc,d_dvvc.value.trim());pushChange(changes,'Ảnh ĐVVC',(t.dvvc_images||[]).length+' ảnh',editImages.length+' ảnh');t.status_dvvc=d_status_dvvc.value;t.dvvc=d_dvvc.value.trim();t.dvvc_images=[...editImages];t.updated_at=now;if(changes.length)t.history.push(`${formatTime(now)} - ${currentUser.name}:\n${changes.join('\n')}`);persist();closeAll();render()}
-function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}function openDetail(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${formatTime(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${t.carrier}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${escapeHtml(getHistoryText(t))}</div></div>`;detailModal.style.display='flex'}function getHistoryText(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]).join('\n')}
-function openHistory(id){const t=tasks.find(x=>x.id===id);h_content.textContent=getHistoryText(t);historyModal.style.display='flex'}function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này?'))return;const t=tasks.find(x=>x.id===id);t.deleted=true;t.history.push(`${formatTime(Date.now())} - ${currentUser.name}: xóa phiếu`);persist();render()}function copyTracking(c){navigator.clipboard.writeText(c).then(()=>alert('Đã copy mã: '+c))}async function copyTicket(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);const text=`${t.urgent?'🔥 GẤP\n':''}Ngày tạo: ${formatTime(t.created_at)}\nĐVVC: ${t.carrier}\nMã vận đơn: ${t.tracking}\nNội dung: ${t.shop||''}\nẢnh: ${imgs.length?imgs.length+' ảnh':'Không có ảnh'}`;try{await navigator.clipboard.writeText(text);alert('Đã copy phiếu dạng chữ. Ảnh nên gửi riêng bằng nút xem ảnh/tải ảnh nếu app không nhận ảnh dán.')}catch(e){alert('Không copy được trên trình duyệt này')}}
-function addFilesToList(files,target){Array.from(files||[]).forEach(file=>{if(!file.type.startsWith('image/'))return;const r=new FileReader();r.onload=e=>{if(target==='create'){pastedImages.push(e.target.result);renderPreview()}else{editImages.push(e.target.result);renderEditPreview()}};r.readAsDataURL(file)})}function handleFileImages(e){addFilesToList(e.target.files,'create')}function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}function renderPreview(){c_preview.innerHTML=pastedImages.map(src=>`<img class="preview-img" src="${src}" onclick="showImageGallery([\`${src}\`],0)">`).join('')}function renderEditPreview(){const html=editImages.map((src,i)=>`<div style="position:relative"><img class="preview-img" src="${src}" onclick="showImageGallery(editImages,${i})"><button class="btn-red btn-small" style="position:absolute;right:-5px;top:-5px;padding:1px 5px" onclick="removeEditImage(${i})">×</button></div>`).join('');edit_preview.innerHTML=html;edit_preview_dvvc.innerHTML=html}function removeEditImage(i){editImages.splice(i,1);renderEditPreview()}document.addEventListener('paste',e=>{if(!['flex'].includes(createModal.style.display)&&!['flex'].includes(shopModal.style.display)&&!['flex'].includes(dvvcModal.style.display))return;const files=[];Array.from(e.clipboardData?.items||[]).forEach(it=>{if(it.type.indexOf('image')===0){const f=it.getAsFile();if(f)files.push(f)}});if(files.length){addFilesToList(files,createModal.style.display==='flex'?'create':currentImageTarget);e.preventDefault()}})
-function showImageGalleryById(id,idx){const t=tasks.find(x=>x.id===id);showImageGallery(allImages(t),idx)}function showImageGallery(arr,idx=0){gallery=arr||[];galleryIndex=idx;renderGallery();imgModal.style.display='flex'}function renderGallery(){if(!gallery.length)return;bigImg.src=gallery[galleryIndex];imgCounter.textContent=`${galleryIndex+1}/${gallery.length}`;imgThumbs.innerHTML=gallery.map((s,i)=>`<img class="preview-img" style="width:45px;height:45px;${i===galleryIndex?'outline:3px solid #2563eb':''}" src="${s}" onclick="galleryIndex=${i};renderGallery()">`).join('')}function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.length)%gallery.length;renderGallery()}function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','imgModal'].forEach(id=>$(id).style.display='none')}
-let editingAccountKey=null;
-function openAccount(){if(currentUser.role!=='admin')return;cancelAccountEdit();renderAccounts();accountModal.style.display='flex'}
-function roleName(r){return r==='admin'?'Admin':r==='shop'?'Shop':'ĐVVC'}
-function getAccountFormData(){
-  const u=a_user.value.trim();
-  const pass=a_pass.value.trim()||'123456';
-  const role=a_role.value;
-  const carrier=role==='dvvc'?a_carrier.value:'';
-  return {u,pass,role,carrier};
+function updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value){const el=document.querySelector('.stat-pill');if(el)el.classList.add('active')}document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}
+function filterByShop(s){filterShop.value=filterShop.value===s?'':s;filterDvvc.value='';render()}
+function filterByDvvc(s){filterDvvc.value=filterDvvc.value===s?'':s;filterShop.value='';render()}
+function clearStatusFilter(){filterShop.value='';filterDvvc.value='';render()}
+function renderQuick(){const html=QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join('');quickBox.innerHTML=html;quickBoxShop.innerHTML=html.replaceAll('addQuick','addQuickShop')}
+function addQuick(x){c_shop.value=(c_shop.value.trim()?c_shop.value.trim()+'\n':'')+x}
+function addQuickShop(x){s_shop.value=(s_shop.value.trim()?s_shop.value.trim()+'\n':'')+x}
+
+async function compressImageFile(file,quality=0.70,maxWidth=1600){
+  if(!file||!file.type.startsWith('image/'))return file;
+  const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=URL.createObjectURL(file)});
+  const ratio=Math.min(1,maxWidth/img.width);
+  const canvas=document.createElement('canvas');canvas.width=Math.round(img.width*ratio);canvas.height=Math.round(img.height*ratio);
+  const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  URL.revokeObjectURL(img.src);
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));
+  return new File([blob],(file.name||'image').replace(/\.[^.]+$/,'.jpg'),{type:'image/jpeg'});
 }
-function addOrSaveAccount(){
+async function uploadToCloudinary(file,tracking,side){
+  const compressed=await compressImageFile(file,0.70,1600);
+  const formData=new FormData();
+  const stamp=Date.now()+'_'+Math.random().toString(36).slice(2,7);
+  formData.append('file',compressed);
+  formData.append('upload_preset',CLOUDINARY_UPLOAD_PRESET);
+  formData.append('folder','xulyvandon');
+  formData.append('public_id',`${tracking||'NO_CODE'}_${side||'img'}_${stamp}`);
+  const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,{method:'POST',body:formData});
+  const data=await res.json();
+  if(!res.ok||!data.secure_url)throw new Error(data.error?.message||'Upload Cloudinary thất bại');
+  return data.secure_url;
+}
+function dataUrlToFile(src,name){const arr=src.split(',');const mime=arr[0].match(/:(.*?);/)?.[1]||'image/png';const bstr=atob(arr[1]);let n=bstr.length;const u8arr=new Uint8Array(n);while(n--)u8arr[n]=bstr.charCodeAt(n);return new File([u8arr],name,{type:mime})}
+async function uploadImageList(list,tracking,side){
+  const urls=[];
+  for(const item of list||[]){
+    if(!item)continue;
+    if(typeof item==='string'&&item.startsWith('http')){urls.push(item);continue;}
+    const file=typeof item==='string'&&item.startsWith('data:')?dataUrlToFile(item,`${tracking}_${side}.png`):item;
+    const url=await uploadToCloudinary(file,tracking,side);
+    urls.push(url);
+  }
+  return urls;
+}
+
+function openCreate(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');editId=null;c_carrier.value=CARRIERS[0];c_tracking.value='';c_shop.value='';c_urgent.checked=false;pastedImages=[];c_images.value='';renderPreview();createModal.style.display='flex'}
+function openShop(id){if(!canEditShop())return alert('Chỉ Shop/Admin được sửa phần Shop');const t=allTasks.find(x=>x.id===id);if(!t)return;editId=id;s_carrier.value=t.carrier;s_tracking.value=t.tracking;s_shop.value=t.shop;s_urgent.checked=!!t.urgent;s_status_shop.value=t.status_shop;editImages=[...(t.shop_images||t.images||[])];currentImageTarget='shop';renderEditPreview();shopModal.style.display='flex'}
+function openDvvc(id){const t=allTasks.find(x=>x.id===id);if(!t)return;if(!canEditDvvc(t))return alert('Tài khoản này chỉ được sửa đơn của '+currentUser.carrier);editId=id;d_tracking.value=t.tracking;d_status_dvvc.value=t.status_dvvc;d_dvvc.value=t.dvvc||'';editImages=[...(t.dvvc_images||[])];currentImageTarget='dvvc';renderEditPreview();dvvcModal.style.display='flex'}
+function historyValue(v){return String(v??'').trim()||'(trống)'}
+function pushChange(arr,label,oldVal,newVal){if(String(oldVal??'')!==String(newVal??''))arr.push(`${label}:\n- Cũ: ${historyValue(oldVal)}\n- Mới: ${historyValue(newVal)}`)}
+function saveBtnLoading(btn,loading){if(!btn)return;btn.disabled=!!loading;if(loading){btn.dataset.old=btn.innerHTML;btn.innerHTML='<span class="loading-spinner"></span> Đang lưu...'}else if(btn.dataset.old){btn.innerHTML=btn.dataset.old;delete btn.dataset.old}}
+async function createTask(){
+  if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');
+  const tracking=c_tracking.value.trim().toUpperCase();
+  if(!tracking)return alert('Chưa nhập mã vận đơn');
+  const exists=await db.ref('tasks/'+safeKey(tracking)).once('value');
+  if(exists.exists()&&!exists.val().deleted)return alert('Mã vận đơn đã tồn tại');
+  const btn=createModal.querySelector('.btn-green');saveBtnLoading(btn,true);
+  try{
+    const now=Date.now();
+    const shopImages=await uploadImageList(pastedImages,tracking,'shop');
+    const newTask={id:tracking,created_at:now,carrier:c_carrier.value,tracking,shop:c_shop.value.trim(),dvvc:'',status_dvvc:'chua_xu_ly',status_shop:'chua_xong',urgent:c_urgent.checked,shop_images:shopImages,dvvc_images:[],images:[],created_by:currentUser.uid,created_by_name:currentUser.username,history:[`${formatTime(now)} - ${currentUser.username}: tạo phiếu`]};
+    await db.ref('tasks/'+safeKey(tracking)).set(newTask);
+    closeAll();
+  }catch(e){alert('Lỗi lưu phiếu: '+e.message)}finally{saveBtnLoading(btn,false)}
+}
+async function saveShop(){
+  const t=allTasks.find(x=>x.id===editId);if(!t)return;
+  const btn=shopModal.querySelector('.btn-green');saveBtnLoading(btn,true);
+  try{
+    const now=Date.now(),changes=[];
+    const newImages=await uploadImageList(editImages,t.tracking,'shop');
+    pushChange(changes,'Đơn vị vận chuyển',t.carrier,s_carrier.value);pushChange(changes,'Nội dung Shop',t.shop,s_shop.value.trim());pushChange(changes,'Gấp',t.urgent?'Có':'Không',s_urgent.checked?'Có':'Không');pushChange(changes,'Tiến độ Shop',statusShopText(t.status_shop),statusShopText(s_status_shop.value));pushChange(changes,'Ảnh Shop',(t.shop_images||[]).length+' ảnh',newImages.length+' ảnh');
+    const history=[...(t.history||[])];if(changes.length)history.push(`${formatTime(now)} - ${currentUser.username}:\n${changes.join('\n')}`);
+    await db.ref('tasks/'+t.id).update({carrier:s_carrier.value,shop:s_shop.value.trim(),urgent:s_urgent.checked,status_shop:s_status_shop.value,shop_images:newImages,updated_at:now,updated_by:currentUser.uid,history});
+    closeAll();
+  }catch(e){alert('Lỗi lưu Shop: '+e.message)}finally{saveBtnLoading(btn,false)}
+}
+async function saveDvvc(){
+  const t=allTasks.find(x=>x.id===editId);if(!t)return;
+  const btn=dvvcModal.querySelector('.btn-green');saveBtnLoading(btn,true);
+  try{
+    const now=Date.now(),changes=[];
+    const newImages=await uploadImageList(editImages,t.tracking,'dvvc');
+    pushChange(changes,'Tiến độ ĐVVC',statusDvvcText(t.status_dvvc),statusDvvcText(d_status_dvvc.value));pushChange(changes,'Nội dung ĐVVC',t.dvvc,d_dvvc.value.trim());pushChange(changes,'Ảnh ĐVVC',(t.dvvc_images||[]).length+' ảnh',newImages.length+' ảnh');
+    const history=[...(t.history||[])];if(changes.length)history.push(`${formatTime(now)} - ${currentUser.username}:\n${changes.join('\n')}`);
+    await db.ref('tasks/'+t.id).update({status_dvvc:d_status_dvvc.value,dvvc:d_dvvc.value.trim(),dvvc_images:newImages,updated_at:now,updated_by:currentUser.uid,history});
+    closeAll();
+  }catch(e){alert('Lỗi lưu ĐVVC: '+e.message)}finally{saveBtnLoading(btn,false)}
+}
+function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}
+function openDetail(id){const t=allTasks.find(x=>x.id===id);if(!t)return;const imgs=allImages(t);detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${formatTime(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${t.carrier}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${escapeHtml(getHistoryText(t))}</div></div>`;detailModal.style.display='flex'}
+function getHistoryText(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]).join('\n')}
+function openHistory(id){const t=allTasks.find(x=>x.id===id);if(!t)return;h_content.textContent=getHistoryText(t);historyModal.style.display='flex'}
+async function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này?'))return;const t=allTasks.find(x=>x.id===id);if(!t)return;try{await db.ref('tasks/'+id).update({deleted:true,deleted_at:Date.now(),deleted_by:currentUser.uid,history:[...(t.history||[]),`${formatTime(Date.now())} - ${currentUser.username}: xóa phiếu`]})}catch(e){alert('Lỗi xóa: '+e.message)}}
+function copyTracking(c){navigator.clipboard.writeText(c).then(()=>alert('Đã copy mã: '+c)).catch(e=>alert('Copy lỗi: '+e.message))}
+async function copyTicket(id){const t=allTasks.find(x=>x.id===id);if(!t)return;const shopImgs=t.shop_images||[];const dvvcImgs=t.dvvc_images||[];const lines=[];if(t.urgent)lines.push('🔥 GẤP');lines.push('Ngày tạo: '+formatTime(t.created_at));lines.push('ĐVVC: '+(t.carrier||''));lines.push('Mã vận đơn: '+(t.tracking||''));lines.push('');lines.push('Nội dung Shop:');lines.push(t.shop||'(trống)');lines.push('');lines.push('Ảnh Shop:');lines.push(shopImgs.length?shopImgs.join('\n'):'Không có ảnh');lines.push('');lines.push('Nội dung ĐVVC:');lines.push(t.dvvc||'(trống)');lines.push('');lines.push('Ảnh ĐVVC:');lines.push(dvvcImgs.length?dvvcImgs.join('\n'):'Không có ảnh');try{await navigator.clipboard.writeText(lines.join('\n'));alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}}
+function addFilesToList(files,target){Array.from(files||[]).forEach(file=>{if(!file.type.startsWith('image/'))return;const r=new FileReader();r.onload=e=>{if(target==='create'){pastedImages.push(e.target.result);renderPreview()}else{editImages.push(e.target.result);renderEditPreview()}};r.readAsDataURL(file)})}
+function handleFileImages(e){addFilesToList(e.target.files,'create')}
+function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}
+function renderPreview(){c_preview.innerHTML=pastedImages.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGallery([...pastedImages],${i})">`).join('')}
+function renderEditPreview(){const html=editImages.map((src,i)=>`<div style="position:relative"><img class="preview-img" src="${src}" onclick="showImageGallery([...editImages],${i})"><button class="btn-red btn-small" style="position:absolute;right:-5px;top:-5px;padding:1px 5px" onclick="removeEditImage(${i})">×</button></div>`).join('');edit_preview.innerHTML=html;edit_preview_dvvc.innerHTML=html}
+function removeEditImage(i){editImages.splice(i,1);renderEditPreview()}
+document.addEventListener('paste',e=>{if(!['flex'].includes(createModal.style.display)&&!['flex'].includes(shopModal.style.display)&&!['flex'].includes(dvvcModal.style.display))return;const files=[];Array.from(e.clipboardData?.items||[]).forEach(it=>{if(it.type.indexOf('image')===0){const f=it.getAsFile();if(f)files.push(f)}});if(files.length){addFilesToList(files,createModal.style.display==='flex'?'create':currentImageTarget);e.preventDefault()}})
+function showImageGalleryById(id,idx){const t=allTasks.find(x=>x.id===id);if(!t)return;showImageGallery(allImages(t),idx)}
+function showImageGallery(arr,idx=0){gallery=arr||[];galleryIndex=idx;renderGallery();imgModal.style.display='flex'}
+function renderGallery(){if(!gallery.length)return;bigImg.src=gallery[galleryIndex];imgCounter.textContent=`${galleryIndex+1}/${gallery.length}`;imgThumbs.innerHTML=gallery.map((s,i)=>`<img class="preview-img" style="width:45px;height:45px;${i===galleryIndex?'outline:3px solid #2563eb':''}" src="${s}" onclick="galleryIndex=${i};renderGallery()">`).join('')}
+function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.length)%gallery.length;renderGallery()}
+function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}
+function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','imgModal'].forEach(id=>$(id).style.display='none')}
+
+function openAccount(){if(currentUser.role!=='admin')return;cancelAccountEdit();renderAccounts();accountModal.style.display='flex'}
+function getAccountFormData(){const u=a_user.value.trim().toLowerCase();const pass=a_pass.value.trim();const role=a_role.value;const carrier=role==='dvvc'?a_carrier.value:'';return {u,pass,role,carrier,email:emailFromLoginName(u)}}
+async function addOrSaveAccount(){
   const data=getAccountFormData();
   if(!data.u)return alert('Chưa nhập tên đăng nhập');
   if(data.role==='dvvc'&&!data.carrier)return alert('Tài khoản ĐVVC phải chọn đơn vị vận chuyển');
-  if(editingAccountKey){
-    if(editingAccountKey==='admin' && data.u!=='admin')return alert('Không đổi tên tài khoản admin');
-    if(data.u!==editingAccountKey && USERS[data.u])return alert('Tên đăng nhập mới đã tồn tại');
-    const old=USERS[editingAccountKey];
-    if(data.u!==editingAccountKey)delete USERS[editingAccountKey];
-    USERS[data.u]={pass:data.pass,role:data.role,name:data.u,carrier:data.carrier};
-    if(currentUser && currentUser.username===editingAccountKey){currentUser={username:data.u,...USERS[data.u]};localStorage.setItem('xvd_user',data.u);showApp();}
-    saveUsers();cancelAccountEdit();renderAccounts();alert('Đã lưu sửa tài khoản');return;
-  }
-  if(USERS[data.u])return alert('Tài khoản đã tồn tại');
-  USERS[data.u]={pass:data.pass,role:data.role,name:data.u,carrier:data.carrier};
-  saveUsers();clearAccountForm();renderAccounts();alert('Đã thêm tài khoản');
+  try{
+    if(editingAccountUid){
+      const snap=await db.ref('users/'+editingAccountUid).once('value');const old=snap.val()||{};
+      const updates={username:old.username||data.u,email:old.email||data.email,name:data.u,role:data.role,carrier:data.carrier,active:true,updated_at:Date.now(),updated_by:currentUser.uid};
+      await db.ref('users/'+editingAccountUid).update(updates);
+      if(data.pass){
+        if(editingAccountUid===currentUser.uid){await auth.currentUser.updatePassword(data.pass);alert('Đã lưu và đổi mật khẩu tài khoản đang đăng nhập')}
+        else alert('Đã lưu quyền/ĐVVC. Đổi mật khẩu tài khoản khác cần Firebase Admin SDK/backend, web tĩnh không đổi trực tiếp được.')
+      }else alert('Đã lưu sửa tài khoản');
+      cancelAccountEdit();renderAccounts();return;
+    }
+    if(!data.pass)return alert('Tài khoản mới phải nhập mật khẩu');
+    const cred=await secondaryAuth.createUserWithEmailAndPassword(data.email,data.pass);
+    await db.ref('users/'+cred.user.uid).set({username:data.u,email:data.email,name:data.u,role:data.role,carrier:data.carrier,active:true,created_at:Date.now(),created_by:currentUser.uid});
+    await secondaryAuth.signOut();
+    clearAccountForm();renderAccounts();alert('Đã tạo tài khoản Firebase Auth + phân quyền');
+  }catch(e){alert('Lỗi tài khoản: '+(e.message||e))}
 }
-function editAccount(u){
-  if(!USERS[u])return;
-  editingAccountKey=u;
-  a_user.value=u;
-  a_user.disabled=(u==='admin');
-  a_pass.value=USERS[u].pass||'';
-  a_role.value=USERS[u].role||'shop';
-  a_carrier.value=USERS[u].carrier||'';
-  accountSaveBtn.textContent='Lưu sửa';
-  accountSaveBtn.className='btn-purple';
-  accountCancelBtn.style.display='inline-block';
-  accountEditNote.textContent='Đang sửa tài khoản: '+u;
-}
-function clearAccountForm(){a_user.value='';a_pass.value='';a_role.value='shop';a_carrier.value='';a_user.disabled=false;}
-function cancelAccountEdit(){editingAccountKey=null;clearAccountForm();if(document.getElementById('accountSaveBtn')){accountSaveBtn.textContent='Thêm';accountSaveBtn.className='btn-green';accountCancelBtn.style.display='none';accountEditNote.textContent='';}}
-function deleteAccount(u){if(DEFAULT_USERS[u])return alert('Không xóa tài khoản admin');if(!confirm('Xóa tài khoản '+u+'?'))return;delete USERS[u];saveUsers();if(editingAccountKey===u)cancelAccountEdit();renderAccounts()}
-function renderAccounts(){accountList.innerHTML=Object.keys(USERS).map(u=>{const acc=USERS[u];return `<div class="account-row"><b>${u}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span>${acc.pass||''}</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${u}')">Sửa</button>${u==='admin'?'<span class="muted">Không xóa</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${u}')">Xóa</button>`}</div></div>`}).join('')}
-window.addEventListener('load',()=>{const saved=localStorage.getItem('xvd_user');if(saved&&USERS[saved]){currentUser={username:saved,...USERS[saved]};showApp();renderQuick();setDefaultMonth()}loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()})});
+async function editAccount(uid){const snap=await db.ref('users/'+uid).once('value');const acc=snap.val();if(!acc)return;editingAccountUid=uid;a_user.value=acc.username||usernameFromEmail(acc.email);a_user.disabled=true;a_pass.value='';a_pass.placeholder=uid===currentUser.uid?'Mật khẩu mới':'Mật khẩu mới (cần backend nếu đổi tài khoản khác)';a_role.value=acc.role||'shop';a_carrier.value=acc.carrier||'';accountSaveBtn.textContent='Lưu sửa';accountSaveBtn.className='btn-purple';accountCancelBtn.style.display='inline-block';accountEditNote.textContent='Đang sửa tài khoản: '+(acc.username||acc.email)}
+function clearAccountForm(){a_user.value='';a_pass.value='';a_pass.placeholder='Mật khẩu';a_role.value='shop';a_carrier.value='';a_user.disabled=false}
+function cancelAccountEdit(){editingAccountUid=null;clearAccountForm();if($('accountSaveBtn')){accountSaveBtn.textContent='Thêm';accountSaveBtn.className='btn-green';accountCancelBtn.style.display='none';accountEditNote.textContent=''}}
+async function deleteAccount(uid){if(uid===currentUser.uid)return alert('Không xóa tài khoản đang đăng nhập');if(!confirm('Xóa quyền tài khoản này? Auth vẫn còn, nhưng không có /users thì không vào web được.'))return;try{await db.ref('users/'+uid).remove();if(editingAccountUid===uid)cancelAccountEdit();renderAccounts()}catch(e){alert('Lỗi xóa: '+e.message)}}
+async function renderAccounts(){try{const snap=await db.ref('users').once('value');const users=snap.val()||{};accountList.innerHTML=Object.keys(users).map(uid=>{const acc=users[uid];return `<div class="account-row"><b>${acc.username||usernameFromEmail(acc.email)||uid}</b><span>${roleName(acc.role)}</span><span>${acc.carrier||'Tất cả'}</span><span style="color:#9ca3af;font-size:11px">Firebase Auth</span><div class="account-actions"><button class="btn-blue btn-small" onclick="editAccount('${uid}')">Sửa</button>${uid===currentUser.uid?'<span class="muted">Đang dùng</span>':`<button class="btn-red btn-small" onclick="deleteAccount('${uid}')">Xóa</button>`}</div></div>`}).join('')||'<div class="note">Chưa có user trong Database.</div>'}catch(e){accountList.innerHTML='<div class="note">Lỗi tải tài khoản: '+escapeHtml(e.message)+'</div>'}}
+
+window.addEventListener('load',()=>{
+  auth.onAuthStateChanged(async user=>{
+    if(user){
+      try{currentUser=await getOrSeedCurrentUser(user);showApp();renderQuick();setDefaultMonth();listenTasks()}
+      catch(e){setLoginMsg('Lỗi: '+e.message);await auth.signOut();loginPage.style.display='flex';app.style.display='none'}
+    }else{loginPage.style.display='flex';app.style.display='none'}
+  });
+  loginPass.addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+});
 </script>
-</body></html>
+
+</body>
+</html>
+```
