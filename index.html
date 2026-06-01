@@ -200,7 +200,7 @@
   </div>
   <div id="accountList"></div>
 </div></div>
-<div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeAll()"><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
+<div id="imgModal" class="modal" onclick="if(event.target.id==='imgModal')closeAll()"><button class="img-close" onclick="event.stopPropagation();closeAll()">Đóng ✕</button><div style="text-align:center"><img id="bigImg" class="img-view"><div class="gallery-tools"><button class="btn-gray" onclick="prevImg(event)">Trước</button><span id="imgCounter" style="color:white;font-weight:800"></span><button class="btn-gray" onclick="nextImg(event)">Sau</button></div><div id="imgThumbs" class="preview-list" style="justify-content:center"></div></div></div>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database-compat.js"></script>
@@ -263,6 +263,8 @@ function addFinalStyle(){
     .admin-tool{background:#eef2ff!important;color:#1d4ed8!important;border:1px solid #bfdbfe!important}.admin-tool.green{background:#ecfdf5!important;color:#047857!important;border-color:#a7f3d0!important}
     .log-list{display:grid;gap:8px}.log-item{background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #60a5fa;border-radius:8px;padding:8px;line-height:1.45}.log-item.err{border-left-color:#ef4444;background:#fff7f7}.log-head{display:flex;justify-content:space-between;gap:8px;font-weight:800}.log-meta{font-size:12px;color:#64748b;margin-top:3px}.log-detail{white-space:pre-wrap;margin-top:5px;color:#111827}
     .render-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:7px 10px;border-radius:8px;margin-bottom:8px;font-weight:700;display:none}
+    #exportBtn{white-space:nowrap!important;min-width:92px!important;line-height:1.1!important}
+    .img-close{position:fixed;top:14px;right:14px;z-index:40;background:#fff!important;color:#111827!important;border:1px solid #e5e7eb!important;border-radius:999px!important;padding:8px 12px!important;font-weight:900!important;box-shadow:0 2px 12px #0006!important}
   `;document.head.appendChild(st);
 }
 addFinalStyle();
@@ -428,7 +430,7 @@ function excelEscape(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,
 function exportFilteredExcel(){
   if(!(currentUser&&currentUser.role==='admin'))return alert('Chỉ admin được xuất Excel');
   const list=lastRenderedList||[];
-  const rows=list.map((t,i)=>`<tr><td>${i+1}</td><td>${excelEscape(dateOnly(t.created_at))}</td><td>${excelEscape(timeOnly(t.created_at))}</td><td>${excelEscape(t.carrier||'')}</td><td>${excelEscape(t.tracking||'')}</td><td>${excelEscape(t.urgent?'Gấp':'')}</td><td>${excelEscape(t.shop||'')}</td><td>${excelEscape(statusShopText(t.status_shop))}</td><td>${excelEscape(t.dvvc||'')}</td><td>${excelEscape(statusDvvcText(t.status_dvvc))}</td><td>${(t.shop_images||[]).length}</td><td>${(t.dvvc_images||[]).length}</td><td>${excelEscape(t.deleted?'Đã xóa':'')}</td></tr>`).join('');
+  const rows=list.map((t,i)=>`<tr><td>${i+1}</td><td>${excelEscape(dateOnly(t.created_at))}</td><td>${excelEscape(timeOnly(t.created_at))}</td><td>${excelEscape(t.carrier||'')}</td><td style="mso-number-format:'\\@'">&#8203;${excelEscape(t.tracking||'')}</td><td>${excelEscape(t.urgent?'Gấp':'')}</td><td>${excelEscape(t.shop||'')}</td><td>${excelEscape(statusShopText(t.status_shop))}</td><td>${excelEscape(t.dvvc||'')}</td><td>${excelEscape(statusDvvcText(t.status_dvvc))}</td><td>${(t.shop_images||[]).length}</td><td>${(t.dvvc_images||[]).length}</td><td>${excelEscape(t.deleted?'Đã xóa':'')}</td></tr>`).join('');
   const html=`<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>STT</th><th>Ngày</th><th>Giờ</th><th>ĐVVC</th><th>Mã vận đơn</th><th>Gấp</th><th>Nội dung Shop</th><th>Tiến độ Shop</th><th>Nội dung ĐVVC</th><th>Tiến độ ĐVVC</th><th>Ảnh Shop</th><th>Ảnh ĐVVC</th><th>Trạng thái xóa</th></tr>${rows}</table></body></html>`;
   const blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`xuly_vandon_${new Date().toISOString().slice(0,10)}.xls`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
