@@ -752,7 +752,23 @@ function historyHtml(t){const arr=(t.history&&t.history.length?t.history:[`${for
 function openHistory(id){const t=tasks.find(x=>x.id===id);if(!t)return;h_content.innerHTML=historyHtml(t);historyModal.style.display='flex'}
 async function deleteTask(id){if(!canDeleteTask())return;if(!confirm('Xóa phiếu này? Dữ liệu vẫn lưu trong DB.'))return;const t=tasks.find(x=>x.id===id);if(!t)return;try{await db.ref('tasks/'+id).update({deleted:true,deleted_at:Date.now(),deleted_by:currentUser.username,history:[...(t.history||[]),`${formatTime(Date.now())} - ${currentUser.name||currentUser.username}: xóa phiếu`]});logEvent('Xóa mềm phiếu',id)}catch(e){alert('Lỗi xóa: '+e.message)}}
 function copyTracking(c){navigator.clipboard.writeText(c).then(()=>alert('Đã copy mã: '+c)).catch(e=>alert('Copy lỗi: '+e.message))}
-async function copyTicket(id){const t=tasks.find(x=>x.id===id);if(!t)return;const n=(t.shop_images||[]).length;const text=`${t.urgent?'🔥 GẤP\n':''}Ngày tạo: ${timeOnly(t.created_at)} ${dateOnly(t.created_at)}\nĐVVC: ${normalizeCarrier(t.carrier)}\nMã vận đơn: ${t.tracking}\nNội dung Shop:\n${t.shop||''}\nẢnh Shop: ${n?`Có ${n} ảnh vào web xem`:'Không có ảnh'}`;try{await navigator.clipboard.writeText(text);alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}}
+async function copyTicket(id){
+  const t=tasks.find(x=>x.id===id);
+  if(!t)return;
+  const n=(t.shop_images||[]).length;
+  const remind=remindText(t);
+  const lines=[];
+  if(remind)lines.push(`Nhắc xử lý : 🔥${remind}`);
+  if(t.urgent)lines.push('🔥 GẤP');
+  lines.push(`Ngày tạo: ${timeOnly(t.created_at)} ${dateOnly(t.created_at)}`);
+  lines.push(`ĐVVC: ${normalizeCarrier(t.carrier)}`);
+  lines.push(`Mã vận đơn: ${t.tracking}`);
+  lines.push('Nội dung Shop:');
+  lines.push(t.shop||'');
+  lines.push(`Ảnh Shop: ${n?`Có ${n} ảnh vào web xem`:'Không có ảnh'}`);
+  const text=lines.join('\n');
+  try{await navigator.clipboard.writeText(text);alert('Đã copy phiếu')}catch(e){alert('Không copy được: '+e.message)}
+}
 function addFilesToList(files,target){Array.from(files||[]).forEach(file=>{if(!file.type.startsWith('image/'))return;const r=new FileReader();r.onload=e=>{if(target==='create'){pastedImages.push(e.target.result);renderPreview()}else{editImages.push(e.target.result);renderEditPreview()}};r.readAsDataURL(file)})}
 function handleFileImages(e){addFilesToList(e.target.files,'create')}function handleEditImages(e){addFilesToList(e.target.files,currentImageTarget)}
 function renderPreview(){c_preview.innerHTML=pastedImages.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGallery([...pastedImages],${i})">`).join('')}
