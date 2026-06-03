@@ -489,7 +489,7 @@ function badgeShop(s){if(s==='huy'&&!canSeeShopCancel())return '';const cls=s===
 function badgeDvvc(s){const cls=s==='chua_xu_ly'?'red':s==='dang_xu_ly'?'yellow':s==='da_xu_ly'?'green':'black';return `<span class="badge ${cls}">${statusDvvcText(s)}</span>`}
 function remindText(t){const r=String((t&&t.remind_level)||'').trim();return (r==='Lần 2'||r==='Lần 3')?r:''}
 function remindBadge(t){const r=remindText(t);return r?`<span class="remind-badge">${escapeHtml(r)}</span>`:''}
-function setDefaultMonthfunction setDefaultMonth(){const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render()}
+function setDefaultMonth(){const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render()}
 function setDateCustom(){dateFilter={from:dateFrom.value?startOfDay(new Date(dateFrom.value+'T00:00')).getTime():null,to:dateTo.value?endOfDay(new Date(dateTo.value+'T00:00')).getTime():null,mode:'custom'};updateDateLabels();render()}
 function clearDateFilter(){dateFilter={from:null,to:null,mode:''};dateFrom.value='';dateTo.value='';updateDateLabels();render()}
 
@@ -567,7 +567,7 @@ function render(){
   tbody.innerHTML=renderList.map((t,i)=>rowHtml(t,i)).join('');
   mobileList.innerHTML=renderList.map((t,i)=>cardHtml(t,i)).join('');
 }
-function dateHtmlfunction dateHtml(ts){return `<div class="date-cell"><div class="date-main">${dateOnly(ts)}</div><div class="time-sub">${timeOnly(ts)}</div></div>`}
+function dateHtml(ts){return `<div class="date-cell"><div class="date-main">${dateOnly(ts)}</div><div class="time-sub">${timeOnly(ts)}</div></div>`}
 function rowHtml(t,i){
   const rowClass =
     remindText(t) ? 'row-remind' :
@@ -610,7 +610,7 @@ function cardHtml(t,i){
     <div class="mc-actions">${canEditShop()?`<button class="btn-blue btn-small" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem</button>`}${canEditDvvc(t)?`<button class="btn-orange btn-small" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Xem ĐVVC</button>`}<button class="btn-gray btn-small" onclick="openHistory('${t.id}')">Lịch sử</button>${canDeleteTask()&&!t.deleted?`<button class="btn-red btn-small" onclick="deleteTask('${t.id}')">Xóa</button>`:`<button class="btn-gray btn-small" onclick="openDetail('${t.id}')">Chi tiết</button>`}</div>
   </div>`;
 }
-function updateStatActivefunction updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value){const f=document.querySelector('.stat-pill');if(f)f.classList.add('active')}document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}
+function updateStatActive(){document.querySelectorAll('.stat-pill').forEach(x=>x.classList.remove('active'));if(!filterShop.value&&!filterDvvc.value){const f=document.querySelector('.stat-pill');if(f)f.classList.add('active')}document.querySelectorAll('.stat-pill').forEach(el=>{const oc=el.getAttribute('onclick')||'';if((filterShop.value&&oc.includes(filterShop.value))||(filterDvvc.value&&oc.includes(filterDvvc.value)))el.classList.add('active')})}
 function filterByShop(s){if(s==='huy'&&!canSeeShopCancel())return;filterShop.value=filterShop.value===s?'':s;filterDvvc.value='';render()}function filterByDvvc(s){filterDvvc.value=filterDvvc.value===s?'':s;filterShop.value='';render()}function clearStatusFilter(){filterShop.value='';filterDvvc.value='';render()}
 function renderQuick(){const html=QUICK_TEXTS.map(x=>`<button type="button" onclick="addQuick('${x.replaceAll("'","\\'")}')">${x}</button>`).join('');quickBox.innerHTML=html;quickBoxShop.innerHTML=html.replaceAll('addQuick','addQuickShop')}
 function addQuick(x){c_shop.value=(c_shop.value.trim()?c_shop.value.trim()+'\n':'')+x}function addQuickShop(x){s_shop.value=(s_shop.value.trim()?s_shop.value.trim()+'\n':'')+x}
@@ -688,7 +688,7 @@ async function saveDvvc(){
   };
   try{await db.ref('tasks/'+editId).update(updates);closeAll()}catch(e){alert('Lỗi lưu: '+e.message)}
 }
-function allImagesfunction allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}
+function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}
 function openDetail(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);if(!t)return;detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${dateOnly(t.created_at)} ${timeOnly(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${normalizeCarrier(t.carrier)}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nhắc xử lý</div><div>${remindBadge(t)||''}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${historyHtml(t)}</div></div>`;detailModal.style.display='flex'}
 function getHistoryText(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]).join('\n')}
 function historyHtml(t){const arr=(t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]);return `<div class="history-list">${arr.map(x=>`<div class="history-item">${escapeHtml(x)}</div>`).join('')}</div>`}
