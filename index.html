@@ -282,6 +282,21 @@ td:nth-child(11) .content-preview{
 }
 td:nth-child(12) .content-preview{text-align:left!important}
 
+
+/* ===== FIX CĂN TRÁI NỘI DUNG SHOP / ĐVVC ===== */
+td .content-preview,
+td .content-preview.dvvc-preview{
+  text-align:left!important;
+  justify-content:flex-start!important;
+  align-items:flex-start!important;
+}
+@media(min-width:901px){
+  th:nth-child(7),td:nth-child(7),
+  th:nth-child(12),td:nth-child(12){
+    text-align:left!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -763,7 +778,10 @@ function toggleSelectAllExport(checked){
 }
 function getExportList(){
   const ids=getSelectedExportIds();
-  if(!ids.length)return lastRenderedList||[];
+  if(!ids.length){
+    alert('Vui lòng tích chọn đơn cần xuất Excel trước.');
+    return null;
+  }
   const set=new Set(ids);
   return (lastRenderedList||[]).filter(t=>set.has(t.id));
 }
@@ -771,6 +789,7 @@ function getExportList(){
 function exportFilteredExcel(){
   if(!currentUser)return alert('Chưa đăng nhập');
   const list=getExportList();
+  if(!list)return;
   const rows=list.map((t,i)=>`<tr><td>${i+1}</td><td>${excelEscape(dateOnly(t.created_at))}</td><td>${excelEscape(timeOnly(t.created_at))}</td><td>${excelEscape(normalizeCarrier(t.carrier)||'')}</td><td style="mso-number-format:'\\@'">&#8203;${excelEscape(t.tracking||'')}</td><td>${excelEscape(t.urgent?'Gấp':'')}</td><td>${excelEscape(t.shop||'')}</td><td>${excelEscape(statusShopText(t.status_shop))}</td><td>${excelEscape(t.remind_level||'')}</td><td>${excelEscape(t.dvvc||'')}</td><td>${excelEscape(statusDvvcText(t.status_dvvc))}</td><td>${(t.shop_images||[]).length}</td><td>${(t.dvvc_images||[]).length}</td><td>${excelEscape(t.deleted?'Đã xóa':'')}</td></tr>`).join('');
   const html=`<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>STT</th><th>Ngày</th><th>Giờ</th><th>ĐVVC</th><th>Mã vận đơn</th><th>Gấp</th><th>Nội dung Shop</th><th>Tiến độ Shop</th><th>Nhắc xử lý</th><th>Nội dung ĐVVC</th><th>Tiến độ ĐVVC</th><th>Ảnh Shop</th><th>Ảnh ĐVVC</th><th>Trạng thái xóa</th></tr>${rows}</table></body></html>`;
   const blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'});
