@@ -204,6 +204,19 @@
   th:nth-child(15),td:nth-child(15){width:58px!important;text-align:center!important}
 }
 
+
+/* FIX LỆCH Ô NHẮC XỬ LÝ */
+td,th{vertical-align:top}
+.remind-badge{white-space:nowrap!important}
+td:nth-child(10){
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.content-preview{
+  word-break:break-word;
+}
+
 </style>
 </head>
 <body>
