@@ -247,6 +247,41 @@ td:nth-child(10){white-space:nowrap!important;overflow:hidden!important;text-ove
   th:nth-child(15),td:nth-child(15){width:58px!important;text-align:center!important}
 }
 
+
+/* ===== FIX CĂN LỀ NỘI DUNG ĐVVC + SORT NHẮC XỬ LÝ ===== */
+@media(min-width:901px){
+  th:nth-child(11),td:nth-child(11){text-align:left!important}
+}
+td:nth-child(11) .content-preview{
+  text-align:left!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+
+/* ===== CHECKBOX CHỌN XUẤT EXCEL ===== */
+.export-check{width:16px!important;height:16px!important;cursor:pointer}
+@media(min-width:901px){
+  table{min-width:1985px!important}
+  th:nth-child(1),td:nth-child(1){width:46px!important;text-align:center!important}
+  th:nth-child(2),td:nth-child(2){width:42px!important;text-align:center!important}
+  th:nth-child(3),td:nth-child(3){width:130px!important}
+  th:nth-child(4),td:nth-child(4){width:82px!important;text-align:center!important}
+  th:nth-child(5),td:nth-child(5){width:90px!important;text-align:center!important}
+  th:nth-child(6),td:nth-child(6){width:230px!important}
+  th:nth-child(7),td:nth-child(7){width:305px!important}
+  th:nth-child(8),td:nth-child(8){width:58px!important;text-align:center!important}
+  th:nth-child(9),td:nth-child(9){width:105px!important;text-align:center!important}
+  th:nth-child(10),td:nth-child(10){width:82px!important;text-align:center!important}
+  th:nth-child(11),td:nth-child(11){width:110px!important;text-align:center!important}
+  th:nth-child(12),td:nth-child(12){width:290px!important;text-align:left!important}
+  th:nth-child(13),td:nth-child(13){width:115px!important;text-align:center!important}
+  th:nth-child(14),td:nth-child(14){width:84px!important;text-align:center!important}
+  th:nth-child(15),td:nth-child(15){width:78px!important;text-align:center!important}
+  th:nth-child(16),td:nth-child(16){width:58px!important;text-align:center!important}
+}
+td:nth-child(12) .content-preview{text-align:left!important}
+
 </style>
 </head>
 <body>
@@ -273,7 +308,7 @@ td:nth-child(10){white-space:nowrap!important;overflow:hidden!important;text-ove
   </div>
 </div>
 <div id="renderNote" class="render-note"></div>
-<div class="table-wrap"><table><thead><tr><th>STT</th><th>Ngày</th><th>Gấp</th><th>ĐVVC</th><th>Mã vận đơn</th><th>Nội dung Shop</th><th>Ảnh</th><th>Tiến độ Shop</th><th>Shop sửa</th><th>Nhắc xử lý</th><th>Nội dung ĐVVC</th><th>Tiến độ ĐVVC</th><th>ĐVVC sửa</th><th>Lịch sử</th><th>Xóa</th></tr></thead><tbody id="tbody"></tbody></table></div><div id="mobileList" class="mobile-list"></div></div></div>
+<div class="table-wrap"><table><thead><tr><th><input id="selectAllExport" class="export-check" type="checkbox" onchange="toggleSelectAllExport(this.checked)"></th><th>STT</th><th>Ngày</th><th>Gấp</th><th>ĐVVC</th><th>Mã vận đơn</th><th>Nội dung Shop</th><th>Ảnh</th><th>Tiến độ Shop</th><th>Shop sửa</th><th>Nhắc xử lý</th><th>Nội dung ĐVVC</th><th>Tiến độ ĐVVC</th><th>ĐVVC sửa</th><th>Lịch sử</th><th>Xóa</th></tr></thead><tbody id="tbody"></tbody></table></div><div id="mobileList" class="mobile-list"></div></div></div>
 <div id="createModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Tạo phiếu mới</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>Đơn vị vận chuyển</label><select id="c_carrier"></select></div><div class="form-row"><label>Mã vận đơn</label><input id="c_tracking" placeholder="Nhập mã vận đơn"><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;align-items:center">
   <label style="display:flex;gap:6px;font-weight:800;color:#b91c1c"><input id="c_urgent" type="checkbox" style="width:auto"> Gấp</label>
   <label style="display:flex;gap:6px;font-weight:800;color:#111827"><input id="c_cancel_pickup" type="checkbox" style="width:auto"> Hủy lấy đơn</label>
@@ -489,6 +524,11 @@ function badgeShop(s){if(s==='huy'&&!canSeeShopCancel())return '';const cls=s===
 function badgeDvvc(s){const cls=s==='chua_xu_ly'?'red':s==='dang_xu_ly'?'yellow':s==='da_xu_ly'?'green':'black';return `<span class="badge ${cls}">${statusDvvcText(s)}</span>`}
 function remindText(t){const r=String((t&&t.remind_level)||'').trim();return (r==='Lần 2'||r==='Lần 3')?r:''}
 function remindBadge(t){const r=remindText(t);return r?`<span class="remind-badge">${escapeHtml(r)}</span>`:''}
+function effectiveDvvcStatus(t){
+  if(!t)return 'chua_xu_ly';
+  if(t.status_dvvc==='khong_xu_ly'&&!remindText(t))return 'chua_xu_ly';
+  return t.status_dvvc||'chua_xu_ly';
+}
 function setDefaultMonth(){const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-1,1);dateFilter={from:from.getTime(),to:endOfDay(now).getTime(),mode:'2months'};dateFrom.value=fmtDate(dateFilter.from);dateTo.value=fmtDate(dateFilter.to);updateDateLabels();render()}
 function setDateCustom(){dateFilter={from:dateFrom.value?startOfDay(new Date(dateFrom.value+'T00:00')).getTime():null,to:dateTo.value?endOfDay(new Date(dateTo.value+'T00:00')).getTime():null,mode:'custom'};updateDateLabels();render()}
 function clearDateFilter(){dateFilter={from:null,to:null,mode:''};dateFrom.value='';dateTo.value='';updateDateLabels();render()}
@@ -516,8 +556,8 @@ function getBaseList(){
 function sortDisplayList(list){
   const rank=t=>{
     if(remindText(t))return 0;
-    if(t.status_dvvc==='chua_xu_ly')return 1;
-    if(t.status_dvvc==='dang_xu_ly')return 2;
+    if(effectiveDvvcStatus(t)==='chua_xu_ly')return 1;
+    if(effectiveDvvcStatus(t)==='dang_xu_ly')return 2;
     if(t.status_shop==='huy')return 3;
     if(t.status_shop==='da_xong')return 4;
     return 5;
@@ -532,8 +572,8 @@ function sortDisplayList(list){
 function sortDisplayList(list){
   const rank=t=>{
     if(remindText(t))return 0;
-    if(t.status_dvvc==='chua_xu_ly')return 1;
-    if(t.status_dvvc==='dang_xu_ly')return 2;
+    if(effectiveDvvcStatus(t)==='chua_xu_ly')return 1;
+    if(effectiveDvvcStatus(t)==='dang_xu_ly')return 2;
     if(t.status_shop==='huy')return 3;
     if(t.status_shop==='da_xong')return 4;
     return 5;
@@ -548,15 +588,15 @@ function render(){
   if(currentUser&&currentUser.role==='dvvc'&&filterShop.value==='huy')filterShop.value='';
   let base=getBaseList(),list=[...base];
   if(filterShop.value)list=list.filter(t=>t.status_shop===filterShop.value);
-  if(filterDvvc.value)list=list.filter(t=>filterDvvc.value==='khong_xu_ly'?!!remindText(t):t.status_dvvc===filterDvvc.value);
+  if(filterDvvc.value)list=list.filter(t=>filterDvvc.value==='khong_xu_ly'?(!!remindText(t)&&t.status_shop!=='da_xong'):effectiveDvvcStatus(t)===filterDvvc.value);
   stTotal.textContent=base.length;
   stShopRed.textContent=base.filter(t=>t.status_shop==='chua_xong').length;
   stShopGreen.textContent=base.filter(t=>t.status_shop==='da_xong').length;
   stShopCancel.textContent=canSeeShopCancel()?base.filter(t=>t.status_shop==='huy').length:0;
-  stDvvcRed.textContent=base.filter(t=>t.status_dvvc==='chua_xu_ly').length;
-  stDvvcYellow.textContent=base.filter(t=>t.status_dvvc==='dang_xu_ly').length;
+  stDvvcRed.textContent=base.filter(t=>effectiveDvvcStatus(t)==='chua_xu_ly').length;
+  stDvvcYellow.textContent=base.filter(t=>effectiveDvvcStatus(t)==='dang_xu_ly').length;
   stDvvcGreen.textContent=base.filter(t=>t.status_dvvc==='da_xu_ly').length;
-  stDvvcBlack.textContent=base.filter(t=>remindText(t)).length;
+  stDvvcBlack.textContent=base.filter(t=>remindText(t)&&t.status_shop!=='da_xong').length;
   const cancelPill=document.querySelector("[onclick=\"filterByShop('huy')\"]");
   if(cancelPill)cancelPill.style.display=canSeeShopCancel()?'flex':'none';
   updateStatActive();
@@ -571,14 +611,15 @@ function dateHtml(ts){return `<div class="date-cell"><div class="date-main">${da
 function rowHtml(t,i){
   const rowClass =
     remindText(t) ? 'row-remind' :
-    t.status_dvvc==='chua_xu_ly' ? 'row-dvvc-chua' :
-    t.status_dvvc==='dang_xu_ly' ? 'row-dvvc-dang' :
+    effectiveDvvcStatus(t)==='chua_xu_ly' ? 'row-dvvc-chua' :
+    effectiveDvvcStatus(t)==='dang_xu_ly' ? 'row-dvvc-dang' :
     t.status_shop==='huy' ? 'row-shop-huy' :
     t.status_shop==='da_xong' ? 'row-shop-xong' :
     '';
   const imgs=allImages(t);
   const shopBadge=badgeShop(t.status_shop);
   return `<tr class="${rowClass} ${t.urgent?'row-urgent':''}">
+    <td><input class="export-check row-export-check" type="checkbox" data-id="${t.id}"></td>
     <td>${i+1}</td>
     <td>${dateHtml(t.created_at)}</td>
     <td>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</td>
@@ -590,7 +631,7 @@ function rowHtml(t,i){
     <td>${canEditShop()?`<button class="btn-small btn-blue" onclick="openShop('${t.id}')">Shop sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td>
     <td>${remindBadge(t)}</td>
     <td><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div>${(t.dvvc||'').length>55?`<button class="more-btn" onclick="openDetail('${t.id}')">Xem thêm</button>`:''}</td>
-    <td>${badgeDvvc(t.status_dvvc)}</td>
+    <td>${badgeDvvc(effectiveDvvcStatus(t))}</td>
     <td>${canEditDvvc(t)?`<button class="btn-small btn-orange" onclick="openDvvc('${t.id}')">ĐVVC sửa</button>`:`<button class="btn-small btn-gray" onclick="openDetail('${t.id}')">Xem</button>`}</td>
     <td><button class="btn-small btn-gray" onclick="openHistory('${t.id}')">Xem (${(t.history||[]).length})</button></td>
     <td>${canDeleteTask()&&!t.deleted?`<button class="btn-small btn-red" onclick="deleteTask('${t.id}')">Xóa</button>`:''}</td>
@@ -600,10 +641,10 @@ function cardHtml(t,i){
   const imgs=allImages(t);
   const shopBadge=badgeShop(t.status_shop);
   return `<div class="mobile-card ${t.urgent?'row-urgent':''}">
-    <div class="mc-head"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${dateOnly(t.created_at)} ${timeOnly(t.created_at)} • ${normalizeCarrier(t.carrier)}</div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div>
+    <div class="mc-head"><div style="display:flex;gap:8px;align-items:flex-start"><input class="export-check row-export-check" type="checkbox" data-id="${t.id}"><div><div class="mc-code" onclick="openDetail('${t.id}')">${t.tracking}</div><div class="mc-date">#${i+1} • ${dateOnly(t.created_at)} ${timeOnly(t.created_at)} • ${normalizeCarrier(t.carrier)}</div></div></div><div>${t.urgent?'<span class="badge urgent">🔥 Gấp</span>':''}</div></div>
     <div class="mc-body">
       <div><div class="mc-label">Shop</div><div class="content-preview">${escapeHtml(t.shop||'')}</div></div>
-      <div>${shopBadge} ${badgeDvvc(t.status_dvvc)} ${remindBadge(t)} <span class="badge carrier">${normalizeCarrier(t.carrier)}</span></div>
+      <div>${shopBadge} ${badgeDvvc(effectiveDvvcStatus(t))} ${remindBadge(t)} <span class="badge carrier">${normalizeCarrier(t.carrier)}</span></div>
       <div><div class="mc-label">ĐVVC</div><div class="content-preview dvvc-preview">${escapeHtml(t.dvvc||'')}</div></div>
       ${imgs.length?`<button class="btn-small btn-gray" onclick="showImageGalleryById('${t.id}',0)">📷 Ảnh (${imgs.length})</button>`:'<span class="mc-label">Không có ảnh</span>'}
     </div>
@@ -653,7 +694,8 @@ async function saveShop(){
   let newShopStatus=cancelPickup?'huy':s_status_shop.value;
   let newDvvcStatus=t.status_dvvc||'chua_xu_ly';
   if(remindLevel)newDvvcStatus='khong_xu_ly';
-  if(newShopStatus==='da_xong')newDvvcStatus='da_xu_ly';
+  else if(t.status_dvvc==='khong_xu_ly')newDvvcStatus='chua_xu_ly';
+  if(newShopStatus==='da_xong'){newDvvcStatus='da_xu_ly';remindLevel='';}
 
   pushChange(changes,'Đơn vị vận chuyển',t.carrier,s_carrier.value);
   pushChange(changes,'Nội dung Shop',t.shop,s_shop.value.trim());
@@ -661,7 +703,7 @@ async function saveShop(){
   pushChange(changes,'Hủy lấy đơn',t.status_shop==='huy'?'Có':'Không',cancelPickup?'Có':'Không');
   pushChange(changes,'Nhắc xử lý',remindText(t),remindLevel);
   pushChange(changes,'Tiến độ Shop',statusShopText(t.status_shop),statusShopText(newShopStatus));
-  pushChange(changes,'Tiến độ ĐVVC',statusDvvcText(t.status_dvvc),statusDvvcText(newDvvcStatus));
+  pushChange(changes,'Tiến độ ĐVVC',statusDvvcText(effectiveDvvcStatus(t)),statusDvvcText(newDvvcStatus));
   pushChange(changes,'Ảnh Shop',(t.shop_images||[]).length+' ảnh',newImages.length+' ảnh');
   const updates={
     carrier:normalizeCarrier(s_carrier.value),shop:s_shop.value.trim(),urgent:s_urgent.checked,
@@ -689,7 +731,7 @@ async function saveDvvc(){
   try{await db.ref('tasks/'+editId).update(updates);closeAll()}catch(e){alert('Lỗi lưu: '+e.message)}
 }
 function allImages(t){return [...(t.shop_images||[]),...(t.dvvc_images||[]),...(t.images||[])]}
-function openDetail(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);if(!t)return;detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${dateOnly(t.created_at)} ${timeOnly(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${normalizeCarrier(t.carrier)}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nhắc xử lý</div><div>${remindBadge(t)||''}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(t.status_dvvc)}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${historyHtml(t)}</div></div>`;detailModal.style.display='flex'}
+function openDetail(id){const t=tasks.find(x=>x.id===id),imgs=allImages(t);if(!t)return;detailContent.innerHTML=`<div class="detail-grid"><div class="detail-label">Ngày tạo</div><div>${dateOnly(t.created_at)} ${timeOnly(t.created_at)}</div><div class="detail-label">ĐVVC</div><div><span class="badge carrier">${normalizeCarrier(t.carrier)}</span></div><div class="detail-label">Mã vận đơn</div><div>${t.urgent?'<span class="badge urgent">Gấp</span> ':''}<b style="color:#2563eb">${t.tracking}</b> <button class="btn-small btn-gray" onclick="copyTracking('${t.tracking}')">Copy</button></div><div class="detail-label">Nội dung Shop</div><div class="copy-line"><div class="copy-text">${escapeHtml(t.shop)}</div><button class="btn-small btn-blue" onclick="copyTicket('${t.id}')">Copy phiếu</button></div><div class="detail-label">Tiến độ Shop</div><div>${badgeShop(t.status_shop)}</div><div class="detail-label">Nhắc xử lý</div><div>${remindBadge(t)||''}</div><div class="detail-label">Nội dung ĐVVC</div><div>${escapeHtml(t.dvvc||'')}</div><div class="detail-label">Tiến độ ĐVVC</div><div>${badgeDvvc(effectiveDvvcStatus(t))}</div><div class="detail-label">Ảnh</div><div>${imgs.length?imgs.map((src,i)=>`<img class="preview-img" src="${src}" onclick="showImageGalleryById('${t.id}',${i})">`).join(''):'Không có ảnh'}</div><div class="detail-label">Lịch sử</div><div>${historyHtml(t)}</div></div>`;detailModal.style.display='flex'}
 function getHistoryText(t){return (t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]).join('\n')}
 function historyHtml(t){const arr=(t.history&&t.history.length?t.history:[`${formatTime(t.created_at)} - tạo phiếu`]);return `<div class="history-list">${arr.map(x=>`<div class="history-item">${escapeHtml(x)}</div>`).join('')}</div>`}
 function openHistory(id){const t=tasks.find(x=>x.id===id);if(!t)return;h_content.innerHTML=historyHtml(t);historyModal.style.display='flex'}
@@ -710,9 +752,25 @@ function closeImage(){const m=$('imgModal');if(m)m.style.display='none'}
 function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','logsModal','imgModal'].forEach(id=>{const el=$(id);if(el)el.style.display='none'})}
 
 function excelEscape(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function getSelectedExportIds(){
+  return Array.from(document.querySelectorAll('.row-export-check:checked'))
+    .map(x=>x.dataset.id)
+    .filter(Boolean);
+}
+function toggleSelectAllExport(checked){
+  document.querySelectorAll('.row-export-check').forEach(x=>x.checked=checked);
+}
+function getExportList(){
+  const ids=getSelectedExportIds();
+  if(!ids.length)return lastRenderedList||[];
+  const set=new Set(ids);
+  return (lastRenderedList||[]).filter(t=>set.has(t.id));
+}
+
 function exportFilteredExcel(){
   if(!currentUser)return alert('Chưa đăng nhập');
-  const list=lastRenderedList||[];
+  const list=getExportList();
   const rows=list.map((t,i)=>`<tr><td>${i+1}</td><td>${excelEscape(dateOnly(t.created_at))}</td><td>${excelEscape(timeOnly(t.created_at))}</td><td>${excelEscape(normalizeCarrier(t.carrier)||'')}</td><td style="mso-number-format:'\\@'">&#8203;${excelEscape(t.tracking||'')}</td><td>${excelEscape(t.urgent?'Gấp':'')}</td><td>${excelEscape(t.shop||'')}</td><td>${excelEscape(statusShopText(t.status_shop))}</td><td>${excelEscape(t.remind_level||'')}</td><td>${excelEscape(t.dvvc||'')}</td><td>${excelEscape(statusDvvcText(t.status_dvvc))}</td><td>${(t.shop_images||[]).length}</td><td>${(t.dvvc_images||[]).length}</td><td>${excelEscape(t.deleted?'Đã xóa':'')}</td></tr>`).join('');
   const html=`<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>STT</th><th>Ngày</th><th>Giờ</th><th>ĐVVC</th><th>Mã vận đơn</th><th>Gấp</th><th>Nội dung Shop</th><th>Tiến độ Shop</th><th>Nhắc xử lý</th><th>Nội dung ĐVVC</th><th>Tiến độ ĐVVC</th><th>Ảnh Shop</th><th>Ảnh ĐVVC</th><th>Trạng thái xóa</th></tr>${rows}</table></body></html>`;
   const blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'});
