@@ -945,6 +945,8 @@ async function uploadImagesFromData(arr,tracking,type){const urls=[];for(let i=0
 function showImageGalleryById(id,idx,type='all'){const t=tasks.find(x=>x.id===id);if(!t)return;const arr=type==='shop'?shopImages(t):type==='dvvc'?dvvcImages(t):allImages(t);showImageGallery(arr,idx)}function showImageGallery(arr,idx=0){gallery=arr||[];galleryIndex=idx;renderGallery();imgModal.style.display='flex'}function renderGallery(){if(!gallery.length)return;bigImg.src=gallery[galleryIndex];imgCounter.textContent=`${galleryIndex+1}/${gallery.length}`;imgThumbs.innerHTML=gallery.map((s,i)=>`<img class="preview-img" style="width:45px;height:45px;${i===galleryIndex?'outline:3px solid #2563eb':''}" src="${s}" onclick="galleryIndex=${i};renderGallery()">`).join('')}function prevImg(e){e.stopPropagation();galleryIndex=(galleryIndex-1+gallery.length)%gallery.length;renderGallery()}function nextImg(e){e.stopPropagation();galleryIndex=(galleryIndex+1)%gallery.length;renderGallery()}
 function closeImage(){const m=$('imgModal');if(m)m.style.display='none'}
 function closeAll(){['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','onlineModal','logsModal','imgModal'].forEach(id=>{const el=$(id);if(el)el.style.display='none'})}
+function hasOpenModal(){return ['createModal','shopModal','dvvcModal','historyModal','detailModal','accountModal','onlineModal','logsModal','imgModal'].some(id=>{const el=$(id);return el&&el.style.display==='flex'})}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&hasOpenModal()){e.preventDefault();closeAll()}})
 
 function excelEscape(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
