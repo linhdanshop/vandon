@@ -330,14 +330,14 @@ td .content-preview.dvvc-preview{
   <label style="display:flex;gap:6px;align-items:center;font-weight:800;color:#92400e">Nhắc xử lý
     <select id="c_remind_level" style="width:92px;padding:4px 6px"><option value="">Không</option><option value="Lần 2">Lần 2</option><option value="Lần 3">Lần 3</option></select>
   </label>
-</div></div><div class="form-row"><label>Nội dung Shop</label><textarea id="c_shop"></textarea><div class="quick" id="quickBox"></div></div><div class="form-row"><label>Ảnh</label><input id="c_images" type="file" multiple accept="image/*" onchange="handleFileImages(event)"><div id="c_preview" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="createTask()">Lưu phiếu</button></div></div>
+</div></div><div class="form-row"><label>Nội dung Shop</label><textarea id="c_shop"></textarea><div class="template-panel"><div class="template-actions"><input id="quickTemplateTextCreate" placeholder="Nhập mẫu tin nhắn"><button id="quickTemplateSaveCreate" class="btn-green btn-small" type="button" onclick="saveTemplateText('create')">Thêm mẫu</button><button id="quickTemplateCancelCreate" class="btn-gray btn-small" type="button" style="display:none" onclick="cancelTemplateEdit('create')">Hủy</button></div><div class="quick template-list" id="quickBox"></div></div></div><div class="form-row"><label>Ảnh</label><input id="c_images" type="file" multiple accept="image/*" onchange="handleFileImages(event)"><div id="c_preview" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="createTask()">Lưu phiếu</button></div></div>
 <div id="shopModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Sửa nội dung Shop</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>ĐVVC</label><select id="s_carrier"></select></div><div class="form-row"><label>Mã vận đơn</label><input id="s_tracking" disabled><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;align-items:center">
   <label style="display:flex;gap:6px;font-weight:800;color:#b91c1c"><input id="s_urgent" type="checkbox" style="width:auto"> Gấp</label>
   <label style="display:flex;gap:6px;font-weight:800;color:#111827"><input id="s_cancel_pickup" type="checkbox" style="width:auto"> Hủy lấy đơn</label>
   <label style="display:flex;gap:6px;align-items:center;font-weight:800;color:#92400e">Nhắc xử lý
     <select id="s_remind_level" style="width:92px;padding:4px 6px"><option value="">Không</option><option value="Lần 2">Lần 2</option><option value="Lần 3">Lần 3</option></select>
   </label>
-</div></div><div class="form-row"><label>Nội dung Shop</label><textarea id="s_shop"></textarea><div class="template-panel"><div class="template-actions"><input id="quickTemplateText" placeholder="Nhập mẫu tin nhắn"><button id="quickTemplateSave" class="btn-green btn-small" type="button" onclick="saveTemplateText()">Thêm mẫu</button><button id="quickTemplateCancel" class="btn-gray btn-small" type="button" style="display:none" onclick="cancelTemplateEdit()">Hủy</button></div><div class="quick template-list" id="quickBoxShop"></div></div></div><div class="form-row"><label>Ảnh Shop bổ sung</label><input id="s_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><div class="form-row"><label>Tiến độ Shop</label><select id="s_status_shop"><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy lấy đơn</option></select></div><button class="btn-green" onclick="saveShop()">Lưu Shop</button></div></div>
+</div></div><div class="form-row"><label>Nội dung Shop</label><textarea id="s_shop"></textarea><div class="template-panel"><div class="template-actions"><input id="quickTemplateText" placeholder="Nhập mẫu tin nhắn"><button id="quickTemplateSave" class="btn-green btn-small" type="button" onclick="saveTemplateText('shop')">Thêm mẫu</button><button id="quickTemplateCancel" class="btn-gray btn-small" type="button" style="display:none" onclick="cancelTemplateEdit('shop')">Hủy</button></div><div class="quick template-list" id="quickBoxShop"></div></div></div><div class="form-row"><label>Ảnh Shop bổ sung</label><input id="s_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><div class="form-row"><label>Tiến độ Shop</label><select id="s_status_shop"><option value="chua_xong">Chưa xong</option><option value="da_xong">Đã xong</option><option value="huy">Hủy lấy đơn</option></select></div><button class="btn-green" onclick="saveShop()">Lưu Shop</button></div></div>
 <div id="dvvcModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Cập nhật ĐVVC</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div class="form-row"><label>Mã vận đơn</label><input id="d_tracking" disabled></div><div class="form-row"><label>Tiến độ ĐVVC</label><select id="d_status_dvvc"><option value="chua_xu_ly">Chưa xử lý</option><option value="dang_xu_ly">Đang xử lý</option><option value="da_xu_ly">Đã xử lý</option><option value="khong_xu_ly">Nhắc xử lý</option></select></div><div class="form-row"><label>Nội dung ĐVVC</label><textarea id="d_dvvc"></textarea></div><div class="form-row"><label>Ảnh ĐVVC bổ sung</label><input id="d_images" type="file" multiple accept="image/*" onchange="handleEditImages(event)"><div id="edit_preview_dvvc" class="preview-list"></div><div class="note">Có thể chọn ảnh hoặc Ctrl+V để dán ảnh trực tiếp.</div></div><button class="btn-green" onclick="saveDvvc()">Lưu ĐVVC</button></div></div>
 <div id="historyModal" class="modal"><div class="modal-box modal-wide"><div class="modal-head"><h3 id="historyTitle">Lịch sử</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="historySearchWrap" class="history-tools" style="display:none"><input id="historySearch" placeholder="Tìm mã vận đơn" oninput="renderAllHistoryModal()"></div><div id="h_content" class="history"></div></div></div>
 <div id="detailModal" class="modal"><div class="modal-box"><div class="modal-head"><h3>Chi tiết phiếu</h3><button class="btn-gray" onclick="closeAll()">Đóng</button></div><div id="detailContent"></div></div></div>
@@ -391,11 +391,13 @@ let quickTexts=[...DEFAULT_QUICK_TEXTS];
 let currentUser=null,editId=null,pastedImages=[],editImages=[],currentImageTarget='create',dateFilter={from:null,to:null,mode:'month'},gallery=[],galleryIndex=0,lastRenderedList=[];
 let tasks=[];
 let showDeleted=false;
+let showCompleted=true;
 let editingAccountKey=null;
 let tasksListenerStarted=false;
-let quickTextsListenerStarted=false,editingTemplateIndex=null,historyMode='row',historyTaskId=null,historyGalleryCache={},onlineCache=null;
+let quickTextsListenerStarted=false,editingTemplateIndex=null,editingTemplateScope='shop',historyMode='row',historyTaskId=null,historyGalleryCache={},onlineCache=null;
 let presenceSessionRef=null,presenceUserRef=null,presenceSessionId='',presenceTimer=null,presenceOnlineMs=0,presenceAwayMs=0,presenceLastTick=0,presenceLastActivity=0,presenceAway=false,presenceStarted=false;
 const PRESENCE_AWAY_MS=60000, PRESENCE_STALE_MS=120000;
+try{showCompleted=localStorage.getItem('xvd_show_done')!=='0'}catch(e){}
 
 function $(id){return document.getElementById(id)}
 function pad2(n){return String(n).padStart(2,'0')}
@@ -435,8 +437,9 @@ function addFinalStyle(){
     .history-tools{margin-bottom:8px}.history{background:#fff!important;padding:0!important;white-space:normal!important;max-height:65vh!important}.history-table-wrap{overflow:auto;border:1px solid #e5e7eb;border-radius:9px}.history-table{width:100%!important;min-width:900px!important;border-collapse:separate!important;border-spacing:0!important;table-layout:auto!important}.history-table th,.history-table td{width:auto!important;text-align:left!important;padding:7px 8px!important;border-bottom:1px solid #e5e7eb!important;vertical-align:top!important}.history-table th{position:sticky;top:0;background:#f8fafc!important;z-index:1}.history-table td{white-space:pre-wrap!important}.history-muted{color:#64748b}.history-images{display:flex;gap:5px;flex-wrap:wrap}.history-img{width:42px;height:42px;object-fit:cover;border:1px solid #d1d5db;border-radius:6px;cursor:pointer}.history-empty{padding:12px;color:#64748b}
     .template-panel{border:1px solid #e5e7eb;background:#f8fafc;border-radius:9px;padding:8px;margin-top:7px}.template-actions{display:grid;grid-template-columns:1fr auto auto;gap:6px;margin-bottom:7px}.template-list{display:grid!important;gap:6px!important;margin-top:0!important}.template-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center}.template-use{text-align:left!important;background:#eef2ff!important;color:#1d4ed8!important;white-space:normal!important;line-height:1.25!important}.template-edit{background:#e5e7eb!important;color:#111827!important}.template-delete{background:#fee2e2!important;color:#b91c1c!important}
     .online-list{display:grid;gap:8px}.online-head,.online-row,.online-day,.online-session{display:grid;grid-template-columns:1.1fr .8fr .7fr .8fr .8fr 1fr;gap:8px;align-items:center}.online-head{font-weight:900;color:#374151;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:8px}.online-row,.online-day,.online-session{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:8px;cursor:pointer}.online-row:hover{background:#f8fafc}.online-status{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11.5px;font-weight:900}.online-status.on{background:#dcfce7;color:#166534}.online-status.away{background:#fef3c7;color:#92400e}.online-status.off{background:#e5e7eb;color:#374151}.online-detail-list{display:grid;gap:8px}.online-day{grid-template-columns:1fr 1fr 1fr 1fr;cursor:default;background:#f8fafc}.online-session{grid-template-columns:1fr 1fr 1fr 1fr;cursor:default;margin-left:14px}.mc-img-row{display:flex;gap:6px;flex-wrap:wrap}
+    .completed-float{position:fixed;right:14px;bottom:14px;z-index:15;border-radius:999px!important;padding:9px 13px!important;box-shadow:0 4px 14px #0003!important;background:#111827!important;color:#fff!important}.completed-float.off{background:#f59e0b!important;color:#111827!important}
     @media(min-width:901px){.table-wrap table{min-width:2070px!important}.table-wrap th:nth-child(1),.table-wrap td:nth-child(1){width:42px!important;text-align:center!important}.table-wrap th:nth-child(2),.table-wrap td:nth-child(2){width:70px!important}.table-wrap th:nth-child(3),.table-wrap td:nth-child(3){width:120px!important;text-align:center!important}.table-wrap th:nth-child(4),.table-wrap td:nth-child(4){width:80px!important;text-align:center!important}.table-wrap th:nth-child(5),.table-wrap td:nth-child(5){width:90px!important;text-align:center!important}.table-wrap th:nth-child(6),.table-wrap td:nth-child(6){width:230px!important}.table-wrap th:nth-child(7),.table-wrap td:nth-child(7){width:300px!important}.table-wrap th:nth-child(8),.table-wrap td:nth-child(8){width:92px!important;text-align:center!important}.table-wrap th:nth-child(9),.table-wrap td:nth-child(9){width:105px!important;text-align:center!important}.table-wrap th:nth-child(10),.table-wrap td:nth-child(10){width:88px!important;text-align:center!important}.table-wrap th:nth-child(11),.table-wrap td:nth-child(11){width:94px!important;text-align:center!important}.table-wrap th:nth-child(12),.table-wrap td:nth-child(12){width:290px!important}.table-wrap th:nth-child(13),.table-wrap td:nth-child(13){width:92px!important;text-align:center!important}.table-wrap th:nth-child(14),.table-wrap td:nth-child(14){width:105px!important;text-align:center!important}.table-wrap th:nth-child(15),.table-wrap td:nth-child(15){width:84px!important;text-align:center!important}.table-wrap th:nth-child(16),.table-wrap td:nth-child(16){width:78px!important;text-align:center!important}.table-wrap th:nth-child(17),.table-wrap td:nth-child(17){width:58px!important;text-align:center!important}}
-    @media(max-width:900px){.toolbar .admin-tool,.toolbar .deleted-toggle{grid-column:span 2!important;min-height:34px!important;white-space:normal!important}.modal-wide{width:100%!important}.history{max-height:none!important}.history-table{min-width:760px!important}.template-actions{grid-template-columns:1fr!important}.template-actions button{width:100%}.template-row{grid-template-columns:1fr auto auto}.online-head{display:none}.online-row,.online-day,.online-session{grid-template-columns:1fr 1fr!important;gap:6px}.online-row b,.online-day b{grid-column:1/3}.online-session{margin-left:0}.mc-actions{grid-template-columns:1fr 1fr!important}.mc-img-row button{flex:1 1 130px}}
+    @media(max-width:900px){.toolbar .admin-tool,.toolbar .deleted-toggle{grid-column:span 2!important;min-height:34px!important;white-space:normal!important}.modal-wide{width:100%!important}.history{max-height:none!important}.history-table{min-width:760px!important}.template-actions{grid-template-columns:1fr!important}.template-actions button{width:100%}.template-row{grid-template-columns:1fr auto auto}.online-head{display:none}.online-row,.online-day,.online-session{grid-template-columns:1fr 1fr!important;gap:6px}.online-row b,.online-day b{grid-column:1/3}.online-session{margin-left:0}.mc-actions{grid-template-columns:1fr 1fr!important}.mc-img-row button{flex:1 1 130px}.completed-float{right:10px;bottom:10px;padding:8px 11px!important;font-size:12px!important}}
   `;document.head.appendChild(st);
 }
 addFinalStyle();
@@ -511,6 +514,7 @@ async function logout(){
   currentUser=null;
   tasks=[];
   showDeleted=false;
+  if($('completedFloatBtn'))completedFloatBtn.style.display='none';
 
   try{ setLoginMsg('', 'ok'); }catch(e){}
 
@@ -534,6 +538,7 @@ function showApp(){
   if(currentUser.role==='dvvc'){filterCarrier.value=normalizeCarrier(currentUser.carrier);filterCarrier.disabled=true}else{filterCarrier.disabled=false}
   addDeletedButton();
   addAdminToolButtons();
+  addCompletedFloatButton();
 }
 function addDeletedButton(){
   if($('deletedBtn')){deletedBtn.style.display=currentUser&&currentUser.role==='admin'?'':'none';return}
@@ -551,6 +556,24 @@ function addAdminToolButtons(){
   if(!$('onlineBtn')){const b=document.createElement('button');b.id='onlineBtn';b.className='btn-small admin-tool';b.textContent='Thiết bị Online';b.onclick=openOnlineDevices;tb.appendChild(b)}
   if(!$('logsBtn')){const b=document.createElement('button');b.id='logsBtn';b.className='btn-small admin-tool';b.textContent='Logs';b.onclick=openLogs;tb.appendChild(b)}
   exportBtn.style.display=logged?'':'none'; allHistoryBtn.style.display=logged?'':'none'; onlineBtn.style.display=isAdmin?'':'none'; logsBtn.style.display=isAdmin?'':'none';
+}
+function addCompletedFloatButton(){
+  if(!$('completedFloatBtn')){
+    const b=document.createElement('button');b.id='completedFloatBtn';b.className='completed-float';b.onclick=toggleCompletedVisibility;document.body.appendChild(b);
+  }
+  completedFloatBtn.style.display=currentUser?'':'none';
+  updateCompletedFloatButton();
+}
+function updateCompletedFloatButton(){
+  if(!$('completedFloatBtn'))return;
+  completedFloatBtn.textContent=showCompleted?'Ẩn Đã xong':'Hiện Đã xong';
+  completedFloatBtn.classList.toggle('off',!showCompleted);
+}
+function toggleCompletedVisibility(){
+  showCompleted=!showCompleted;
+  try{localStorage.setItem('xvd_show_done',showCompleted?'1':'0')}catch(e){}
+  updateCompletedFloatButton();
+  render();
 }
 
 function canSeeShopCancel(){return !(currentUser&&currentUser.role==='dvvc')}
@@ -626,6 +649,7 @@ function render(){
   let base=getBaseList(),list=[...base];
   if(filterShop.value)list=list.filter(t=>t.status_shop===filterShop.value);
   if(filterDvvc.value)list=list.filter(t=>filterDvvc.value==='khong_xu_ly'?(!!remindText(t)&&t.status_shop!=='da_xong'):effectiveDvvcStatus(t)===filterDvvc.value);
+  if(!showCompleted&&filterShop.value!=='da_xong')list=list.filter(t=>t.status_shop!=='da_xong');
   stTotal.textContent=base.length;
   stShopRed.textContent=base.filter(t=>t.status_shop==='chua_xong').length;
   stShopGreen.textContent=base.filter(t=>t.status_shop==='da_xong').length;
@@ -702,24 +726,57 @@ function loadQuickTexts(){
   db.ref('settings/quick_texts').on('value',snap=>{quickTexts=snap.exists()?normalizeQuickTexts(snap.val()):[...DEFAULT_QUICK_TEXTS];renderQuick()},()=>{quickTexts=[...DEFAULT_QUICK_TEXTS];renderQuick()});
 }
 async function persistQuickTexts(){await db.ref('settings/quick_texts').set(quickTexts)}
-function renderQuick(){
-  const createHtml=quickTexts.map(x=>`<button type="button" onclick="addQuick('${jsArg(x)}')">${escapeHtml(x)}</button>`).join('');
-  if($('quickBox'))quickBox.innerHTML=createHtml;
-  if($('quickBoxShop'))quickBoxShop.innerHTML=quickTexts.map((x,i)=>`<div class="template-row"><button class="template-use" type="button" onclick="addQuickShop('${jsArg(x)}')">${escapeHtml(x)}</button><button class="template-edit btn-small" type="button" onclick="editTemplateText(${i})">Sửa</button><button class="template-delete btn-small" type="button" onclick="deleteTemplateText(${i})">Xóa</button></div>`).join('');
+function templateEls(scope='shop'){
+  const create=scope==='create';
+  return {
+    input:$(create?'quickTemplateTextCreate':'quickTemplateText'),
+    save:$(create?'quickTemplateSaveCreate':'quickTemplateSave'),
+    cancel:$(create?'quickTemplateCancelCreate':'quickTemplateCancel')
+  };
 }
-async function saveTemplateText(){
+function templateRows(scope){
+  const addFn=scope==='create'?'addQuick':'addQuickShop';
+  return quickTexts.map((x,i)=>`<div class="template-row"><button class="template-use" type="button" onclick="${addFn}('${jsArg(x)}')">${escapeHtml(x)}</button><button class="template-edit btn-small" type="button" onclick="editTemplateText(${i},'${scope}')">Sửa</button><button class="template-delete btn-small" type="button" onclick="deleteTemplateText(${i},'${scope}')">Xóa</button></div>`).join('');
+}
+function renderQuick(){
+  if($('quickBox'))quickBox.innerHTML=templateRows('create');
+  if($('quickBoxShop'))quickBoxShop.innerHTML=templateRows('shop');
+}
+async function saveTemplateText(scope='shop'){
   if(!canEditShop())return alert('Chỉ Shop/Admin được sửa mẫu tin nhắn');
-  const text=quickTemplateText.value.trim();
+  const els=templateEls(scope);
+  const text=(els.input?els.input.value:'').trim();
   if(!text)return alert('Chưa nhập mẫu tin nhắn');
   if(editingTemplateIndex===null)quickTexts.push(text);else quickTexts[editingTemplateIndex]=text;
-  try{await persistQuickTexts();cancelTemplateEdit();logEvent('Sửa mẫu tin nhắn',`${quickTexts.length} mẫu`)}catch(e){alert('Lỗi lưu mẫu: '+e.message)}
+  try{await persistQuickTexts();cancelTemplateEdit(scope);logEvent('Sửa mẫu tin nhắn',`${quickTexts.length} mẫu`)}catch(e){alert('Lỗi lưu mẫu: '+e.message)}
 }
-function editTemplateText(i){editingTemplateIndex=i;quickTemplateText.value=quickTexts[i]||'';quickTemplateSave.textContent='Lưu mẫu';quickTemplateCancel.style.display='inline-block';quickTemplateText.focus()}
-async function deleteTemplateText(i){if(!canEditShop())return alert('Chỉ Shop/Admin được xóa mẫu tin nhắn');if(!confirm('Xóa mẫu tin nhắn này?'))return;quickTexts.splice(i,1);try{await persistQuickTexts();cancelTemplateEdit();logEvent('Xóa mẫu tin nhắn',String(i))}catch(e){alert('Lỗi xóa mẫu: '+e.message)}}
-function cancelTemplateEdit(){editingTemplateIndex=null;if($('quickTemplateText'))quickTemplateText.value='';if($('quickTemplateSave'))quickTemplateSave.textContent='Thêm mẫu';if($('quickTemplateCancel'))quickTemplateCancel.style.display='none'}
+function editTemplateText(i,scope='shop'){
+  editingTemplateIndex=i;editingTemplateScope=scope;
+  const els=templateEls(scope);
+  if(els.input)els.input.value=quickTexts[i]||'';
+  if(els.save)els.save.textContent='Lưu mẫu';
+  if(els.cancel)els.cancel.style.display='inline-block';
+  if(els.input)els.input.focus();
+}
+async function deleteTemplateText(i,scope='shop'){
+  if(!canEditShop())return alert('Chỉ Shop/Admin được xóa mẫu tin nhắn');
+  if(!confirm('Xóa mẫu tin nhắn này?'))return;
+  quickTexts.splice(i,1);
+  try{await persistQuickTexts();cancelTemplateEdit(scope);logEvent('Xóa mẫu tin nhắn',String(i))}catch(e){alert('Lỗi xóa mẫu: '+e.message)}
+}
+function cancelTemplateEdit(scope=editingTemplateScope||'shop'){
+  editingTemplateIndex=null;editingTemplateScope=scope;
+  ['create','shop'].forEach(s=>{
+    if(scope!==s&&scope!=='all')return;
+    const els=templateEls(s);
+    if(els.input)els.input.value='';
+    if(els.save)els.save.textContent='Thêm mẫu';
+    if(els.cancel)els.cancel.style.display='none';
+  });
+}
 function addQuick(x){c_shop.value=(c_shop.value.trim()?c_shop.value.trim()+'\n':'')+x}function addQuickShop(x){s_shop.value=(s_shop.value.trim()?s_shop.value.trim()+'\n':'')+x}
-function openCreate(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');editId=null;c_carrier.value=CARRIERS[0];c_tracking.value='';c_shop.value='';c_urgent.checked=false;if($('c_cancel_pickup'))c_cancel_pickup.checked=false;if($('c_remind_level'))c_remind_level.value='';pastedImages=[];c_images.value='';renderPreview();createModal.style.display='flex'}
-function openShop(id){if(!canEditShop())return alert('Chỉ Shop/Admin được sửa phần Shop');const t=tasks.find(x=>x.id===id);if(!t)return;editId=id;s_carrier.value=normalizeCarrier(t.carrier);s_tracking.value=t.tracking;s_shop.value=t.shop;s_urgent.checked=!!t.urgent;if($('s_cancel_pickup'))s_cancel_pickup.checked=t.status_shop==='huy';if($('s_remind_level'))s_remind_level.value=t.remind_level||'';s_status_shop.value=t.status_shop;editImages=[...(t.shop_images||t.images||[])];currentImageTarget='shop';cancelTemplateEdit();renderEditPreview();shopModal.style.display='flex'}
+function openCreate(){if(!canCreateTask())return alert('Tài khoản ĐVVC không được tạo phiếu');editId=null;c_carrier.value=CARRIERS[0];c_tracking.value='';c_shop.value='';c_urgent.checked=false;if($('c_cancel_pickup'))c_cancel_pickup.checked=false;if($('c_remind_level'))c_remind_level.value='';pastedImages=[];c_images.value='';cancelTemplateEdit('create');renderPreview();createModal.style.display='flex'}
+function openShop(id){if(!canEditShop())return alert('Chỉ Shop/Admin được sửa phần Shop');const t=tasks.find(x=>x.id===id);if(!t)return;editId=id;s_carrier.value=normalizeCarrier(t.carrier);s_tracking.value=t.tracking;s_shop.value=t.shop;s_urgent.checked=!!t.urgent;if($('s_cancel_pickup'))s_cancel_pickup.checked=t.status_shop==='huy';if($('s_remind_level'))s_remind_level.value=t.remind_level||'';s_status_shop.value=t.status_shop;editImages=[...(t.shop_images||t.images||[])];currentImageTarget='shop';cancelTemplateEdit('shop');renderEditPreview();shopModal.style.display='flex'}
 function openDvvc(id){const t=tasks.find(x=>x.id===id);if(!t)return;if(!canEditDvvc(t))return alert('Tài khoản này chỉ được sửa đơn của '+currentUser.carrier);editId=id;d_tracking.value=t.tracking;d_status_dvvc.value=t.status_dvvc;d_dvvc.value=t.dvvc||'';editImages=[...(t.dvvc_images||[])];currentImageTarget='dvvc';renderEditPreview();dvvcModal.style.display='flex'}
 function historyValue(v){return String(v??'').trim()||'(trống)'}
 function pushChange(arr,label,oldVal,newVal){if(String(oldVal??'')!==String(newVal??''))arr.push({field:label,before:historyValue(oldVal),after:historyValue(newVal)})}
